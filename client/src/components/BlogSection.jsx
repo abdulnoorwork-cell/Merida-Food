@@ -8,8 +8,8 @@ const BlogSection = () => {
   const { latestBlogs, blogLoading } = useContext(AppContext);
 
   return (
-    <section className="pt-10 2xl:pb-24 pb-20 px-4">
-      <div className="container mx-auto">
+    <section className="pt-10 2xl:pb-24 pb-20">
+      <div className="container mx-auto px-4">
 
         {/* Heading */}
         <div className="text-center 2xl:mb-10 mb-9">
