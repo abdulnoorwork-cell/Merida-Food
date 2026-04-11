@@ -11,9 +11,11 @@ import { MdDeleteOutline } from 'react-icons/md';
 
 const WishlistProducts = () => {
     const [wishlist, setWishlist] = useState([]);
-    const { backendUrl, isAdmin, currency, wishlistLoading, fetchProducts } = useContext(AppContext);
+    const [wishlistLoading,setWishlistLoading]=useState(false)
+    const { backendUrl, isAdmin, currency, fetchProducts } = useContext(AppContext);
     const fetchWishlistProducts = async () => {
         try {
+            setWishlistLoading(true)
             let response = await axios.get(`${backendUrl}/api/wishlist/get-wishlist-products`, {
                 headers: {
                     Authorization: `${isAdmin}`
@@ -22,8 +24,11 @@ const WishlistProducts = () => {
             })
             if (response.data) {
                 setWishlist(response.data)
+                setWishlistLoading(false)
             }
+            setWishlistLoading(false)
         } catch (error) {
+            setWishlistLoading(false)
             console.log(error)
         }
     }
