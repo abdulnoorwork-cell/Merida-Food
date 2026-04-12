@@ -153,8 +153,8 @@ app.use('/api/order', orderRoutes);
 app.use('/api/wishlist', wishlistRoutes);
 app.use('/api/review', reviewRoutes);
 
-// app.listen(Port, () => {
-//   console.log(`Server is running http://localhost:${Port}`)
-// })
+app.listen(Port, () => {
+  console.log(`Server is running http://localhost:${Port}`)
+})
 
 export default app

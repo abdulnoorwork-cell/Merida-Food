@@ -173,14 +173,13 @@ export const getSearchProducts = (req, res) => {
       SELECT * FROM products 
       WHERE name LIKE ? 
       OR category LIKE ? 
-      OR subCategory LIKE ?
       OR about LIKE ?
       OR description LIKE ?
     `;
     }
 
     const values = query
-        ? [`%${query}%`, `%${query}%`, `%${query}%`, `%${query}%`, `%${query}%`]
+        ? [`%${query}%`, `%${query}%`, `%${query}%`, `%${query}%`]
         : [];
 
     db.query(sql, values, async (err, data) => {
@@ -190,7 +189,7 @@ export const getSearchProducts = (req, res) => {
             for (let product of data) {
                 const images = await new Promise((resolve, reject) => {
                     const imgSql =
-                        "SELECT image FROM product_images WHERE product_id = ?";
+                        "SELECT images FROM product_images WHERE product_id = ?";
 
                     db.query(imgSql, [product._id], (err, result) => {
                         if (err) reject(err);
@@ -198,7 +197,7 @@ export const getSearchProducts = (req, res) => {
                     });
                 });
 
-                product.images = images.map((img) => img.image);
+                product.images = images.map((img) => JSON.parse(img.images));
             }
 
             res.status(200).json(data);
@@ -213,16 +212,16 @@ export const getSuggestions = (req, res) => {
     if (!query) return res.json([]);
     const sql = `SELECT _id, name
 FROM products
-WHERE name LIKE ? OR category LIKE ? OR subCategory LIKE ? LIMIT 8`
+WHERE name LIKE ? OR category LIKE ? LIMIT 8`
     const values = query ?
-        [`%${query}%`, `%${query}%`, `%${query}%`] : [];
+        [`%${query}%`, `%${query}%`] : [];
     db.query(sql, values, async (err, data) => {
         if (err) return res.status(500).json(err);
         try {
             for (let product of data) {
                 const images = await new Promise((resolve, reject) => {
                     const imgSql =
-                        "SELECT image FROM product_images WHERE product_id = ?";
+                        "SELECT images FROM product_images WHERE product_id = ?";
 
                     db.query(imgSql, [product._id], (err, result) => {
                         if (err) reject(err);
@@ -230,7 +229,7 @@ WHERE name LIKE ? OR category LIKE ? OR subCategory LIKE ? LIMIT 8`
                     });
                 });
 
-                product.images = images.map((img) => img.image);
+                product.images = images.map((img) => JSON.parse(img.images));
             }
 
             res.status(200).json(data);

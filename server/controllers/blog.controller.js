@@ -166,3 +166,41 @@ export const getLatestBlogs = (req, res) => {
         }
     });
 }
+
+export const getSearchBlogs = (req, res) => {
+    const { blogQuery } = req.query;
+    if (!blogQuery) return res.json([]);
+
+    let sql = ''; // ✅ FIXED
+
+    if (blogQuery) {
+        sql = `
+      SELECT * FROM blogs 
+      WHERE title LIKE ? 
+      OR description LIKE ?
+    `;
+    }
+
+    const values = blogQuery
+        ? [`%${blogQuery}%`, `%${blogQuery}%`]
+        : [];
+
+    db.query(sql, values, async (err, data) => {
+        if (err) return res.status(500).json(err);
+        res.status(200).json(data);
+    });
+};
+
+export const getBlogSuggestions = (req, res) => {
+    const { blogQuery } = req.query;
+    if (!blogQuery) return res.json([]);
+    const sql = `SELECT _id, title, image
+FROM blogs
+WHERE title LIKE ? OR description LIKE ? LIMIT 8`
+    const values = blogQuery ?
+        [`%${blogQuery}%`, `%${blogQuery}%`] : [];
+    db.query(sql, values, async (err, data) => {
+        if (err) return res.status(500).json(err);
+        res.status(200).json(data);
+    });
+};

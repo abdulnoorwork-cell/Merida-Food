@@ -8,12 +8,15 @@ import axios from 'axios';
 import { useEffect } from 'react';
 const BlogCard = React.lazy(() => import('../components/BlogCard'))
 import loading_animation from '../../public/loading_animation.svg'
+import { IoMdClose } from 'react-icons/io';
+import { TbLoader2 } from 'react-icons/tb';
+import { LuSearch } from 'react-icons/lu';
 
 const SingleBlog = () => {
 
     const [blog, setBlog] = useState([]);
     const { blog_id } = useParams();
-    const { backendUrl, latestBlogs } = useContext(AppContext)
+    const { backendUrl, latestBlogs,handleSearchBlogs, blogQuery, setBlogQuery, blogSuggestions, setBlogSuggestions, handleClearBlogSearch, blogSuggestionLoading,navigate } = useContext(AppContext)
     const fetchBog = async () => {
         try {
             let response = await axios.get(`${backendUrl}/api/blog/blog-detail/${blog_id}`, { withCredentials: true });
@@ -31,8 +34,6 @@ const SingleBlog = () => {
     const cleanHTML = blog?.description
         ?.replace(/style="[^"]*color:[^";]+;?[^"]*"/gi, "")
         ?.replace(/color:[^;"]+;?/gi, "");
-
-    console.log(latestBlogs)
 
     return (
         <div className='bg-white'>
@@ -58,7 +59,7 @@ const SingleBlog = () => {
                 </div>
             </div>
 
-            <div className="container mx-auto 2xl:py-24 sm:py-20 py-16 px-4">
+            <div className="container mx-auto 2xl:py-24 py-20 px-4">
                 {blog ?
                     <div className="grid grid-cols-1 lg:grid-cols-3 gap-10">
 
@@ -93,16 +94,48 @@ const SingleBlog = () => {
                         <div className="space-y-8">
 
                             {/* Search */}
-                            <div className="bg-[#F6F6F7] p-6 rounded">
-                                <div className="flex text-sm">
+                            <div className="relative bg-[#F6F6F7] p-6 rounded">
+                                <div className="flex items-center w-full pl-4 h-[45px] outline-none bg-white">
                                     <input
                                         type="text"
+                                        value={blogQuery} onChange={(e) => setBlogQuery(e.target.value)}
+                                        onKeyDown={(e) => {
+                                            if (e.key === "Enter" || e.keyCode === 13) {
+                                                e.preventDefault();
+                                                handleSearchBlogs();
+                                                setBlogQuery('')
+                                            }
+                                            if (e.key === "Backspace") {
+                                                e.preventDefault();
+                                                setBlogQuery("")
+                                                setBlogSuggestions([])
+                                                handleClearBlogSearch()
+                                            }
+                                        }}
                                         placeholder="Search..."
-                                        className="w-full px-4 py-3 outline-none bg-white"
+                                        className="w-full outline-none bg-white"
                                     />
-                                    <button className="bg-orange-500 text-white px-4 font-medium">
-                                        Search
+                                    {blogSuggestionLoading ? <span className='text-lg animate-spin mr-1'><TbLoader2 /></span> : <span onClick={(handleClearBlogSearch)} className={`text-lg cursor-pointer text-[#1A1A1A] mr-1 ${blogQuery !== "" ? 'block' : 'hidden'}`}><IoMdClose /></span>}
+                                    <button onClick={() => { handleSearchBlogs() }} className="bg-orange-500 text-white px-4 h-full cursor-pointer text-xl">
+                                        <LuSearch />
                                     </button>
+                                    {blogQuery && blogSuggestions.length > 0 &&
+                                        <div className="suggestions absolute top-full shadow left-0 bg-white w-full">
+                                            <ul className='px-3 w-full overflow-y-auto max-h-[300px]'>
+                                                {blogSuggestions?.map((v, i) => (
+                                                    <li key={i} onClick={() => {
+                                                        setBlogQuery("");  // select suggestion
+                                                        navigate(`/blogs/${v._id}`);
+                                                        scrollTo(0, 0)
+                                                    }} className='cursor-pointer flex items-center gap-1 w-full border-b border-gray-300'>
+                                                        <img src={JSON.parse(v.image).url} className='w-14 h-14 object-contain' alt="" />
+                                                        <h6 className='text-[13px] line-clamp-2'>{v.title}</h6>
+                                                    </li>
+                                                ))}
+                                            </ul>
+                                            <button onClick={() => { handleSearchBlogs(); setBlogQuery(''); setBlogSuggestions('') }} className='cursor-pointer text-white bg-orange-500 px-4 py-2 mx-auto my-2 text-xs rounded ml-2'>View All Result</button>
+                                        </div>
+                                    }
                                 </div>
                             </div>
 

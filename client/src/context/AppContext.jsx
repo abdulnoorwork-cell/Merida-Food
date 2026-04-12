@@ -30,9 +30,13 @@ const AppContextProvider = ({ children }) => {
     const [allReviews, setAllReviews] = useState([]);
     const backendUrl = import.meta.env.VITE_BACKEND_URL;
     const [query, setQuery] = useState([])
+    const [blogQuery, setBlogQuery] = useState([])
     const [suggestions, setSuggestions] = useState([]);
+    const [blogSuggestions, setBlogSuggestions] = useState([]);
     const [searchLoading, setSearchLoading] = useState(false)
+    const [blogsSearchLoading, setBlogSearchLoading] = useState(false)
     const [suggestionLoading, setSuggestionLoading] = useState(false)
+    const [blogSuggestionLoading, setBlogSuggestionLoading] = useState(false)
     const navigate = useNavigate()
     const currency = "Rs"
     const shippingFee = 150;
@@ -100,7 +104,7 @@ const AppContextProvider = ({ children }) => {
                     if (query.length > 1) {
                         setProducts(response.data)
                         setSuggestions([])
-                        navigate('/shop/all-products')
+                        navigate('/shop')
                         scrollTo(0, 0)
                         setSearchLoading(false)
                     }
@@ -147,6 +151,68 @@ const AppContextProvider = ({ children }) => {
             return () => clearTimeout(delay);
         }
     }, [query]);
+
+    const handleSearchBlogs = async () => {
+        if (!blogQuery) {
+            setBlogSuggestions([]);
+            return;
+        }
+        if (blogQuery && blogSuggestions.length > 0) {
+            try {
+                setBlogSearchLoading(true)
+                let response = await axios.get(`${backendUrl}/api/blog/search-blogs?blogQuery=${blogQuery}`, { withCredentials: true });
+                if (response.data) {
+                    if (blogQuery.length > 1) {
+                        setBlogs(response.data)
+                        setBlogSuggestions([])
+                        navigate('/blogs')
+                        scrollTo(0, 0)
+                        setBlogSearchLoading(false)
+                    }
+                }
+                setBlogSearchLoading(false)
+            } catch (error) {
+                setBlogSearchLoading(false)
+                console.log(error)
+            }
+        }
+    }
+
+    const handleClearBlogSearch = () => {
+        setBlogQuery('');
+        setBlogs([]);
+        fetchBlogs();
+    }
+
+    useEffect(() => {
+        if (blogQuery.length > 1) {
+            const delay = setTimeout(async () => {
+                if (!blogQuery) {
+                    setBlogSuggestions([]);
+                    return;
+                }
+
+                try {
+                    setBlogSuggestionLoading(true)
+                    // 🔹 fetch suggestions
+                    const sugRes = await axios.get(`${backendUrl}/api/blog/get-suggestions`, {
+                        params: { blogQuery },
+                    });
+                    if (sugRes.data) {
+                        setBlogSuggestions(sugRes.data);
+                        setBlogSuggestionLoading(false)
+                    }
+                    setBlogSuggestionLoading(false)
+
+                } catch (err) {
+                    setBlogSuggestionLoading(false)
+                    console.error(err);
+                }
+            }, 300); // 300ms debounce
+
+            return () => clearTimeout(delay);
+        }
+    }, [blogQuery]);
 
     const addToCart = async (product_id, quantity) => {
         if (!token) {
@@ -315,10 +381,12 @@ const AppContextProvider = ({ children }) => {
         fetchBlogs();
         fetchLatestBlogs()
         fetchProducts();
-        handleSearchProducts();
+        handleSearchProducts();;
+        handleSearchBlogs()
         getCartItems()
         getTotalCartItems()
         handleClearSearch()
+        handleClearBlogSearch()
         fetchWishlist();
         fetchUserOrders()
         fetchAllReviews();
@@ -327,7 +395,7 @@ const AppContextProvider = ({ children }) => {
     }, [])
 
     return (
-        <AppContext.Provider value={{ navigate, userId, discount, backendUrl, token, shippingFee, blogs, fetchBlogs, fetchLatestBlogs, latestBlogs,addToCart,qty, setQty, isAdmin, products, setProducts, fetchProducts, fetchLatestProducts, latestProducts, currency, handleSearchProducts, query, setQuery, suggestions, setSuggestions, cartItems, getCartItems, totalCartItems, getTotalCartItems, handleClearSearch, toggleWishlist, isInWishlist, fetchWishlist, wishlist, orders, fetchUserOrders, searchLoading, setSearchLoading, suggestionLoading, setSuggestionLoading, loading, blogLoading, orderLoading, setOrderLoading, wishlistLoading, setWishlistLoading, fetchAllReviews, allReviews, fetchAdminOrders, adminOrders }}>{children}</AppContext.Provider>
+        <AppContext.Provider value={{ navigate, userId, discount, backendUrl, token, shippingFee, blogs, fetchBlogs, fetchLatestBlogs, latestBlogs, addToCart, qty, setQty, isAdmin, products, setProducts, fetchProducts, fetchLatestProducts, latestProducts, currency, handleSearchProducts,handleSearchBlogs, query,blogQuery, setQuery,setBlogQuery, suggestions, setSuggestions,blogSuggestions,setBlogSuggestions,blogSuggestionLoading, setBlogSuggestionLoading, cartItems, getCartItems, totalCartItems, getTotalCartItems, handleClearSearch,handleClearBlogSearch, toggleWishlist, isInWishlist, fetchWishlist, wishlist, orders, fetchUserOrders, searchLoading, setSearchLoading,blogsSearchLoading,setBlogSearchLoading, suggestionLoading, setSuggestionLoading, loading, blogLoading, orderLoading, setOrderLoading, wishlistLoading, setWishlistLoading, fetchAllReviews, allReviews, fetchAdminOrders, adminOrders }}>{children}</AppContext.Provider>
     )
 }
 
