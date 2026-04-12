@@ -6,7 +6,7 @@ import breadcrumb_bg from '../assets/breadcrumb_bg.webp'
 
 const Checkout = () => {
     const [loading, setLoading] = useState(false)
-    const { cartItems, backendUrl, userId, token, getCartItems, shippingFee, currency, discount, getTotalCartItems, fetchAdminOrders,navigate } = useContext(AppContext)
+    const { cartItems, backendUrl, userId, token, getCartItems, shippingFee, currency, discount, getTotalCartItems, fetchAdminOrders, navigate } = useContext(AppContext)
 
     const [payment, setPayment] = useState("ONLINE");
     const [deliveryInfo, setDeliveryInfo] = useState({
@@ -21,8 +21,16 @@ const Checkout = () => {
     const onChangeHandler = (e) => {
         setDeliveryInfo({ ...deliveryInfo, [e.target.name]: e.target.value })
     }
+    const subtotal = cartItems.reduce(
+        (acc, item) => acc + item.price * item.quantity,
+        0
+    );
+    const total = subtotal + shippingFee - discount;
     const onSubmitHandler = async (event) => {
         event.preventDefault();
+        if (!token) {
+            return toast.error("Please login first")
+        }
         if (token) {
             try {
                 if (!cartItems || cartItems.length === 0) {
@@ -60,16 +68,10 @@ const Checkout = () => {
             }
         } else {
             localStorage.removeItem('User')
-            window.location.href = "/user/login";
+            window.location.href = "/login";
             window.location.reload()
         }
     }
-
-    const subtotal = cartItems.reduce(
-        (acc, item) => acc + item.price * item.quantity,
-        0
-    );
-    const total = subtotal + shippingFee - discount;
 
     return (
         <div>
@@ -100,7 +102,7 @@ const Checkout = () => {
                 <form onSubmit={onSubmitHandler} className="container mx-auto px-4 grid lg:grid-cols-3 gap-10">
 
                     {/* Billing Form */}
-                    <div className="lg:col-span-2 bg-white p-8 border border-gray-400">
+                    <div className="lg:col-span-2 bg-white sm:p-12 p-8 border border-gray-400">
 
                         <h3 className="sm:text-3xl text-2xl font-bold mb-6 tracking-tight">
                             Billing Details

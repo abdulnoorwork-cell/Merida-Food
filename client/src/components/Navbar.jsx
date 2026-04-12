@@ -4,18 +4,19 @@ import { LuSearch } from "react-icons/lu";
 import { RiUserLine } from "react-icons/ri";
 import { FiHeart } from "react-icons/fi";
 import { HiOutlineShoppingBag } from "react-icons/hi";
-import { IoIosArrowDown, IoMdClose, IoMdSearch } from "react-icons/io";
+import { IoMdClose, IoMdSearch } from "react-icons/io";
 import { MdClose } from "react-icons/md";
 import { RiMenu3Fill } from "react-icons/ri";
-import { HiMiniPlusCircle } from "react-icons/hi2";
 import { AppContext } from '../context/AppContext';
 import { TbLoader2 } from "react-icons/tb";
+import { BiLogOut } from "react-icons/bi";
+import toast from 'react-hot-toast';
 
 const Navbar = () => {
     const [sticky, setSticky] = useState(false);
     const [mobile, setMobile] = useState(false)
     const [searchBox, setSearchBox] = useState(false)
-    const { navigate, token, totalCartItems, wishlist, searchLoading, setSearchLoading, suggestionLoading, setSuggestionLoading, handleClearSearch, handleSearchProducts, query, setQuery, suggestions, setSuggestions } = useContext(AppContext)
+    const { navigate, token, totalCartItems, wishlist, searchLoading, setSearchLoading, suggestionLoading, handleClearSearch, handleSearchProducts, query, setQuery, suggestions, setSuggestions } = useContext(AppContext)
     window.addEventListener('scroll', () => {
         if (window.scrollY > 20) {
             setSticky(true)
@@ -23,6 +24,15 @@ const Navbar = () => {
             setSticky(false)
         }
     })
+    const logout = () => {
+        localStorage.removeItem('User');
+        toast.success("Logout successfully")
+        setTimeout(() => {
+            navigate('/login')
+            window.location.reload()
+        }, 1000)
+    }
+
     return (
         <>
             {/* Top */}
@@ -56,7 +66,8 @@ const Navbar = () => {
                             {token ? <span onClick={() => { navigate('/cart'); scrollTo(0, 0) }} className='2xl:text-[22px] text-xl cursor-pointer relative'><HiOutlineShoppingBag /><small className='absolute top-1.5 -right-1.5 bg-orange-600 text-white sm:text-[11px] text-[10px] rounded-full px-[3px] py-[2px] min-w-[14px] text-center leading-none'>{totalCartItems > 0 ? totalCartItems : "0"}</small></span> : <span onClick={() => { navigate('/login'); scrollTo(0, 0) }} className='2xl:text-[22px] text-xl cursor-pointer relative'><HiOutlineShoppingBag /><small className='absolute top-1.5 -right-1.5 bg-orange-600 text-white sm:text-[11px] text-[10px] rounded-full px-[3px] py-[2px] min-w-[14px] text-center leading-none'>{totalCartItems > 0 ? totalCartItems : "0"}</small></span>}
                             {token ? <span onClick={() => { navigate('/my-account'); scrollTo(0, 0) }} className='2xl:text-[22px] text-xl cursor-pointer'><RiUserLine /></span> : <span onClick={() => { navigate('/login'); scrollTo(0, 0) }} className='2xl:text-[22px] text-xl cursor-pointer'><RiUserLine /></span>}
                         </div>
-                        <button className='uppercase 2xl:text-base text-sm bg-[#FE6A13] text-white px-[30px] 2xl:py-3.5 py-3 font-semibold cursor-pointer hover:bg-[#1A1A1A] transition-all duration-300 sm:block hidden'>Get Started</button>
+                        {token ? <button onClick={logout} className='2xl:text-base text-sm bg-orange-600 text-white px-8 py-3 2xl:py-3.5 font-medium cursor-pointer hover:bg-[#1A1A1A] transition-all duration-300 sm:flex hidden items-center gap-1'>Logout <span className='text-lg'><BiLogOut /></span></button>
+                            : <button onClick={() => { navigate('/login'); scrollTo(0, 0) }} className='uppercase 2xl:text-base text-sm bg-[#FE6A13] text-white px-[30px] 2xl:py-3.5 py-3 font-medium cursor-pointer hover:bg-[#1A1A1A] transition-all duration-300 sm:block hidden'>Get Started</button>}
 
                         {/* hamburger */}
                         <span onClick={() => setMobile(true)} className='hamburger text-white bg-[#1A1A1A] sm:w-[45px] w-10 h-10 sm:h-[45px] lg:hidden block sm:text-xl text-lg flex items-center justify-center cursor-pointer'><RiMenu3Fill /></span>
@@ -94,7 +105,7 @@ const Navbar = () => {
                                             setQuery("");  // select suggestion
                                             setSearchBox(false);
                                             navigate(`/shop/${v._id}`);
-                                            scrollTo(0,0)
+                                            scrollTo(0, 0)
                                         }} className='cursor-pointer flex items-center gap-1 w-full border-b border-gray-300'>
                                             <img src={v?.images[0].url} className='w-14 h-14 object-contain' alt="" />
                                             <h6 className='text-[13px] line-clamp-2'>{v.name}</h6>
@@ -117,7 +128,7 @@ const Navbar = () => {
                     setSuggestions([]);
                     handleClearSearch();
                     setSearchLoading(false);
-                }} className={`w-full h-screen fixed top-0 left-0 bg-[#1A1A1A] opacity-80 z-40 ${ searchBox || searchLoading ? 'block' : 'hidden'}`}></div>
+                }} className={`w-full h-screen fixed top-0 left-0 bg-[#1A1A1A] opacity-80 z-40 ${searchBox || searchLoading ? 'block' : 'hidden'}`}></div>
             </div>
         </>
     )
