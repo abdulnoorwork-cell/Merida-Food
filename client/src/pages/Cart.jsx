@@ -73,7 +73,7 @@ const Cart = () => {
         (acc, item) => acc + item.price * item.quantity,
         0
     );
-    const total = subtotal + shippingFee;
+    const total = subtotal + shippingFee - discount;
 
     return (
         <div>
@@ -137,6 +137,11 @@ const Cart = () => {
                             <div className="flex justify-between mb-2 sm:text-base text-sm">
                                 <span>Shipping</span>
                                 <span>{currency}.{subtotal ? shippingFee.toFixed(2).toLocaleString() : '00'}</span>
+                            </div>
+
+                            <div className="flex justify-between mb-2 sm:text-base text-sm">
+                                <span>Discount</span>
+                                <span className="text-red-400/90">-{currency}.{subtotal ? discount.toFixed(2) : "0"}</span>
                             </div>
 
                             <div className="flex justify-between sm:text-xl text-lg font-semibold mt-4 border-t border-gray-700 pt-4">

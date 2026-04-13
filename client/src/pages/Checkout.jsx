@@ -67,9 +67,11 @@ const Checkout = () => {
                 console.log(error)
             }
         } else {
-            localStorage.removeItem('User')
-            window.location.href = "/login";
-            window.location.reload()
+            if (error.response.status === 500) {
+                localStorage.removeItem('User')
+                window.location.href = "/login";
+                window.location.reload()
+            }
         }
     }
 
@@ -240,7 +242,7 @@ const Checkout = () => {
                                         </h6>
                                     </div>
 
-                                    <h6 className="font-semibold">
+                                    <h6 className="font-medium">
                                         {currency}.{(item.price * item.quantity).toFixed(2)}
                                     </h6>
 
@@ -253,16 +255,16 @@ const Checkout = () => {
 
                         <div className="space-y-2 text-sm sm:text-[15px]">
 
-                            <div className="text-gray-600 flex justify-between font-medium">
+                            <div className="text-gray-800 flex justify-between">
                                 <span>Subtotal</span>
                                 <span>{currency}. {subtotal.toFixed(2)}</span>
                             </div>
 
-                            <div className="text-gray-600 flex justify-between font-medium">
+                            <div className="text-gray-800 flex justify-between">
                                 <span>Shipping</span>
                                 <span>{currency}.{subtotal ? shippingFee.toFixed(2) : "0"}</span>
                             </div>
-                            <div className="text-gray-600 flex justify-between font-medium">
+                            <div className="text-gray-800 flex justify-between">
                                 <span>Discount</span>
                                 <span className="text-red-700/90">-{currency}.{subtotal ? discount.toFixed(2) : "0"}</span>
                             </div>

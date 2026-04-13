@@ -8,7 +8,7 @@ export const placeOrder = async (req, res) => {
     const { user_id, items, total_amount, payment_method, address } = req.body;
 
     if (!address || !address.firstName) {
-        return res.status(400).json({ message: "Invalid address" });
+        return res.status(400).json({ messege: "Invalid address" });
     }
 
     // 🟢 COD (Keep your existing logic)
@@ -18,7 +18,7 @@ export const placeOrder = async (req, res) => {
              VALUES (?, ?, ?, ?, ?)`,
             [user_id, total_amount, payment_method, JSON.stringify(address), "PENDING"],
             (err, result) => {
-                if (err) return res.status(500).json({ success: false, message: err });
+                if (err) return res.status(500).json({ success: false, messege: err });
 
                 const order_id = result.insertId;
 
@@ -33,7 +33,7 @@ export const placeOrder = async (req, res) => {
                 // delete cart
                 db.query('DELETE FROM cart_items WHERE user_id = ?', [user_id]);
 
-                res.json({ success: true, message: "Order placed (COD)" });
+                res.json({ success: true, messege: "Order placed (COD)" });
             }
         );
     }
@@ -49,14 +49,14 @@ export const placeOrder = async (req, res) => {
                     product_data: {
                         name: item.name,
                     },
-                    unit_amount: item.price * 100,
+                    unit_amount: Math.round(Number(total_amount) * 100),
                 },
-                quantity: item.quantity,
+                quantity: 1,
             })),
 
             mode: "payment",
 
-            success_url: `${process.env.FRONTEND_URL}/success`,
+            success_url: `${process.env.FRONTEND_URL}/success?session_id={CHECKOUT_SESSION_ID}`,
             cancel_url: `${process.env.FRONTEND_URL}/cancel`,
 
             metadata: {
@@ -65,17 +65,75 @@ export const placeOrder = async (req, res) => {
                     items.map(item => ({
                         id: item._id,
                         qty: item.quantity,
-                        price:item.price
+                        price: item.price
                     }))
                 ),
                 address: JSON.stringify(address),
-                total_amount: total_amount.toString()
+                total_amount: total_amount
             },
         });
 
         return res.json({ url: session.url });
     }
 };
+
+export const confirmOrder = async (req, res) => {
+    const { session_id } = req.body;
+
+    try {
+        // 🔒 Check if already exists
+        db.query(
+            "SELECT * FROM orders WHERE stripe_session_id = ?",
+            [session_id],
+            async (err, data) => {
+
+                if (data.length > 0) {
+                    return res.json({ messege: "Order already exists" });
+                }
+
+                // 👉 Continue only if NOT exists
+                const session = await stripe.checkout.sessions.retrieve(session_id);
+
+                if (session.payment_status !== "paid") {
+                    return res.status(400).json({ messege: "Payment not completed" });
+                }
+
+                const user_id = session.metadata.user_id;
+                const items = JSON.parse(session.metadata.items);
+                const address = JSON.parse(session.metadata.address);
+                const total_amount = session.metadata.total_amount;
+
+                db.query(
+                    `INSERT INTO orders (user_id, total_amount, payment_method, address, payment_status, stripe_session_id)
+           VALUES (?, ?, ?, ?, ?, ?)`,
+                    [user_id, total_amount, "ONLINE", JSON.stringify(address), "PAID", session_id],
+                    (err, result) => {
+
+                        const order_id = result.insertId;
+
+                        items.forEach(item => {
+                            db.query(
+                                `INSERT INTO order_items (order_id, product_id, quantity, price)
+                 VALUES (?, ?, ?, ?)`,
+                                [order_id, item.id, item.qty, item.price]
+                            );
+                        });
+
+                        db.query(
+                            "DELETE FROM cart_items WHERE user_id = ?",
+                            [user_id]
+                        );
+
+                        res.json({ success: true });
+                    }
+                );
+            }
+        );
+
+    } catch (error) {
+        res.status(500).json({ messege: "Error" });
+    }
+}
 
 export const getUserOrders = (req, res) => {
     const { user_id } = req.params;
@@ -126,7 +184,7 @@ export const getLatestOrders = (req, res) => {
     db.query(sql, [limit], async (err, data) => {
         if (err) {
             console.log(err);
-            return res.status(500).json({ message: "Server error" });
+            return res.status(500).json({ messege: "Server error" });
         } else {
             for (let product of data) {
                 const images = await new Promise((resolve, reject) => {

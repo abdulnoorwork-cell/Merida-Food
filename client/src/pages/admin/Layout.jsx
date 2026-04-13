@@ -17,10 +17,10 @@ const Layout = () => {
   return (
     <div className='bg-cover bg-no-repeat bg-cover text-white' style={{backgroundImage: `url(${backgroundImage})`}}>
       <div className='flex items-center justify-between py-3 px-4 sm:px-10 gap-2 bg-black/30 backdrop-blur-xs min-h-[75px]'>
-        <div style={{fontFamily:'Poppins'}} onClick={() => { navigate('/admin'); scrollTo(0, 0) }} className="logo leading-none sm:text-[32px] text-2xl cursor-pointer text-white">
+        <div style={{fontFamily:'Poppins'}} onClick={() => { navigate('/admin'); scrollTo(0, 0) }} className="logo leading-none sm:text-[32px] text-2xl cursor-pointer text-white tracking-tight">
           Admin<span className='text-[#FE6A13] font-bold'> Panel</span>
         </div>
-        <button style={{fontFamily:'Poppins'}} onClick={logout} type='submit' className='sm:text-sm text-xs px-7 w-fit py-[10px] bg-orange-600 text-white rounded-md cursor-pointer font-medium flex items-center gap-1'><span className='text-lg'><BiLogOut /></span>Logout</button>
+        <button style={{fontFamily:'Poppins'}} onClick={logout} type='submit' className='sm:text-sm text-xs px-7 w-fit py-[10px] bg-orange-600 hover:bg-orange-600 text-white rounded-md cursor-pointer font-medium flex items-center gap-1'><span className='text-lg'><BiLogOut /></span>Logout</button>
       </div>
       <div className='flex min-h-[95vh]'>
         <Sidebar />

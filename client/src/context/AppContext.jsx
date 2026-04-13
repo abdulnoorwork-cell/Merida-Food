@@ -39,7 +39,7 @@ const AppContextProvider = ({ children }) => {
     const [blogSuggestionLoading, setBlogSuggestionLoading] = useState(false)
     const navigate = useNavigate()
     const currency = "Rs"
-    const shippingFee = 150;
+    const shippingFee = 80;
     const discount = 28
     const fetchBlogs = async () => {
         try {
