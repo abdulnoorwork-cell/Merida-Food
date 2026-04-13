@@ -77,6 +77,9 @@ const Login = () => {
             })
             if (response.data.success) {
                 setLoading(false)
+                // ⏰ assume token expires in 1 hour (same as backend)
+                const expiryTime = Date.now() + 60 * 60 * 1000;
+                localStorage.setItem("expiryTime", expiryTime);
                 localStorage.setItem('User', JSON.stringify(response.data))
                 toast.success(response.data.messege)
                 setEmail('');

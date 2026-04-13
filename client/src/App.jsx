@@ -1,4 +1,4 @@
-import React, { useContext } from 'react'
+import React, { useContext, useEffect } from 'react'
 import MainLayout from './MainLayout'
 import { Routes, Route } from 'react-router-dom'
 import Home from './pages/Home'
@@ -34,9 +34,31 @@ import Checkout from './pages/Checkout'
 import OrderSuccessfull from './pages/OrderSuccessfull'
 import CategoryProducts from './pages/CategoryProducts'
 import OrderCancelled from './pages/OrderCancelled'
+import axios from 'axios'
 
 const App = () => {
   const { isAdmin, token } = useContext(AppContext);
+
+  useEffect(() => {
+    const interval = setInterval(() => {
+      const expiryTime = localStorage.getItem("expiryTime");
+
+      if (!expiryTime) return;
+
+      if (Date.now() > expiryTime) {
+        // ✅ AUTO LOGOUT
+        localStorage.removeItem("User");
+        localStorage.removeItem("expiryTime");
+
+        window.location.href = "/login";
+        window.location.reload();
+      }
+    }, 60000); // check every 1 minute
+
+    return () => clearInterval(interval);
+  }, []);
+
+
   return (
     <div className='bg-white'>
       <Routes>
@@ -57,7 +79,7 @@ const App = () => {
           <Route path='/cart' element={<Cart />} />
           <Route path='/wishlist' element={<Wishlist />} />
           <Route path='/login' element={<Login />} />
-          <Route path='/checkout' element={token && <Checkout /> } />
+          <Route path='/checkout' element={token && <Checkout />} />
         </Route>
         <Route path='/forgot-password' element={<ForgotPassword />} />
         <Route path='/reset-password' element={<ResetPassword />} />

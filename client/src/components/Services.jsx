@@ -1,27 +1,34 @@
-import React from 'react'
+import React, { useContext } from 'react'
 import service_image from '../assets/service_image.webp'
 import service_image2 from '../assets/service_image2.webp'
 import service_image3 from '../assets/service_image3.webp'
 import about_image from '../assets/about.webp'
+import { AppContext } from '../context/AppContext'
 
-const Service = () => {
-    const services = [
+const services = [
         {
             _id: 1,
             title: "Fine Dining",
             img: service_image,
+            link: '/shop/category/lunch'
         },
         {
             _id: 2,
             title: "Bar Testing",
             img: service_image2,
+            link: '/shop/category/light&digestive'
         },
         {
             _id: 3,
             title: "Fast Food",
             img: service_image3,
+            link: '/shop/category/fastfood'
+
         }
     ];
+
+const Service = () => {
+    const {navigate}=useContext(AppContext);
     return (
         <div className="container mx-auto px-4 2xl:py-20 py-16">
 
@@ -40,6 +47,7 @@ const Service = () => {
                 <div className="grid grid-cols-3 md:gap-5 sm:gap-4 gap-3">
                     {services.map((service, index) => (
                         <div
+                            onClick={()=>{navigate(`${service.link}`);scrollTo(0,0)}}
                             key={index}
                             className="relative group overflow-hidden transition-all duration-500"
                         >

@@ -42,7 +42,6 @@ cloudinary.config({
 app.get('/', (_, res) => {
   res.status(200).json({ success: true, messege: "Response from the server" })
 })
-
 app.use('/api/user', userRoutes);
 app.use('/api/blog', blogRoutes);
 app.use('/api/product', productRoutes);

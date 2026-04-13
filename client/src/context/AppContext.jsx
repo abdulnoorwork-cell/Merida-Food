@@ -41,6 +41,16 @@ const AppContextProvider = ({ children }) => {
     const currency = "Rs"
     const shippingFee = 80;
     const discount = 28
+
+    const logout = () => {
+        localStorage.removeItem('User');
+        toast.success("Logout successfully")
+        setTimeout(() => {
+            navigate('/login')
+            window.location.reload()
+        }, 1000)
+    }
+
     const fetchBlogs = async () => {
         try {
             setBlogLoading(true)
@@ -395,7 +405,7 @@ const AppContextProvider = ({ children }) => {
     }, [])
 
     return (
-        <AppContext.Provider value={{ navigate, userId, discount, backendUrl, token, shippingFee, blogs, fetchBlogs, fetchLatestBlogs, latestBlogs, addToCart, qty, setQty, isAdmin, products, setProducts, fetchProducts, fetchLatestProducts, latestProducts, currency, handleSearchProducts,handleSearchBlogs, query,blogQuery, setQuery,setBlogQuery, suggestions, setSuggestions,blogSuggestions,setBlogSuggestions,blogSuggestionLoading, setBlogSuggestionLoading, cartItems, getCartItems, totalCartItems, getTotalCartItems, handleClearSearch,handleClearBlogSearch, toggleWishlist, isInWishlist, fetchWishlist, wishlist, orders, fetchUserOrders, searchLoading, setSearchLoading,blogsSearchLoading,setBlogSearchLoading, suggestionLoading, setSuggestionLoading, loading, blogLoading, orderLoading, setOrderLoading, wishlistLoading, setWishlistLoading, fetchAllReviews, allReviews, fetchAdminOrders, adminOrders }}>{children}</AppContext.Provider>
+        <AppContext.Provider value={{ navigate, userId, discount, backendUrl, token, logout, shippingFee, blogs, fetchBlogs, fetchLatestBlogs, latestBlogs, addToCart, qty, setQty, isAdmin, products, setProducts, fetchProducts, fetchLatestProducts, latestProducts, currency, handleSearchProducts, handleSearchBlogs, query, blogQuery, setQuery, setBlogQuery, suggestions, setSuggestions, blogSuggestions, setBlogSuggestions, blogSuggestionLoading, setBlogSuggestionLoading, cartItems, getCartItems, totalCartItems, getTotalCartItems, handleClearSearch, handleClearBlogSearch, toggleWishlist, isInWishlist, fetchWishlist, wishlist, orders, fetchUserOrders, searchLoading, setSearchLoading, blogsSearchLoading, setBlogSearchLoading, suggestionLoading, setSuggestionLoading, loading, blogLoading, orderLoading, setOrderLoading, wishlistLoading, setWishlistLoading, fetchAllReviews, allReviews, fetchAdminOrders, adminOrders }}>{children}</AppContext.Provider>
     )
 }
 
