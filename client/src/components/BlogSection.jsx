@@ -5,7 +5,7 @@ const BlogCard = React.lazy(() => import('./BlogCard'))
 import loading_animation from '../../public/loading_animation.svg'
 
 const BlogSection = () => {
-  const { latestBlogs, blogLoading } = useContext(AppContext);
+  const { latestBlogs, latestBlogLoading } = useContext(AppContext);
 
   return (
     <section className="pt-10 2xl:pb-24 pb-20">
@@ -22,7 +22,7 @@ const BlogSection = () => {
         </div>
 
         {/* Blog Cards */}
-        {blogLoading ? <img src={loading_animation} alt='loader' className='mx-auto' /> : <>
+        {latestBlogLoading ? <img src={loading_animation} alt='loader' className='mx-auto' /> : <>
           {latestBlogs.length > 0 ? <div className="blogs grid lg:grid-cols-4 md:grid-cols-3 grid-cols-2 gap-5">
             {latestBlogs.map((blog, index) => (
               <BlogCard key={index} blog={blog} />
