@@ -15,7 +15,7 @@ const Layout = () => {
     }, 1000)
   }
   return (
-    <div className='bg-cover bg-no-repeat bg-cover text-white' style={{backgroundImage: `url(${backgroundImage})`}}>
+    <div className='bg-no-repeat bg-cover text-white' style={{backgroundImage: `url(${backgroundImage})`}}>
       <div className='flex items-center justify-between py-3 px-4 sm:px-10 gap-2 bg-black/30 backdrop-blur-xs min-h-[75px]'>
         <div style={{fontFamily:'Poppins'}} onClick={() => { navigate('/admin'); scrollTo(0, 0) }} className="logo leading-none sm:text-[32px] text-2xl cursor-pointer text-white tracking-tight">
           Admin<span className='text-[#FE6A13] font-bold'> Panel</span>

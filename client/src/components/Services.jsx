@@ -32,7 +32,7 @@ const Service = () => {
     return (
         <div className="container mx-auto px-4 2xl:py-20 py-16">
 
-            <div className='max-w-[1200px] mx-auto'>
+            <div className=''>
                 {/* Heading */}
                 <div className="text-center 2xl:mb-10 sm:mb-9 mb-6.5">
                     <p className="text-orange-500 uppercase tracking-widest 2xl:text-base text-sm font-semibold mb-2">

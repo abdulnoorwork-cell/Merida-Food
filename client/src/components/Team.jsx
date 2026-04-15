@@ -25,7 +25,7 @@ const Team = () => {
 
   return (
     <section className="container mx-auto 2xl:pt-20 pt-16 pb-16 px-4">
-      <div className="max-w-6xl mx-auto">
+      <div>
 
         {/* Heading */}
         <div className="text-center 2xl:mb-10 mb-9">
