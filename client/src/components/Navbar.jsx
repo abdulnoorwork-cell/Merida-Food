@@ -55,7 +55,7 @@ const Navbar = () => {
                         <NavLink onClick={() => { scrollTo(0, 0); setMobile(false) }} to={'/shop'} className={`hover:text-[#FE6A13] transition-all duration-200 2xl:py-[34px] lg:py-7 px-4 lg:px-0 py-3 2xl:text-[15px] text-sm border-b lg:border-none max-lg:w-full flex items-center justify-between lg:justify-start gap-0.5`}>Shop</NavLink>
                         <NavLink onClick={() => { scrollTo(0, 0); setMobile(false) }} to={'/blogs'} className={`hover:text-[#FE6A13] transition-all duration-200 2xl:py-[34px] lg:py-7 px-4 lg:px-0 py-3 2xl:text-[15px] text-sm border-b lg:border-none max-lg:w-full`}>Blogs</NavLink>
                         <NavLink onClick={() => { scrollTo(0, 0); setMobile(false) }} to={'/contact'} className={`hover:text-[#FE6A13] transition-all duration-200 2xl:py-[34px] lg:py-7 px-4 lg:px-0 py-3 2xl:text-[15px] text-sm border-b lg:border-none max-lg:w-full`}>Contact us</NavLink>
-                        <Link className='border border-gray-500 px-4 py-1.5 text-[12.8px] capitalize max-lg:mt-6 max-lg:bg-orange-500 max-lg:text-white max-lg:border-none' to={'/admin'} style={{fontFamily:'Poppins'}} onClick={() => scrollTo(0, 0)}>Admin Panel</Link>
+                        <Link className='border border-gray-500 px-4 py-1.5 max-lg:text-[12.8px] text-xs capitalize max-lg:mt-6 max-lg:bg-orange-500 max-lg:text-white max-lg:border-none' to={'/admin'} style={{fontFamily:'Poppins'}} onClick={() => scrollTo(0, 0)}>Admin Panel</Link>
                     </ul>
                     {/* Icons and Button */}
                     <div className='icons_button flex items-center sm:gap-8 gap-5'>
