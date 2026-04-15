@@ -9,12 +9,7 @@ import { TbLoader2 } from 'react-icons/tb';
 import { LuSearch } from 'react-icons/lu';
 
 const Blogs = () => {
-  const { blogs,fetchBlogs,fetchLatestBlogs, blogLoading, latestBlogs, handleSearchBlogs, blogQuery, setBlogQuery, blogSuggestions, setBlogSuggestions, handleClearBlogSearch, blogSuggestionLoading,navigate } = useContext(AppContext);
-
-  useEffect(()=>{
-    fetchBlogs()
-    fetchLatestBlogs()
-  },[])
+  const { blogs, blogLoading, latestBlogs, handleSearchBlogs, blogQuery, setBlogQuery, blogSuggestions, setBlogSuggestions, handleClearBlogSearch, blogSuggestionLoading,navigate } = useContext(AppContext);
 
   return (
     <div className='bg-white'>

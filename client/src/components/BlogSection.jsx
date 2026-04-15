@@ -5,11 +5,7 @@ const BlogCard = React.lazy(() => import('./BlogCard'))
 import loading_animation from '../../public/loading_animation.svg'
 
 const BlogSection = () => {
-  const { latestBlogs, latestBlogLoading,fetchLatestBlogs } = useContext(AppContext);
-
-  useEffect(()=>{
-    fetchLatestBlogs()
-  },[])
+  const { latestBlogs, latestBlogLoading } = useContext(AppContext);
 
   return (
     <section className="pt-10 2xl:pb-24 pb-20">

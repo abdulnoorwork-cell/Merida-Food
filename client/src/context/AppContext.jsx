@@ -393,7 +393,10 @@ const AppContextProvider = ({ children }) => {
     }
 
     useEffect(() => {
+        fetchBlogs()
+        fetchLatestBlogs()
         fetchProducts();
+        fetchLatestProducts()
         handleSearchProducts();;
         handleSearchBlogs()
         getCartItems()

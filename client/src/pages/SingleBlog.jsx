@@ -16,7 +16,7 @@ const SingleBlog = () => {
 
     const [blog, setBlog] = useState([]);
     const { blog_id } = useParams();
-    const { backendUrl, latestBlogs, fetchLatestBlogs,handleSearchBlogs, blogQuery, setBlogQuery, blogSuggestions, setBlogSuggestions, handleClearBlogSearch, blogSuggestionLoading,navigate } = useContext(AppContext)
+    const { backendUrl, latestBlogs, handleSearchBlogs, blogQuery, setBlogQuery, blogSuggestions, setBlogSuggestions, handleClearBlogSearch, blogSuggestionLoading,navigate } = useContext(AppContext)
     const fetchBog = async () => {
         try {
             let response = await axios.get(`${backendUrl}/api/blog/blog-detail/${blog_id}`, { withCredentials: true });
@@ -30,10 +30,6 @@ const SingleBlog = () => {
     useEffect(() => {
         fetchBog();
     }, [blog_id])
-
-    useEffect(()=>{
-        fetchLatestBlogs()
-    },[])
 
     const cleanHTML = blog?.description
         ?.replace(/style="[^"]*color:[^";]+;?[^"]*"/gi, "")

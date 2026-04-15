@@ -7,7 +7,7 @@ import { RiArrowRightLongLine } from "react-icons/ri";
 import { RiArrowLeftLongLine } from "react-icons/ri";
 
 const Shop = () => {
-    const { products,fetchProducts } = useContext(AppContext)
+    const { products } = useContext(AppContext)
     const [sortType, setSortType] = useState('latest');
     const [category, setCategory] = useState('All');
     const [itemsPerPage, setItemsPerPage] = useState(8)
@@ -54,9 +54,6 @@ const Shop = () => {
     })
     const currentProducts = sortedProducts.slice(firstIndex, lastIndex);
     const totalPages = Math.ceil(products?.length / itemsPerPage);
-    useEffect(()=>{
-        fetchProducts()
-    },[])
 
     return (
         <div className='pb-20 sm:pb-24'>
