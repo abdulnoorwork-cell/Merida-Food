@@ -27,14 +27,14 @@ h1,h2,h3,h4,h5 {
 @media screen and (min-width:1280px) {
     .container {
         width: 100%;
-        max-width: 1200px;
+        max-width: 1180px;
     }
 }
 
 @media screen and (min-width:1536px) {
     .container {
         width: 100%;
-        max-width: 1320px;
+        max-width: 1400px;
     }
 }
 
