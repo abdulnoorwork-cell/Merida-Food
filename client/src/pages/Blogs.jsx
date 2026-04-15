@@ -1,4 +1,4 @@
-import React from 'react'
+import React, { useEffect } from 'react'
 import breadcrumb_bg from '../assets/breadcrumb_bg.webp'
 import { useContext } from 'react';
 import { AppContext } from '../context/AppContext';
@@ -9,7 +9,11 @@ import { TbLoader2 } from 'react-icons/tb';
 import { LuSearch } from 'react-icons/lu';
 
 const Blogs = () => {
-  const { blogs, blogLoading, latestBlogs, handleSearchBlogs, blogQuery, setBlogQuery, blogSuggestions, setBlogSuggestions, handleClearBlogSearch, blogSuggestionLoading,navigate } = useContext(AppContext);
+  const { blogs,fetchBlogs, blogLoading, latestBlogs, handleSearchBlogs, blogQuery, setBlogQuery, blogSuggestions, setBlogSuggestions, handleClearBlogSearch, blogSuggestionLoading,navigate } = useContext(AppContext);
+
+  useEffect(()=>{
+    fetchBlogs()
+  },[])
 
   return (
     <div className='bg-white'>

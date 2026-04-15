@@ -5,7 +5,11 @@ const ProductCard = React.lazy(()=>import('./ProductCard'))
 
 const LatestItems = () => {
     
-    const { latestProducts } = useContext(AppContext);
+    const { latestProducts,fetchLatestProducts } = useContext(AppContext);
+
+    useEffect(()=>{
+        fetchLatestProducts()
+    },[])
 
     return (
         <section>
