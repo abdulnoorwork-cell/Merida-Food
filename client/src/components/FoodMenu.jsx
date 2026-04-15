@@ -6,39 +6,6 @@ const ProductCard = React.lazy(()=>import("./ProductCard"));
 
 const categories = ["All", "Breakfast", "Lunch", "Light & Digestive","Fast Food"];
 
-const foods = [
-    {
-        _id: 1,
-        name: "Grilled Cheese Burger",
-        price: "$39.00",
-        img: "https://merida.themepul.com/wp-content/uploads/2024/08/product-3.jpg",
-    },
-    {
-        _id: 2,
-        name: "Paneer Tikka Crispy",
-        price: "$28.00",
-        img: "https://merida.themepul.com/wp-content/uploads/2024/08/product-6.jpg",
-    },
-    {
-        _id: 3,
-        name: "Honey Glazed Salmon",
-        price: "$19.00",
-        img: "https://images.unsplash.com/photo-1544025162-d76694265947",
-    },
-    {
-        _id: 4,
-        name: "Mandarin Quinoa Salad",
-        price: "$24.00",
-        img: "https://images.unsplash.com/photo-1546069901-ba9599a7e63c",
-    },
-    {
-        _id: 5,
-        name: "Paneer Tikka Crispy",
-        price: "$28.00",
-        img: "https://merida.themepul.com/wp-content/uploads/2024/08/product-1.jpg",
-    },
-];
-
 export default function FoodMenu() {
     const [active, setActive] = useState("All");
     const [categoryProducts, setCategoryProducts] = useState([])

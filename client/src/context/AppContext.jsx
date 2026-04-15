@@ -404,7 +404,6 @@ const AppContextProvider = ({ children }) => {
         fetchUserOrders()
         fetchAllReviews();
         fetchAdminOrders();
-        fetchLatestProducts()
     }, [])
 
     return (
