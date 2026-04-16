@@ -56,26 +56,52 @@ export const addProduct = async (req, res) => {
     })
 }
 
-export const getProducts = (req, res) => {
-    const sql = 'SELECT _id, name, price, category, description, created_at FROM products';
-    db.query(sql, async (err, data) => {
-        if (err) {
-            return res.status(500).json({ success: false, messege: 'Error in getting products: ' + err });
-        } else {
-            for (let product of data) {
-                const images = await new Promise((resolve, reject) => {
-                    const imgSql = "SELECT images FROM product_images WHERE product_id = ?";
-                    db.query(imgSql, [product._id], (err, data) => {
-                        if (err) reject(err)
-                        resolve(data)
-                    })
-                })
-                product.images = images.map(img => JSON.parse(img.images))
-            }
-            res.status(200).json(data);
+export const getProducts = async (req, res) => {
+    try {
+        // 1. Get all products
+        const [products] = await db.query(
+            "SELECT _id, name, price, category, description, created_at FROM products"
+        );
+
+        if (!products.length) {
+            return res.status(200).json([]);
         }
-    })
-}
+
+        // 2. Get all images in ONE query (NO LOOP QUERIES)
+        const [images] = await db.query(
+            "SELECT product_id, images FROM product_images"
+        );
+
+        // 3. Group images by product_id
+        const imageMap = {};
+
+        for (const img of images) {
+            if (!imageMap[img.product_id]) {
+                imageMap[img.product_id] = [];
+            }
+
+            try {
+                imageMap[img.product_id].push(JSON.parse(img.images));
+            } catch (e) {
+                imageMap[img.product_id].push(img.images);
+            }
+        }
+
+        // 4. Attach images to products
+        const result = products.map((product) => ({
+            ...product,
+            images: imageMap[product._id] || []
+        }));
+
+        return res.status(200).json(result);
+    } catch (error) {
+        console.error("Get Products Error:", error);
+        return res.status(500).json({
+            success: false,
+            message: "Internal server error"
+        });
+    }
+};
 
 export const getSingleProduct = (req, res) => {
     const { productId } = req.params;
