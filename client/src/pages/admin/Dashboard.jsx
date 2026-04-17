@@ -23,7 +23,7 @@ const Dashboard = () => {
         withCredentials: true
       });
       if (response.data.success) {
-        toast.success(response.data.messege)
+        toast.success(response.data.message)
         await fetchBlogs();
         await fetchLatestBlogs()
       }
@@ -33,7 +33,7 @@ const Dashboard = () => {
         localStorage.removeItem('token');
         window.location.href = "/admin"
       }
-      toast.error(error.response.data.messege);
+      toast.error(error.response.data.message);
     }
   }
 
@@ -46,12 +46,12 @@ const Dashboard = () => {
         withCredentials: true
       });
       if (response.data.success) {
-        toast.success(response.data.messege)
+        toast.success(response.data.message)
         await fetchProducts();
         await fetchLatestProducts()
       }
     } catch (error) {
-      toast.error(error.response.data.messege);
+      toast.error(error.response.data.message);
       console.log(error)
       if (error.response.status === 500) {
         localStorage.removeItem('token');

@@ -29,9 +29,10 @@ const UpdateBlog = () => {
         withCredentials: true
       });
       if (response.data) {
-        setBlog(response.data[0])
-        setTitle(response.data[0].title);
-        quillRef.current.root.innerHTML = response.data[0].description
+        console.log(response.data)
+        setBlog(response.data)
+        setTitle(response.data.title);
+        quillRef.current.root.innerHTML = response.data.description
       }
     } catch (error) {
       console.log(error)
@@ -56,7 +57,7 @@ const UpdateBlog = () => {
         }
       })
       if (response.data.success) {
-        toast.success(response.data.messege);
+        toast.success(response.data.message);
         setLoading(false);
         await fetchBlogs()
         setTimeout(() => {
@@ -71,7 +72,7 @@ const UpdateBlog = () => {
         localStorage.removeItem('token');
         window.location.href = "/admin"
       }
-      toast.error(error.response.data.messege)
+      toast.error(error.response.data.message)
     }
   }
 
@@ -81,13 +82,11 @@ const UpdateBlog = () => {
     }
   }, [])
 
-  console.log(blog)
-
   return (
     <form onSubmit={onSubmitHandler} className='flex w-full justify-center px-4 py-8 md:px-8 lg:py-10 h-full min-h-[85vh]'>
       <div className='bg-black/30 backdrop-blur-xs flex flex-col w-full max-w-[700px] p-6 md:p-10 shadow rounded'>
         <label htmlFor="image">
-          <img src={!image ? blog.image && JSON.parse(blog.image).url : URL.createObjectURL(image)} className='rounded cursor-pointer max-h-24 max-w-24' alt="" />
+          <img src={!image ? blog.image && blog.image.url : URL.createObjectURL(image)} className='rounded cursor-pointer max-h-24 max-w-24' alt="" />
           <input type="file" onChange={(e) => setImage(e.target.files[0])} hidden id='image' />
         </label>
         <h6 className='mt-4'>Blog title</h6>

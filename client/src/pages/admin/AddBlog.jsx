@@ -35,7 +35,7 @@ const AddBlog = () => {
         withCredentials: true
       })
       if (response.data.success) {
-        toast.success(response.data.messege);
+        toast.success(response.data.message);
         await fetchBlogs()
         await fetchLatestBlogs()
         setLoading(false);
@@ -55,7 +55,7 @@ const AddBlog = () => {
         localStorage.removeItem('token');
         window.location.href = "/admin"
       }
-      toast.error(error.response.data.messege)
+      toast.error(error.response.data.message)
     }
   }
 

@@ -72,7 +72,7 @@ const AddProduct = () => {
         withCredentials: true
       })
       if (response.data.success) {
-        toast.success(response.data.messege);
+        toast.success(response.data.message);
         setLoading(false);
         setImages(upload_area);
         setName('');
@@ -93,7 +93,7 @@ const AddProduct = () => {
         localStorage.removeItem('token');
         window.location.href = "/admin"
       }
-      toast.error(error.response.data.messege)
+      toast.error(error.response.data.message)
     }
   }
 

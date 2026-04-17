@@ -20,11 +20,11 @@ const ListBlog = () => {
         withCredentials: true
       });
       if (response.data.success) {
-        toast.success(response.data.messege)
+        toast.success(response.data.message)
         await fetchBlogs();
       }
     } catch (error) {
-      toast.error(error.response.data.messege);
+      toast.error(error.response.data.message);
       console.log(error)
       if (error.response.status === 500) {
         localStorage.removeItem('token');
