@@ -59,6 +59,8 @@ export default function FoodMenu() {
             ? limitedProducts
             : categoryProducts;
 
+    console.log(filtered)
+
     return (
         <section style={{ backgroundImage: `url(${product_bg})` }} className="bg-center bg-no-repeat bg-cover text-white">
             <div className="container mx-auto px-4 2xl:py-24 sm:py-20 py-16">
@@ -93,7 +95,7 @@ export default function FoodMenu() {
 
                 {/* Cards */}
                 <div className="products grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 sm:gap-5 gap-4">
-                    {filtered.map((item, index) => (
+                    {filtered?.map((item, index) => (
                         <ProductCard key={index} product={item} />
                     ))}
                 </div>
