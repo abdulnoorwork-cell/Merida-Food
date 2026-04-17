@@ -20,6 +20,7 @@ const SingleProduct = () => {
     const { product_id } = useParams()
     const [product, setProduct] = useState([])
     const [relatedtems, setRelatedItems] = useState([])
+    const [getRating, setGetRating] = useState([])
     const [relatedItemsLoading, setRelatedItemsLoading] = useState(false)
     const [images, setImages] = useState([])
     const [selected, setSelected] = useState();
@@ -68,6 +69,17 @@ const SingleProduct = () => {
             fetchRelatedItems();
         }
     }, [product]);
+
+    const fetchRating = async () => {
+        try {
+            let response = await axios.get(`${backendUrl}/api/review/get-product-rating/${product_id}`, { withCredentials: true })
+            if (response.data) {
+                setGetRating(response.data)
+            }
+        } catch (error) {
+            console.log(error)
+        }
+    }
 
     const convertToBase64 = (file) => {
         return new Promise((resolve, reject) => {
@@ -131,17 +143,14 @@ const SingleProduct = () => {
         } catch (error) {
             setLoading(false)
             console.log(error)
-            if (error.response.status === 500) {
-                localStorage.removeItem("User");
-                window.location.href = "/login"
-            }
             toast.error(error.response.data.messege)
         }
     }
 
-    useEffect(()=>{
+    useEffect(() => {
         fetchReviews()
-    },[])
+        fetchRating()
+    }, [product_id])
 
     return (
         <div className='bg-white'>
@@ -205,11 +214,22 @@ const SingleProduct = () => {
                                 </p>
 
                                 {/* Rating */}
-                                <div className="flex items-center gap-2 mb-3">
-                                    <div className="text-orange-500 text-xl">★★★★★</div>
-                                    <span className="text-gray-500 text-sm">
-                                        (2 customer reviews)
-                                    </span>
+                                <div className='flex items-center gap-0.5 my-1.5'>
+                                    <div className='flex items-center gap-0.5'>
+                                        {[...Array(5)].map((_, i) => (
+                                            <AiFillStar
+                                                size={17}
+                                                key={i}
+                                                className={
+                                                    i < Math.round(getRating.average_rating || 0)
+                                                        ? "text-orange-400 fill-orange-400"
+                                                        : "text-gray-300 fill-gray-300"
+                                                }
+                                            />
+                                        ))}
+                                    </div>
+                                    {reviews.length > 0 ?
+                                        <span className="text-gray-600 text-sm sm:text-base">({getRating.average_rating ? getRating.average_rating.slice(0,3) : ""})</span> : null}
                                 </div>
 
                                 {/* Price */}
@@ -395,7 +415,7 @@ const SingleProduct = () => {
                                                 <div key={i} className='px-5 py-6 border border-gray-400'>
                                                     <div className='flex sm:flex-row flex-col sm:items-center gap-2'>
                                                         <figure>
-                                                            <img src={JSON.parse(v.profile_image)} alt="profile_image" className='w-12 h-12 rounded-full' />
+                                                            <img src={JSON.parse(v.profile_image).url} alt="profile_image" className='w-12 h-12 rounded-full' />
                                                         </figure>
                                                         <div>
                                                             {/* name */}
@@ -420,7 +440,7 @@ const SingleProduct = () => {
                                                     </div>
                                                     <h6 className='my-3 text-gray-700 text-sm sm:text-base'>{v.comment}</h6>
                                                     <figure className='flex items-center gap-3'>
-                                                        {v.images && JSON.parse(v.images).map((img, i) => {
+                                                        {v.images && v.images.map((img, i) => {
                                                             return <img src={img} key={i} alt="" className='rounded-md bg-gray-50 border border-[#E2E8F0] max-w-[100px]' />
                                                         })}
                                                     </figure>

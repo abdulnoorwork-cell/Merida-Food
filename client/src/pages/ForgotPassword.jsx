@@ -13,6 +13,7 @@ const ForgotPassword = () => {
     const handleSubmit = async (e) => {
         e.preventDefault();
         try {
+            setLoading(true)
             let response = await axios.post(`${backendUrl}/api/user/forgot-password`, { email }, {
                 withCredentials: true
             })

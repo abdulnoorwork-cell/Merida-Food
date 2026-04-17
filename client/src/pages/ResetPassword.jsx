@@ -13,6 +13,7 @@ const ResetPassword = () => {
     const [confirmPassword, setConfirmPassword] = useState('');
     const [resetToken, setResetToken] = useState('')
     const { backendUrl,navigate } = useContext(AppContext);
+    const [loading,setLoading]=useState(false)
     const location = useLocation();
     const handleSubmit = async (e) => {
         e.preventDefault();
@@ -20,11 +21,13 @@ const ResetPassword = () => {
             toast.error('Password does not match')
             return
         }
+        setLoading(true)
         try {
             let response = await axios.post(`${backendUrl}/api/user/reset-password`, { token: resetToken, password }, {
                 withCredentials: true
             })
             if (response.data.success) {
+                setLoading(false)
                 toast.success(response.data.messege)
                 console.log(response.data)
                 setPassword('');
@@ -32,7 +35,9 @@ const ResetPassword = () => {
                 navigate('/login')
                 
             }
+            setLoading(false)
         } catch (error) {
+            setLoading(false)
             console.log(error)
             toast.error(error.response.data.messege)
         }
@@ -60,7 +65,7 @@ const ResetPassword = () => {
                     <h6>Confirm Password</h6>
                     <input type="password" placeholder='Confirm your password' value={confirmPassword} onChange={(e) => setConfirmPassword(e.target.value)} className='w-full mt-1 px-4 py-3 border border-gray-400 rounded-lg focus:border-[#FE6A13] outline-none' />
                 </div>
-                <button type="submit" className='text-white font-medium cursor-pointer bg-[#FE6A13] px-10 py-3 mt-7 rounded-lg active:bg-orange-600 hover:bg-orange-600'>Reset Password</button>
+                <button type="submit" className='text-white font-medium cursor-pointer bg-[#FE6A13] px-10 py-3 mt-7 rounded-lg active:bg-orange-600 hover:bg-orange-600'>{loading ? 'Updating...' : 'Reset Password'}</button>
             </form>
         </div>
     )

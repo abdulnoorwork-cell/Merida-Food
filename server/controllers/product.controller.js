@@ -188,81 +188,128 @@ export const deleteProduct = async (req, res) => {
     }
 };
 
-export const getSearchProducts = (req, res) => {
-    const { query } = req.query;
-    if (!query) return res.json([]);
+export const getSearchProducts = async (req, res) => {
+    try {
+        const { query } = req.query;
 
-    let sql = ''; // ✅ FIXED
+        if (!query) {
+            return res.status(200).json([]);
+        }
 
-    if (query) {
-        sql = `
-      SELECT * FROM products 
-      WHERE name LIKE ? 
-      OR category LIKE ? 
-      OR about LIKE ?
-      OR description LIKE ?
-    `;
-    }
+        // 1. Search products
+        const [products] = await db.query(
+            `SELECT _id, name, category, price, about, description, created_at 
+       FROM products 
+       WHERE name LIKE ? 
+       OR category LIKE ? 
+       OR about LIKE ? 
+       OR description LIKE ?`,
+            [`%${query}%`, `%${query}%`, `%${query}%`, `%${query}%`]
+        );
 
-    const values = query
-        ? [`%${query}%`, `%${query}%`, `%${query}%`, `%${query}%`]
-        : [];
+        if (!products.length) {
+            return res.status(200).json([]);
+        }
 
-    db.query(sql, values, async (err, data) => {
-        if (err) return res.status(500).json(err);
+        // 2. Get images for these products
+        const ids = products.map(p => p._id);
 
-        try {
-            for (let product of data) {
-                const images = await new Promise((resolve, reject) => {
-                    const imgSql =
-                        "SELECT images FROM product_images WHERE product_id = ?";
+        const [images] = await db.query(
+            "SELECT product_id, images FROM product_images WHERE product_id IN (?)",
+            [ids]
+        );
 
-                    db.query(imgSql, [product._id], (err, result) => {
-                        if (err) reject(err);
-                        else resolve(result);
-                    });
-                });
+        // 3. Group images
+        const imageMap = {};
 
-                product.images = images.map((img) => JSON.parse(img.images));
+        for (const img of images) {
+            if (!imageMap[img.product_id]) {
+                imageMap[img.product_id] = [];
             }
 
-            res.status(200).json(data);
-        } catch (error) {
-            res.status(500).json(error);
+            try {
+                imageMap[img.product_id].push(JSON.parse(img.images));
+            } catch {
+                imageMap[img.product_id].push(img.images);
+            }
         }
-    });
+
+        // 4. Attach images
+        const result = products.map(product => ({
+            ...product,
+            images: imageMap[product._id] || []
+        }));
+
+        res.status(200).json(result);
+
+    } catch (error) {
+        console.error(error);
+        res.status(500).json({
+            success: false,
+            message: "Server error"
+        });
+    }
 };
 
-export const getSuggestions = (req, res) => {
-    const { query } = req.query;
-    if (!query) return res.json([]);
-    const sql = `SELECT _id, name
-FROM products
-WHERE name LIKE ? OR category LIKE ? LIMIT 8`
-    const values = query ?
-        [`%${query}%`, `%${query}%`] : [];
-    db.query(sql, values, async (err, data) => {
-        if (err) return res.status(500).json(err);
-        try {
-            for (let product of data) {
-                const images = await new Promise((resolve, reject) => {
-                    const imgSql =
-                        "SELECT images FROM product_images WHERE product_id = ?";
+export const getSuggestions = async (req, res) => {
+    try {
+        const { query } = req.query;
 
-                    db.query(imgSql, [product._id], (err, result) => {
-                        if (err) reject(err);
-                        else resolve(result);
-                    });
-                });
+        if (!query) {
+            return res.status(200).json([]);
+        }
 
-                product.images = images.map((img) => JSON.parse(img.images));
+        // 1. Get suggestions
+        const [products] = await db.query(
+            `SELECT _id, name 
+       FROM products 
+       WHERE name LIKE ? OR category LIKE ? 
+       LIMIT 8`,
+            [`%${query}%`, `%${query}%`]
+        );
+
+        if (!products.length) {
+            return res.status(200).json([]);
+        }
+
+        // 2. Get images
+        const ids = products.map(p => p._id);
+
+        const [images] = await db.query(
+            "SELECT product_id, images FROM product_images WHERE product_id IN (?)",
+            [ids]
+        );
+
+        // 3. Map images
+        const imageMap = {};
+
+        for (const img of images) {
+            if (!imageMap[img.product_id]) {
+                imageMap[img.product_id] = [];
             }
 
-            res.status(200).json(data);
-        } catch (error) {
-            res.status(500).json(error);
+            try {
+                imageMap[img.product_id].push(JSON.parse(img.images));
+            } catch {
+                imageMap[img.product_id].push(img.images);
+            }
         }
-    });
+
+        // 4. Attach images
+        const result = products.map(product => ({
+            ...product,
+            images: imageMap[product._id] || []
+        }));
+
+        res.status(200).json(result);
+
+    } catch (error) {
+        console.error(error);
+        res.status(500).json({
+            success: false,
+            message: "Server error"
+        });
+    }
 };
 
 export const getLatestProducts = async (req, res) => {
@@ -317,219 +364,219 @@ export const getLatestProducts = async (req, res) => {
 };
 
 export const getCategoryProducts = async (req, res) => {
-  try {
-    const limit = parseInt(req.query.limit) || 4;
-    const { category } = req.params;
+    try {
+        const limit = parseInt(req.query.limit) || 4;
+        const { category } = req.params;
 
-    // 1. Get products by category
-    const [products] = await db.query(
-      "SELECT _id, name, category, price, description, created_at FROM products WHERE category = ? LIMIT ?",
-      [category, limit]
-    );
+        // 1. Get products by category
+        const [products] = await db.query(
+            "SELECT _id, name, category, price, description, created_at FROM products WHERE category = ? LIMIT ?",
+            [category, limit]
+        );
 
-    if (!products.length) {
-      return res.status(200).json([]);
+        if (!products.length) {
+            return res.status(200).json([]);
+        }
+
+        // 2. Get images only for these products
+        const ids = products.map(p => p._id);
+
+        const [images] = await db.query(
+            "SELECT product_id, images FROM product_images WHERE product_id IN (?)",
+            [ids]
+        );
+
+        // 3. Group images
+        const imageMap = {};
+
+        for (const img of images) {
+            if (!imageMap[img.product_id]) {
+                imageMap[img.product_id] = [];
+            }
+
+            try {
+                imageMap[img.product_id].push(JSON.parse(img.images));
+            } catch {
+                imageMap[img.product_id].push(img.images);
+            }
+        }
+
+        // 4. Attach images
+        const result = products.map(product => ({
+            ...product,
+            images: imageMap[product._id] || []
+        }));
+
+        res.status(200).json(result);
+
+    } catch (error) {
+        console.error(error);
+        res.status(500).json({
+            success: false,
+            message: "Server error"
+        });
     }
-
-    // 2. Get images only for these products
-    const ids = products.map(p => p._id);
-
-    const [images] = await db.query(
-      "SELECT product_id, images FROM product_images WHERE product_id IN (?)",
-      [ids]
-    );
-
-    // 3. Group images
-    const imageMap = {};
-
-    for (const img of images) {
-      if (!imageMap[img.product_id]) {
-        imageMap[img.product_id] = [];
-      }
-
-      try {
-        imageMap[img.product_id].push(JSON.parse(img.images));
-      } catch {
-        imageMap[img.product_id].push(img.images);
-      }
-    }
-
-    // 4. Attach images
-    const result = products.map(product => ({
-      ...product,
-      images: imageMap[product._id] || []
-    }));
-
-    res.status(200).json(result);
-
-  } catch (error) {
-    console.error(error);
-    res.status(500).json({
-      success: false,
-      message: "Server error"
-    });
-  }
 };
 
 export const getLatestCategoryProducts = async (req, res) => {
-  try {
-    const limit = parseInt(req.query.limit) || 4;
-    const { category } = req.params;
+    try {
+        const limit = parseInt(req.query.limit) || 4;
+        const { category } = req.params;
 
-    // 1. Get latest category products
-    const [products] = await db.query(
-      "SELECT _id, name, category, price, description, created_at FROM products WHERE category = ? ORDER BY created_at DESC LIMIT ?",
-      [category, limit]
-    );
+        // 1. Get latest category products
+        const [products] = await db.query(
+            "SELECT _id, name, category, price, description, created_at FROM products WHERE category = ? ORDER BY created_at DESC LIMIT ?",
+            [category, limit]
+        );
 
-    if (!products.length) {
-      return res.status(200).json([]);
+        if (!products.length) {
+            return res.status(200).json([]);
+        }
+
+        // 2. Get images only for these products
+        const ids = products.map(p => p._id);
+
+        const [images] = await db.query(
+            "SELECT product_id, images FROM product_images WHERE product_id IN (?)",
+            [ids]
+        );
+
+        // 3. Group images
+        const imageMap = {};
+
+        for (const img of images) {
+            if (!imageMap[img.product_id]) {
+                imageMap[img.product_id] = [];
+            }
+
+            try {
+                imageMap[img.product_id].push(JSON.parse(img.images));
+            } catch {
+                imageMap[img.product_id].push(img.images);
+            }
+        }
+
+        // 4. Attach images
+        const result = products.map(product => ({
+            ...product,
+            images: imageMap[product._id] || []
+        }));
+
+        res.status(200).json(result);
+
+    } catch (error) {
+        console.error(error);
+        res.status(500).json({
+            success: false,
+            message: "Server error"
+        });
     }
-
-    // 2. Get images only for these products
-    const ids = products.map(p => p._id);
-
-    const [images] = await db.query(
-      "SELECT product_id, images FROM product_images WHERE product_id IN (?)",
-      [ids]
-    );
-
-    // 3. Group images
-    const imageMap = {};
-
-    for (const img of images) {
-      if (!imageMap[img.product_id]) {
-        imageMap[img.product_id] = [];
-      }
-
-      try {
-        imageMap[img.product_id].push(JSON.parse(img.images));
-      } catch {
-        imageMap[img.product_id].push(img.images);
-      }
-    }
-
-    // 4. Attach images
-    const result = products.map(product => ({
-      ...product,
-      images: imageMap[product._id] || []
-    }));
-
-    res.status(200).json(result);
-
-  } catch (error) {
-    console.error(error);
-    res.status(500).json({
-      success: false,
-      message: "Server error"
-    });
-  }
 };
 
 export const getLimitProducts = async (req, res) => {
-  try {
-    const limit = parseInt(req.query.limit) || 4;
+    try {
+        const limit = parseInt(req.query.limit) || 4;
 
-    // 1. Get products
-    const [products] = await db.query(
-      "SELECT _id, name, price, category, description, created_at FROM products LIMIT ?",
-      [limit]
-    );
+        // 1. Get products
+        const [products] = await db.query(
+            "SELECT _id, name, price, category, description, created_at FROM products LIMIT ?",
+            [limit]
+        );
 
-    if (!products.length) {
-      return res.status(200).json([]);
+        if (!products.length) {
+            return res.status(200).json([]);
+        }
+
+        // 2. Get images for these products only
+        const ids = products.map(p => p._id);
+
+        const [images] = await db.query(
+            "SELECT product_id, images FROM product_images WHERE product_id IN (?)",
+            [ids]
+        );
+
+        // 3. Map images
+        const imageMap = {};
+
+        for (const img of images) {
+            if (!imageMap[img.product_id]) {
+                imageMap[img.product_id] = [];
+            }
+
+            try {
+                imageMap[img.product_id].push(JSON.parse(img.images));
+            } catch {
+                imageMap[img.product_id].push(img.images);
+            }
+        }
+
+        // 4. Attach images
+        const result = products.map(product => ({
+            ...product,
+            images: imageMap[product._id] || []
+        }));
+
+        res.status(200).json(result);
+
+    } catch (error) {
+        console.error(error);
+        res.status(500).json({
+            success: false,
+            message: "Server error"
+        });
     }
-
-    // 2. Get images for these products only
-    const ids = products.map(p => p._id);
-
-    const [images] = await db.query(
-      "SELECT product_id, images FROM product_images WHERE product_id IN (?)",
-      [ids]
-    );
-
-    // 3. Map images
-    const imageMap = {};
-
-    for (const img of images) {
-      if (!imageMap[img.product_id]) {
-        imageMap[img.product_id] = [];
-      }
-
-      try {
-        imageMap[img.product_id].push(JSON.parse(img.images));
-      } catch {
-        imageMap[img.product_id].push(img.images);
-      }
-    }
-
-    // 4. Attach images
-    const result = products.map(product => ({
-      ...product,
-      images: imageMap[product._id] || []
-    }));
-
-    res.status(200).json(result);
-
-  } catch (error) {
-    console.error(error);
-    res.status(500).json({
-      success: false,
-      message: "Server error"
-    });
-  }
 };
 
 export const getCategoryAllProducts = async (req, res) => {
-  try {
-    const { category } = req.params;
+    try {
+        const { category } = req.params;
 
-    // 1. Get category products
-    const [products] = await db.query(
-      "SELECT _id, name, category, price, description, created_at FROM products WHERE category = ?",
-      [category]
-    );
+        // 1. Get category products
+        const [products] = await db.query(
+            "SELECT _id, name, category, price, description, created_at FROM products WHERE category = ?",
+            [category]
+        );
 
-    if (!products.length) {
-      return res.status(200).json([]);
+        if (!products.length) {
+            return res.status(200).json([]);
+        }
+
+        // 2. Get images for these products
+        const ids = products.map(p => p._id);
+
+        const [images] = await db.query(
+            "SELECT product_id, images FROM product_images WHERE product_id IN (?)",
+            [ids]
+        );
+
+        // 3. Map images
+        const imageMap = {};
+
+        for (const img of images) {
+            if (!imageMap[img.product_id]) {
+                imageMap[img.product_id] = [];
+            }
+
+            try {
+                imageMap[img.product_id].push(JSON.parse(img.images));
+            } catch {
+                imageMap[img.product_id].push(img.images);
+            }
+        }
+
+        // 4. Attach images
+        const result = products.map(product => ({
+            ...product,
+            images: imageMap[product._id] || []
+        }));
+
+        res.status(200).json(result);
+
+    } catch (error) {
+        console.error(error);
+        res.status(500).json({
+            success: false,
+            message: "Server error"
+        });
     }
-
-    // 2. Get images for these products
-    const ids = products.map(p => p._id);
-
-    const [images] = await db.query(
-      "SELECT product_id, images FROM product_images WHERE product_id IN (?)",
-      [ids]
-    );
-
-    // 3. Map images
-    const imageMap = {};
-
-    for (const img of images) {
-      if (!imageMap[img.product_id]) {
-        imageMap[img.product_id] = [];
-      }
-
-      try {
-        imageMap[img.product_id].push(JSON.parse(img.images));
-      } catch {
-        imageMap[img.product_id].push(img.images);
-      }
-    }
-
-    // 4. Attach images
-    const result = products.map(product => ({
-      ...product,
-      images: imageMap[product._id] || []
-    }));
-
-    res.status(200).json(result);
-
-  } catch (error) {
-    console.error(error);
-    res.status(500).json({
-      success: false,
-      message: "Server error"
-    });
-  }
 };

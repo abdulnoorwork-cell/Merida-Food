@@ -16,7 +16,7 @@ const AppContextProvider = ({ children }) => {
     const initAuthUser = localStorage.getItem('User');
     const [authenticated, setAuthenticated] = useState(initAuthUser ? JSON.parse(initAuthUser) : undefined)
     const token = authenticated?.token;
-    const userId = authenticated?.data?.[0]._id;
+    const userId = authenticated?.user?._id;
     const isAdmin = localStorage.getItem('token');
     const [orders, setOrders] = useState([])
     const [adminOrders, setAdminOrders] = useState([])
@@ -244,10 +244,11 @@ const AppContextProvider = ({ children }) => {
                 if (response.data) {
                     await getCartItems()
                     await getTotalCartItems()
-                    toast.success(response.data.messege)
+                    toast.success(response.data.message)
                 }
             } catch (error) {
                 console.log(error)
+                toast.error(error.response.data.message);
                 if (error.response?.status === 500) {
                     localStorage.removeItem("User");
                     window.location.href = "/login"
@@ -275,7 +276,7 @@ const AppContextProvider = ({ children }) => {
         try {
             let response = await axios.get(`${backendUrl}/api/cart/totalitems/${userId}`, { withCredentials: true });
             if (response.data) {
-                setTotalCartItems(response.data[0].total_items)
+                setTotalCartItems(response.data?.total_items)
             }
         } catch (error) {
             console.log(error)

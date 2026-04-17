@@ -52,12 +52,12 @@ const MyAccount = () => {
             },
             withCredentials: true
           })
-          console.log(response)
+          console.log(response.data)
           if (response.data) {
             setName(response.data[0].name)
             setEmail(response.data[0].email);
             setPhone(response.data[0].phone);
-            setPreviewImage(JSON.parse(response?.data[0]?.profile_image))
+            setPreviewImage(JSON.parse(response?.data[0]?.profile_image).url)
             await fetchUserOrders()
           }
         } catch (error) {
@@ -93,7 +93,8 @@ const MyAccount = () => {
         },
         withCredentials: true
       })
-      if (response.data.success) {
+      if (response.data) {
+        console.log(response.data)
         setLoading(false)
         setModel(false)
         toast.success(response.data.messege);
@@ -155,7 +156,7 @@ const MyAccount = () => {
               {name}
             </h3>
 
-            <h6 className="text-gray-600 text-sm sm:text-[15px]">
+            <h6 className="text-gray-500 text-sm sm:text-[15px]">
               {email}
             </h6>
             <button onClick={() => setModel(true)} className='text-white bg-[#FE6A13] px-8 py-2 text-sm font-medium cursor-pointer mt-2'>Edit Profile</button>
@@ -495,7 +496,7 @@ const MyAccount = () => {
             </div>
             <img src={previewImage} onClick={() => file.current.click()} className='w-[70px] h-[70px] rounded-full cursor-pointer mt-1' alt="profile image" />
             <input type="file" ref={file} onChange={imageHandler} hidden />
-            <button type='submit' className='cursor-pointer bg-[#FE6A13] mt-4 text-white px-8 py-3 text-sm sm:text-base font-medium hover:bg-orange-600 transition duration-200'>{loading ? 'saving...' : 'Save Changes'}</button>
+            <button type='submit' className='cursor-pointer bg-[#FE6A13] mt-4 text-white px-8 py-3 text-sm sm:text-base font-medium hover:bg-orange-600 transition duration-200'>{loading ? 'Saving...' : 'Save Changes'}</button>
           </div>
         </form>
       </div>

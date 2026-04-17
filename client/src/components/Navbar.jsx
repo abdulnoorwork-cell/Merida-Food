@@ -107,7 +107,7 @@ const Navbar = () => {
                                             setSearchBox(false);
                                             navigate(`/shop/${v._id}`);
                                             scrollTo(0, 0)
-                                        }} className='cursor-pointer flex items-center gap-1 w-full border-b border-gray-300'>
+                                        }} className='cursor-pointer flex items-center gap-2 w-full border-b border-gray-300'>
                                             <img src={v?.images[0].url} className='w-14 h-14 object-contain' alt="" />
                                             <h6 className='text-[13px] line-clamp-2'>{v.name}</h6>
                                         </li>

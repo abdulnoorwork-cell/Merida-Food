@@ -26,7 +26,7 @@ const Cart = () => {
                     withCredentials: true
                 })
                 if (response.data.success) {
-                    toast.success(response.data.messege)
+                    toast.success(response.data.message)
                     getCartItems()
                     getTotalCartItems()
                 }
@@ -36,7 +36,7 @@ const Cart = () => {
                     localStorage.removeItem('User')
                     window.location.href = "/user/login"
                 }
-                toast.error(error.response.data.messege)
+                toast.error(error.response.data.message)
             }
         }
     }
@@ -53,10 +53,10 @@ const Cart = () => {
                     withCredentials: true
                 })
                 if (response.data.success) {
+                    console.log(response.data)
                     getCartItems()
                     getTotalCartItems()
-                    getTotalAmount()
-                    toast.success(response.data.messege)
+                    toast.success(response.data.message)
                 }
             } catch (error) {
                 console.log(error)
@@ -64,7 +64,7 @@ const Cart = () => {
                     localStorage.removeItem('User')
                     window.location.href = "/user/login"
                 }
-                toast.error(error.response.data.messege)
+                toast.error(error.response.data.message)
             }
         }
     }

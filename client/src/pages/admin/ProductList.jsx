@@ -61,7 +61,7 @@ const ProductList = () => {
                       </div>
                       <h6 className='category mx-auto text-center leading-[1.4em] max-sm:hidden'>{product?.category}</h6>
                       <h6 className='category_2 mx-auto text-center leading-[1.4em] text-blue-600 hidden'>{product?.category}</h6>
-                      <h6 className='category mx-auto text-center leading-[1.4em] font-medium text-sm'>{currency}.{product?.price}</h6>
+                      <h6 className='category mx-auto text-center leading-[1.4em] font-medium text-sm'>{currency}.{(product?.price).toLocaleString()}</h6>
                       <h6 className='mx-auto max-xl:hidden text-center leading-[1.4em] text-gray-400 text-[13px]'>{new Date(product?.created_at).toDateString()}</h6>
                       <div className='text-[23px] text-red-500 cursor-pointer mx-auto'>
                         <span onClick={() => deleteProduct(product._id)} className=''><MdDeleteOutline /></span>

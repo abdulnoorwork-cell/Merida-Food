@@ -21,7 +21,7 @@ const SingleBlog = () => {
         try {
             let response = await axios.get(`${backendUrl}/api/blog/blog-detail/${blog_id}`, { withCredentials: true });
             if (response.data) {
-                setBlog(response.data[0]);
+                setBlog(response.data);
             }
         } catch (error) {
             console.log(error)
@@ -54,7 +54,7 @@ const SingleBlog = () => {
                     <p className="md:flex-1 xl:text-6xl lg:text-5xl md:text-[44px] text-[40px] font-semibold md:mb-4 mb-2.5 leading-tight">Blog Details</p>
 
                     <p className="md:flex-1 flex md:justify-end text-sm md:text-base text-white font-semibold">
-                        HOME &gt; BLOGS &gt; Most Leading the Way in Eco-Friendly and Zero-Waste Practices
+                        HOME &gt; BLOGS &gt; {blog.title}
                     </p>
                 </div>
             </div>
@@ -68,7 +68,7 @@ const SingleBlog = () => {
 
                             {/* Image */}
                             <img
-                                src={blog.image && JSON.parse(blog.image).url}
+                                src={blog.image?.url}
                                 alt={blog.title}
                                 className="w-full sm:h-[400px] h-[300px] object-cover rounded"
                             />
@@ -145,11 +145,11 @@ const SingleBlog = () => {
 
                                 <div className="space-y-4">
                                     {latestBlogs.map((item, index) => (
-                                        <div key={index} className="flex gap-3">
+                                        <div onClick={()=>{navigate(`/blogs/${item._id}`);scrollTo(0,0)}} key={index} className="flex gap-3">
                                             <img
-                                                src={JSON.parse(item?.image).url}
+                                                src={item?.image?.url}
                                                 alt={item.title}
-                                                className='w-20 h-14 object-cover leading-none'
+                                                className='w-20 h-14 object-cover leading-none cursor-pointer'
                                             />
                                             <div>
                                                 <p className="text-sm font-medium leading-tight line-clamp-1">
@@ -166,7 +166,7 @@ const SingleBlog = () => {
                             </div>
                         </div>
 
-                    </div> : <img src={loading_animation} alt='loader' className='mx-auto' />}
+                    </div> : console.log(blog)}
             </div>
         </div>
     )

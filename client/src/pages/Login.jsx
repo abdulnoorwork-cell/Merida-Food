@@ -50,20 +50,20 @@ const Login = () => {
             })
             if (response.data.success) {
                 setLoading(false)
-                toast.success(response.data.messege)
+                toast.success(response.data.message)
                 setName('');
                 setEmail('');
                 setPassword('');
                 setPhone('');
+                setError('')
                 setSignupModel(false)
                 setLoginModel(true)
             }
             setLoading(false)
         } catch (error) {
             setLoading(false)
-            console.log(error)
-            { error.response.data.messege === 'Email already exist' ? toast.error(error.response.data.messege) : null }
-            setError(error.response.data)
+            console.log(error.response)
+            setError(error.response.data.message)
         }
     }
 
@@ -81,20 +81,20 @@ const Login = () => {
                 const expiryTime = Date.now() + 60 * 60 * 1000;
                 localStorage.setItem("expiryTime", expiryTime);
                 localStorage.setItem('User', JSON.stringify(response.data))
-                toast.success(response.data.messege)
+                toast.success(response.data.message)
                 setEmail('');
                 setPassword('');
+                setError('')
                 setTimeout(() => {
-                    navigate('/')
-                    window.location.reload();
+                    window.location.href = '/'
                     scrollTo(0, 0)
                 }, 1000)
             }
             setLoading(false)
         } catch (error) {
             setLoading(false)
-            console.log(error)
-            setError(error.response.data)
+            console.log(error.response)
+            setError(error.response.data.message)
         }
     }
 
@@ -144,7 +144,7 @@ const Login = () => {
                                 value={email} onChange={(e) => setEmail(e.target.value)}
                                 className="w-full bg-white rounded text-[15px] px-3 py-2 border border-[#1A1A1A] focus:border-none focus:outline-none focus:ring-1 focus:ring-orange-500"
                             />
-                            <p className='text-red-600 mt-2 leading-none'>{error === 'Please enter your email' || error === 'No email exist' ? error : null}</p>
+                            <p className='text-red-600 mt-2 leading-none text-sm'>{error ? error : null}</p>
                         </div>
 
                         {/* Password */}
@@ -167,12 +167,12 @@ const Login = () => {
                                     <span onClick={() => setShowPassword(true)} className={`cursor-pointer text-base text-gray-700 ${showPassword ? "hidden" : "block"}`}><LuEyeClosed /></span>
                                     <span onClick={() => setShowPassword(false)} className={`cursor-pointer text-base text-gray-700 ${showPassword ? "block" : "hidden"}`}><RxEyeOpen /></span>
                                 </span>
-                                <p className='text-red-600 mt-2 leading-none'>{error === 'Please enter your password' || error === 'Incorrect Password' ? error : null}</p>
+                                <p className='text-red-600 mt-2 leading-none text-sm'>{error ? error : null}</p>
                             </div>
                         </div>
 
                         {/* Forgot Password */}
-                        <p className="text-[15px] text-[#1A1A1A] hover:text-orange-500 cursor-pointer">
+                        <p onClick={()=>{navigate('/forgot-password');scrollTo(0,0)}} className="text-[15px] text-[#1A1A1A] hover:text-orange-500 cursor-pointer">
                             Lost your password?
                         </p>
 
@@ -246,6 +246,7 @@ const Login = () => {
                                 value={name} onChange={(e) => setName(e.target.value)}
                                 className="w-full bg-white rounded text-[15px] px-3 py-2 border border-[#1A1A1A] focus:border-none focus:outline-none focus:ring-1 focus:ring-orange-500"
                             />
+                            <p className='text-red-600 mt-2 leading-none text-sm'>{error ? error : null}</p>
                         </div>
 
                         {/* Email */}
@@ -259,6 +260,7 @@ const Login = () => {
                                 value={email} onChange={(e) => setEmail(e.target.value)}
                                 className="w-full bg-white rounded text-[15px] px-3 py-2 border border-[#1A1A1A] focus:border-none focus:outline-none focus:ring-1 focus:ring-orange-500"
                             />
+                            <p className='text-red-600 mt-2 leading-none text-sm'>{error ? error : null}</p>
                         </div>
 
                         {/* Password */}
@@ -282,6 +284,7 @@ const Login = () => {
                                     <span onClick={() => setShowPassword(false)} className={`cursor-pointer text-base text-gray-700 ${showPassword ? "block" : "hidden"}`}><RxEyeOpen /></span>
                                 </span>
                             </div>
+                            <p className='text-red-600 mt-2 leading-none text-sm'>{error ? error : null}</p>
                         </div>
 
                         {/* Phone*/}

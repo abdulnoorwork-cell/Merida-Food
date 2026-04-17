@@ -55,7 +55,7 @@ const ListBlog = () => {
                   {blogs?.reverse().map((blog, index) => (
                     <div key={index} className='blog_list sm:text-sm text-[13px] border-b border-gray-600 px-3 py-2.5 grid lg:grid-cols-[2fr_2fr_1fr_1fr] sm:grid-cols-[2fr_2fr_1fr] grid-cols-[4fr_1fr] gap-2 items-center'>
                       <div className='flex items-center sm:gap-4 gap-3'>
-                        <img className='main_image h-8 w-14' src={JSON.parse(blog.image).url} alt="" />
+                        <img className='main_image h-8 w-14' src={blog.image.url} alt="" />
                         <h6 className='font-medium'>{blog.title}</h6>
                       </div>
                       <div className='hidden sm:block'>

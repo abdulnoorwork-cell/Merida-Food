@@ -2,205 +2,350 @@ import { v2 as cloudinary } from 'cloudinary';
 import db from '../config/db.js'
 
 export const addBlog = async (req, res) => {
-    const { title, description } = req.body;
-    const { image } = req.files;
-    if (!title || !description || !image) {
-        return res.status(401).json({ success: false, messege: "All fields are required" })
-    }
-    if (title.length > 120) {
-        return res.status(401).json({ success: false, messege: "maximum title is 120 characters" })
-    }
-    if (title.length < 12) {
-        return res.status(401).json({ success: false, messege: "title contains 12 characters atleast" })
-    }
-    if (description.length < 256) {
-        return res.status(401).json({ success: false, messege: "descrupition contains 256 characters atleast" })
-    }
-    const allowedFormat = ['image/jpg', 'image/jpeg', 'image/png', 'image/webp'];
-    if (!allowedFormat.includes(image.mimetype)) {
-        return res.status(400).json({ success: false, messege: "Invalid Format! Only jpg, jpeg, png, webp are allowed" });
-    }
-    const cloudinaryResponse = await cloudinary.uploader.upload(image.tempFilePath, { folder: "blogs" })
-    if (!cloudinaryResponse || cloudinaryResponse.error) {
-        console.log(cloudinaryResponse.error)
-    }
-    const imageData = {
-        public_id: cloudinaryResponse.public_id,
-        url: cloudinaryResponse.url,
-    }
-    const sql = 'INSERT INTO blogs(`title`,`description`,`image`) VALUES(?)';
-    const values = [
-        title,
-        description,
-        JSON.stringify(imageData)
-    ]
-    db.query(sql, [values], (err, data) => {
-        if (err) {
-            return res.status(500).json({ success: false, messege: "Error in adding blog: " + err });
-        } else {
-            res.status(201).json({ success: true, messege: "Blog added successfully", data })
-        }
-    })
-}
-
-export const getBlogs = (req, res) => {
-    const sql = 'SELECT _id, title, description, image, created_at FROM blogs';
-    db.query(sql, (err, data) => {
-        if (err) {
-            return res.status(500).json({ success: false, messege: "Error in getting blogs: " + err });
-        } else {
-            res.status(200).json(data);
-        }
-    })
-}
-
-export const singleBlog = async (req, res) => {
-    const { blogId } = req.params;
-    const sql = 'SELECT _id, title, description, image, created_at FROM blogs WHERE _id = ?'
-    db.query(sql, blogId, (err, data) => {
-        if (err) {
-            return res.status(500).json({ success: false, messege: "Error in getting blog: " + err });
-        } else {
-            res.status(200).json(data);
-        }
-    })
-}
-
-export const deleteBlog = (req, res) => {
-    const { blogId } = req.params;
-    const sql = 'DELETE FROM blogs WHERE _id = ?';
-    db.query(sql, blogId, (err, data) => {
-        if (err) {
-            return res.status(500).json({ success: false, messege: "Error in deleting blog: " + err });
-        } else {
-            res.status(200).json({ success: true, messege: "Blog deleted successfully" });
-        }
-    })
-}
-
-export const updateBlog = async (req, res) => {
-    if (req.body.image !== '') {
+    try {
         const { title, description } = req.body;
-        const { image } = req.files;
+        const { image } = req.files || {};
+
         if (!title || !description || !image) {
-            return res.status(401).json({ success: false, messege: "All fields are required" })
+            return res.status(400).json({
+                success: false,
+                message: "All fields are required"
+            });
         }
-        if (title.length > 120) {
-            return res.status(401).json({ success: false, messege: "maximum title is 120 characters" })
+
+        if (title.length > 120 || title.length < 12) {
+            return res.status(400).json({
+                success: false,
+                message: "Title must be between 12–120 characters"
+            });
         }
-        if (title.length < 12) {
-            return res.status(401).json({ success: false, messege: "title contains 12 characters atleast" })
-        }
+
         if (description.length < 256) {
-            return res.status(401).json({ success: false, messege: "description contains 256 characters atleast" })
+            return res.status(400).json({
+                success: false,
+                message: "Description must be at least 256 characters"
+            });
         }
-        const { blogId } = req.params;
-        const allowedFormat = ['image/jpg', 'image/jpeg', 'image/png', 'image/webp'];
+
+        const allowedFormat = ["image/jpg", "image/jpeg", "image/png", "image/webp"];
+
         if (!allowedFormat.includes(image.mimetype)) {
-            return res.status(400).json({ success: false, messege: "Invalid Format! Only jpg, jpeg, png, webp are allowed" });
+            return res.status(400).json({
+                success: false,
+                message: "Invalid format (jpg, jpeg, png, webp only)"
+            });
         }
-        const cloudinaryResponse = await cloudinary.uploader.upload(image.tempFilePath, {
-            overwrite: true
-        })
+
+        // Upload to Cloudinary
+        const upload = await cloudinary.uploader.upload(image.tempFilePath, {
+            folder: "blogs"
+        });
+
         const imageData = {
-            public_id: cloudinaryResponse.public_id,
-            url: cloudinaryResponse.url,
-        }
-        if (!cloudinaryResponse || cloudinaryResponse.error) {
-            return console.log(cloudinaryResponse.error)
-        }
-        const sql = 'UPDATE blogs SET title = ?, description = ?, image = ? WHERE _id = ?';
-        const values = [
-            title,
-            description,
-            JSON.stringify(imageData)
-        ];
-        db.query(sql, [...values, blogId], (err, data) => {
-            if (err) {
-                console.log(err)
-                return res.status(500).json({ success: false, messege: "Error in updating blog: " + err });
-            } else {
-                res.status(200).json({ success: true, messege: "Blog updated successfully", data })
-            }
-        })
-        return
-    }
-    const { title, description } = req.body;
-    if (!title || !description) {
-        return res.status(401).json({ success: false, messege: "All fields are required" })
-    }
-    if (title.length > 120) {
-        return res.status(401).json({ success: false, messege: "maximum title is 120 characters" })
-    }
-    if (title.length < 12) {
-        return res.status(401).json({ success: false, messege: "title contains 12 characters atleast" })
-    }
-    if (description.length < 256) {
-        return res.status(401).json({ success: false, messege: "descrupition contains 256 characters atleast" })
-    }
-    const { blogId } = req.params;
-    const sql = 'UPDATE blogs SET title = ?, description = ? WHERE _id = ?';
-    const values = [
-        title,
-        description
-    ];
-    db.query(sql, [...values, blogId], (err, data) => {
-        if (err) {
-            console.log(err)
-            return res.status(500).json({ success: false, messege: "Error in updating blog: " + err });
-        } else {
-            res.status(200).json({ success: true, messege: "Blog updated successfully", data })
-        }
-    })
-}
+            public_id: upload.public_id,
+            url: upload.secure_url
+        };
 
-export const getLatestBlogs = (req, res) => {
-    const limit = parseInt(req.query.limit) || 4;
-    const sql = 'SELECT _id, title, description, image, created_at FROM blogs ORDER BY created_at DESC LIMIT ?'
-    db.query(sql, [limit], async (err, data) => {
-        if (err) {
-            console.log(err);
-            return res.status(500).json({ message: err });
-        } else {
-            res.status(200).json(data);
-        }
-    });
-}
+        // Insert into DB
+        await db.query(
+            "INSERT INTO blogs (title, description, image) VALUES (?, ?, ?)",
+            [title, description, JSON.stringify(imageData)]
+        );
 
-export const getSearchBlogs = (req, res) => {
-    const { blogQuery } = req.query;
-    if (!blogQuery) return res.json([]);
+        res.status(201).json({
+            success: true,
+            message: "Blog added successfully"
+        });
 
-    let sql = ''; // ✅ FIXED
-
-    if (blogQuery) {
-        sql = `
-      SELECT * FROM blogs 
-      WHERE title LIKE ? 
-      OR description LIKE ?
-    `;
+    } catch (error) {
+        console.error(error);
+        res.status(500).json({
+            success: false,
+            message: "Server error"
+        });
     }
-
-    const values = blogQuery
-        ? [`%${blogQuery}%`, `%${blogQuery}%`]
-        : [];
-
-    db.query(sql, values, async (err, data) => {
-        if (err) return res.status(500).json(err);
-        res.status(200).json(data);
-    });
 };
 
-export const getBlogSuggestions = (req, res) => {
-    const { blogQuery } = req.query;
-    if (!blogQuery) return res.json([]);
-    const sql = `SELECT _id, title, image
-FROM blogs
-WHERE title LIKE ? OR description LIKE ? LIMIT 8`
-    const values = blogQuery ?
-        [`%${blogQuery}%`, `%${blogQuery}%`] : [];
-    db.query(sql, values, async (err, data) => {
-        if (err) return res.status(500).json(err);
-        res.status(200).json(data);
-    });
+export const getBlogs = async (req, res) => {
+    try {
+        const [blogs] = await db.query(
+            "SELECT _id, title, description, image, created_at FROM blogs"
+        );
+
+        const result = blogs.map(blog => ({
+            ...blog,
+            image: JSON.parse(blog.image)
+        }));
+
+        res.status(200).json(result);
+
+    } catch (error) {
+        console.error(error);
+        res.status(500).json({
+            success: false,
+            message: "Error fetching blogs"
+        });
+    }
+};
+
+export const singleBlog = async (req, res) => {
+    try {
+        const { blogId } = req.params;
+
+        const [rows] = await db.query(
+            "SELECT _id, title, description, image, created_at FROM blogs WHERE _id = ?",
+            [blogId]
+        );
+
+        if (!rows.length) {
+            return res.status(404).json({
+                success: false,
+                message: "Blog not found"
+            });
+        }
+
+        const blog = rows[0];
+
+        blog.image = JSON.parse(blog.image);
+
+        res.status(200).json(blog);
+
+    } catch (error) {
+        console.error(error);
+        res.status(500).json({
+            success: false,
+            message: "Error fetching blog"
+        });
+    }
+};
+
+export const deleteBlog = async (req, res) => {
+    try {
+        const { blogId } = req.params;
+
+        // 1. Get blog image
+        const [rows] = await db.query(
+            "SELECT image FROM blogs WHERE _id = ?",
+            [blogId]
+        );
+
+        if (!rows.length) {
+            return res.status(404).json({
+                success: false,
+                message: "Blog not found"
+            });
+        }
+
+        const imageData = JSON.parse(rows[0].image);
+
+        // 2. Delete from Cloudinary
+        if (imageData.public_id) {
+            await cloudinary.uploader.destroy(imageData.public_id);
+        }
+
+        // 3. Delete from DB
+        await db.query("DELETE FROM blogs WHERE _id = ?", [blogId]);
+
+        res.status(200).json({
+            success: true,
+            message: "Blog deleted successfully"
+        });
+
+    } catch (error) {
+        console.error(error);
+        res.status(500).json({
+            success: false,
+            message: "Error deleting blog"
+        });
+    }
+};
+
+export const updateBlog = async (req, res) => {
+    try {
+        const { blogId } = req.params;
+        const { title, description } = req.body;
+        const imageFile = req.files?.image;
+
+        // 1. Validation
+        if (!title || !description) {
+            return res.status(400).json({
+                success: false,
+                message: "Title and description are required"
+            });
+        }
+
+        if (title.length > 120 || title.length < 12) {
+            return res.status(400).json({
+                success: false,
+                message: "Title must be between 12–120 characters"
+            });
+        }
+
+        if (description.length < 256) {
+            return res.status(400).json({
+                success: false,
+                message: "Description must be at least 256 characters"
+            });
+        }
+
+        // 2. Get existing blog
+        const [rows] = await db.query(
+            "SELECT image FROM blogs WHERE _id = ?",
+            [blogId]
+        );
+
+        if (!rows.length) {
+            return res.status(404).json({
+                success: false,
+                message: "Blog not found"
+            });
+        }
+
+        let imageData = JSON.parse(rows[0].image);
+
+        // 3. If new image uploaded
+        if (imageFile) {
+            const allowedFormat = ["image/jpg", "image/jpeg", "image/png", "image/webp"];
+
+            if (!allowedFormat.includes(imageFile.mimetype)) {
+                return res.status(400).json({
+                    success: false,
+                    message: "Invalid format (jpg, jpeg, png, webp only)"
+                });
+            }
+
+            // 🔥 delete old image
+            if (imageData.public_id) {
+                await cloudinary.uploader.destroy(imageData.public_id);
+            }
+
+            // upload new image
+            const upload = await cloudinary.uploader.upload(imageFile.tempFilePath, {
+                folder: "blogs"
+            });
+
+            imageData = {
+                public_id: upload.public_id,
+                url: upload.secure_url
+            };
+        }
+
+        // 4. Update blog
+        await db.query(
+            "UPDATE blogs SET title = ?, description = ?, image = ? WHERE _id = ?",
+            [title, description, JSON.stringify(imageData), blogId]
+        );
+
+        res.status(200).json({
+            success: true,
+            message: "Blog updated successfully"
+        });
+
+    } catch (error) {
+        console.error(error);
+        res.status(500).json({
+            success: false,
+            message: "Server error"
+        });
+    }
+};
+
+export const getLatestBlogs = async (req, res) => {
+    try {
+        const limit = parseInt(req.query.limit) || 4;
+
+        const [blogs] = await db.query(
+            "SELECT _id, title, description, image, created_at FROM blogs ORDER BY created_at DESC LIMIT ?",
+            [limit]
+        );
+
+        const result = blogs.map(blog => ({
+            ...blog,
+            image: JSON.parse(blog.image)
+        }));
+
+        res.status(200).json(result);
+
+    } catch (error) {
+        console.error(error);
+        res.status(500).json({
+            success: false,
+            message: "Server error"
+        });
+    }
+};
+
+export const getSearchBlogs = async (req, res) => {
+    try {
+        const { blogQuery } = req.query;
+
+        if (!blogQuery) {
+            return res.status(200).json([]);
+        }
+
+        const [blogs] = await db.query(
+            `SELECT _id, title, description, image, created_at 
+       FROM blogs 
+       WHERE title LIKE ? OR description LIKE ?`,
+            [`%${blogQuery}%`, `%${blogQuery}%`]
+        );
+
+        const result = blogs.map(blog => {
+            try {
+                return {
+                    ...blog,
+                    image: JSON.parse(blog.image)
+                };
+            } catch {
+                return blog;
+            }
+        });
+
+        res.status(200).json(result);
+
+    } catch (error) {
+        console.error(error);
+        res.status(500).json({
+            success: false,
+            message: "Server error"
+        });
+    }
+};
+
+export const getBlogSuggestions = async (req, res) => {
+    try {
+        const { blogQuery } = req.query;
+
+        if (!blogQuery) {
+            return res.status(200).json([]);
+        }
+
+        const [blogs] = await db.query(
+            `SELECT _id, title, image 
+       FROM blogs 
+       WHERE title LIKE ? OR description LIKE ? 
+       LIMIT 8`,
+            [`%${blogQuery}%`, `%${blogQuery}%`]
+        );
+
+        const result = blogs.map(blog => {
+            try {
+                return {
+                    ...blog,
+                    image: JSON.parse(blog.image)
+                };
+            } catch {
+                return blog;
+            }
+        });
+
+        res.status(200).json(result);
+
+    } catch (error) {
+        console.error(error);
+        res.status(500).json({
+            success: false,
+            message: "Server error"
+        });
+    }
 };

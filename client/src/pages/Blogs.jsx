@@ -103,11 +103,11 @@ const Blogs = () => {
 
               <div className="space-y-4">
                 {latestBlogs.map((item, index) => (
-                  <div key={index} className="flex gap-3">
+                  <div key={index} onClick={()=>{navigate(`/blogs/${item._id}`);scrollTo(0,0)}} className="flex gap-3">
                     <img
-                      src={JSON.parse(item?.image).url}
+                      src={item?.image?.url}
                       alt={item.title}
-                      className='w-20 h-14 object-cover leading-none'
+                      className='w-20 h-14 object-cover leading-none cursor-pointer'
                     />
                     <div>
                       <p className="text-sm font-medium leading-tight line-clamp-1">

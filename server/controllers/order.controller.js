@@ -80,156 +80,214 @@ export const placeOrder = async (req, res) => {
 export const confirmOrder = async (req, res) => {
     const { session_id } = req.body;
 
+    const conn = await db.getConnection(); // ✅ use connection for transaction
+
     try {
-        // 🔒 Check if already exists
-        db.query(
-            "SELECT * FROM orders WHERE stripe_session_id = ?",
-            [session_id],
-            async (err, data) => {
+        await conn.beginTransaction();
 
-                if (data.length > 0) {
-                    return res.json({ messege: "Order already exists" });
-                }
-
-                // 👉 Continue only if NOT exists
-                const session = await stripe.checkout.sessions.retrieve(session_id);
-
-                if (session.payment_status !== "paid") {
-                    return res.status(400).json({ messege: "Payment not completed" });
-                }
-
-                const user_id = session.metadata.user_id;
-                const items = JSON.parse(session.metadata.items);
-                const address = JSON.parse(session.metadata.address);
-                const total_amount = session.metadata.total_amount;
-
-                db.query(
-                    `INSERT INTO orders (user_id, total_amount, payment_method, address, payment_status, stripe_session_id)
-           VALUES (?, ?, ?, ?, ?, ?)`,
-                    [user_id, total_amount, "ONLINE", JSON.stringify(address), "PAID", session_id],
-                    (err, result) => {
-
-                        const order_id = result.insertId;
-
-                        items.forEach(item => {
-                            db.query(
-                                `INSERT INTO order_items (order_id, product_id, quantity, price)
-                 VALUES (?, ?, ?, ?)`,
-                                [order_id, item.id, item.qty, item.price]
-                            );
-                        });
-
-                        db.query(
-                            "DELETE FROM cart_items WHERE user_id = ?",
-                            [user_id]
-                        );
-
-                        res.json({ success: true });
-                    }
-                );
-            }
+        // ✅ Check existing order
+        const [existing] = await conn.query(
+            "SELECT _id FROM orders WHERE stripe_session_id = ?",
+            [session_id]
         );
 
+        if (existing.length) {
+            await conn.rollback();
+            return res.json({ messege: "Order already exists" });
+        }
+
+        const session = await stripe.checkout.sessions.retrieve(session_id);
+
+        if (session.payment_status !== "paid") {
+            await conn.rollback();
+            return res.status(400).json({ messege: "Payment not completed" });
+        }
+
+        const user_id = session.metadata.user_id;
+        const items = JSON.parse(session.metadata.items);
+        const address = JSON.parse(session.metadata.address);
+        const total_amount = session.metadata.total_amount;
+
+        // ✅ Insert order
+        const [orderResult] = await conn.query(
+            `INSERT INTO orders 
+      (user_id, total_amount, payment_method, address, payment_status, stripe_session_id)
+      VALUES (?, ?, ?, ?, ?, ?)`,
+            [user_id, total_amount, "ONLINE", JSON.stringify(address), "PAID", session_id]
+        );
+
+        const order_id = orderResult.insertId;
+
+        // ✅ Insert items
+        for (const item of items) {
+            await conn.query(
+                `INSERT INTO order_items (order_id, product_id, quantity, price)
+         VALUES (?, ?, ?, ?)`,
+                [order_id, item.id, item.qty, item.price]
+            );
+        }
+
+        // ✅ Clear cart
+        await conn.query("DELETE FROM cart_items WHERE user_id = ?", [user_id]);
+
+        await conn.commit();
+
+        return res.json({ success: true });
+
     } catch (error) {
-        res.status(500).json({ messege: "Error" });
+        await conn.rollback();
+        return res.status(500).json({ messege: error.message });
+    } finally {
+        conn.release();
     }
-}
+};
 
-export const getUserOrders = (req, res) => {
-    const { user_id } = req.params;
-    const sql = 'SELECT * FROM orders JOIN order_items ON orders._id = order_items.order_id JOIN products ON products._id = order_items.product_id WHERE NOT (payment_method = "ONLINE" AND payment_status = "PENDING") AND user_id =?';
-    db.query(sql, [user_id], async (err, data) => {
-        if (err) {
-            return res.status(500).json({ success: false, messege: err })
-        } else {
-            for (let product of data) {
-                const images = await new Promise((resolve, reject) => {
-                    const imgSql = "SELECT images FROM product_images WHERE product_id = ?";
-                    db.query(imgSql, [product._id], (err, data) => {
-                        if (err) reject(err)
-                        resolve(data)
-                    })
-                })
-                product.images = images.map(img => JSON.parse(img.images))
-            }
-            res.status(200).json(data)
-        }
-    })
-}
+export const getUserOrders = async (req, res) => {
+    try {
+        const { user_id } = req.params;
 
-export const fetchAllOrders = (req, res) => {
-    const sql = 'SELECT * FROM orders JOIN order_items ON orders._id = order_items.order_id JOIN products ON products._id = order_items.product_id WHERE NOT (payment_method = "ONLINE" AND payment_status = "PENDING")';
-    db.query(sql, async (err, data) => {
-        if (err) {
-            return res.status(500).json({ success: false, messege: err })
-        } else {
-            for (let product of data) {
-                const images = await new Promise((resolve, reject) => {
-                    const imgSql = "SELECT images FROM product_images WHERE product_id = ?";
-                    db.query(imgSql, [product._id], (err, data) => {
-                        if (err) reject(err)
-                        resolve(data)
-                    })
-                })
-                product.images = images.map(img => JSON.parse(img.images))
-            }
-            res.status(200).json(data)
-        }
-    })
-}
+        const sql = `
+      SELECT 
+        o.*,
+        oi.product_id,
+        oi.quantity,
+        oi.price,
+        p.name,
+        CONCAT('[', GROUP_CONCAT(pi.images), ']') AS images
+      FROM orders o
+      JOIN order_items oi ON o._id = oi.order_id
+      JOIN products p ON p._id = oi.product_id
+      LEFT JOIN product_images pi ON pi.product_id = p._id
+      WHERE NOT (o.payment_method = "ONLINE" AND o.payment_status = "PENDING")
+      AND o.user_id = ?
+      GROUP BY oi._id
+    `;
 
-export const getLatestOrders = (req, res) => {
-    const limit = parseInt(req.query.limit) || 3;
-    const sql = `SELECT * FROM orders JOIN order_items ON orders._id = order_items.order_id JOIN products ON products._id = order_items.product_id WHERE NOT (payment_method = "ONLINE" AND payment_status = "PENDING") ORDER BY orders.created_at DESC LIMIT ?`;
-    db.query(sql, [limit], async (err, data) => {
-        if (err) {
-            console.log(err);
-            return res.status(500).json({ messege: "Server error" });
-        } else {
-            for (let product of data) {
-                const images = await new Promise((resolve, reject) => {
-                    const imgSql = "SELECT images FROM product_images WHERE product_id = ?";
-                    db.query(imgSql, [product._id], (err, data) => {
-                        if (err) reject(err)
-                        resolve(data)
-                    })
-                })
-                product.images = images.map(img => JSON.parse(img.images))
-            }
-            res.status(200).json(data)
-        }
-    })
-}
+        const [data] = await db.query(sql, [user_id]);
 
-export const deleteUserOrder = (req, res) => {
-    const { order_id } = req.params;
-    const deleteQuery = 'DELETE FROM order_items WHERE order_id = ?';
-    db.query(deleteQuery, [order_id], (err, result) => {
-        if (err) {
-            return res.status(500).json({ success: false, messege: err })
-        } else {
-            const sql = 'DELETE FROM orders WHERE _id = ?';
-            db.query(sql, [order_id], (err, result) => {
-                if (err) {
-                    return res.status(500).json({ success: false, messege: err })
-                }
-                res.status(200).json({ success: true, messege: "Order Cancelled" })
-            })
-        }
-    })
-}
+        const result = data.map(item => ({
+            ...item,
+            images: item.images ? JSON.parse(item.images) : []
+        }));
 
-export const updateOrderStatus = (req, res) => {
-    const { order_id } = req.params;
-    const { order_status } = req.body;
-    if (!order_status) {
-        return res.status(400).json({ success: false, messege: "Status can,t be null" })
+        return res.status(200).json(result);
+
+    } catch (err) {
+        return res.status(500).json({ success: false, messege: err.message });
     }
-    const values = [order_status]
-    db.query('UPDATE orders SET order_status = ? WHERE _id = ?', [...values, order_id], (err, result) => {
-        if (err) {
-            return res.status(500).json({ success: false, messege: err })
+};
+
+export const fetchAllOrders = async (req, res) => {
+    try {
+        const sql = `
+      SELECT 
+        o.*,
+        oi.product_id,
+        oi.quantity,
+        oi.price,
+        p.name,
+        CONCAT('[', GROUP_CONCAT(pi.images), ']') AS images
+      FROM orders o
+      JOIN order_items oi ON o._id = oi.order_id
+      JOIN products p ON p._id = oi.product_id
+      LEFT JOIN product_images pi ON pi.product_id = p._id
+      WHERE NOT (o.payment_method = "ONLINE" AND o.payment_status = "PENDING")
+      GROUP BY oi._id
+    `;
+
+        const [data] = await db.query(sql);
+
+        const result = data.map(item => ({
+            ...item,
+            images: item.images ? JSON.parse(item.images) : []
+        }));
+
+        return res.status(200).json(result);
+
+    } catch (err) {
+        return res.status(500).json({ success: false, messege: err.message });
+    }
+};
+
+export const getLatestOrders = async (req, res) => {
+    try {
+        const limit = parseInt(req.query.limit) || 3;
+
+        const sql = `
+      SELECT 
+        o.*,
+        oi.product_id,
+        oi.quantity,
+        oi.price,
+        p.name,
+        CONCAT('[', GROUP_CONCAT(pi.images), ']') AS images
+      FROM orders o
+      JOIN order_items oi ON o._id = oi.order_id
+      JOIN products p ON p._id = oi.product_id
+      LEFT JOIN product_images pi ON pi.product_id = p._id
+      WHERE NOT (o.payment_method = "ONLINE" AND o.payment_status = "PENDING")
+      GROUP BY oi._id
+      ORDER BY o.created_at DESC
+      LIMIT ?
+    `;
+
+        const [data] = await db.query(sql, [limit]);
+
+        const result = data.map(item => ({
+            ...item,
+            images: item.images ? JSON.parse(item.images) : []
+        }));
+
+        return res.status(200).json(result);
+
+    } catch (err) {
+        return res.status(500).json({ messege: err.message });
+    }
+};
+
+export const deleteUserOrder = async (req, res) => {
+    try {
+        const { order_id } = req.params;
+
+        await db.query("DELETE FROM order_items WHERE order_id = ?", [order_id]);
+        await db.query("DELETE FROM orders WHERE _id = ?", [order_id]);
+
+        return res.status(200).json({
+            success: true,
+            messege: "Order Cancelled"
+        });
+
+    } catch (err) {
+        return res.status(500).json({ success: false, messege: err.message });
+    }
+};
+
+export const updateOrderStatus = async (req, res) => {
+    try {
+        const { order_id } = req.params;
+        const { order_status } = req.body;
+
+        if (!order_status) {
+            return res.status(400).json({
+                success: false,
+                messege: "Status can't be null"
+            });
         }
-        res.status(200).json({ success: true, messege: "Order Status updated" })
-    })
-}
+
+        await db.query(
+            "UPDATE orders SET order_status = ? WHERE _id = ?",
+            [order_status, order_id]
+        );
+
+        return res.status(200).json({
+            success: true,
+            messege: "Order status updated"
+        });
+
+    } catch (err) {
+        return res.status(500).json({
+            success: false,
+            messege: err.message
+        });
+    }
+};

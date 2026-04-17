@@ -7,12 +7,11 @@ import toast from 'react-hot-toast'
 import { AppContext } from '../../context/AppContext'
 import parcel_icon from '../../assets/parcel_icon.svg'
 import loading_animation from '../../../public/loading_animation.svg'
-import { RiBox3Line } from 'react-icons/ri'
 
 const Orders = () => {
     const { currency, backendUrl, isAdmin, fetchUserOrders, orderLoading, setOrderLoading, fetchAdminOrders, adminOrders } = useContext(AppContext);
 
-    const updateOrderStatus = async (event, order_id) => {
+    const updateOrderStatus = async (order_id,event) => {
         try {
 
             let response = await axios.put(`${backendUrl}/api/order/update-order/${order_id}`, { order_status: event.target.value }, {
@@ -22,6 +21,7 @@ const Orders = () => {
                 withCredentials: true
             });
             if (response.data.success) {
+                console.log(response.data)
                 await fetchAdminOrders()
                 await fetchUserOrders()
                 toast.success(response.data.messege);
@@ -83,7 +83,7 @@ const Orders = () => {
                                             <h6>Date: {new Date(order.created_at).toDateString()}</h6>
                                             <h6>Payment: {order.payment_status.charAt(0).toUpperCase() + order.payment_status.slice(1).toLowerCase()}</h6>
                                         </div>
-                                        <select value={order.order_status?.trim()} onChange={(event) => updateOrderStatus(event, order.order_id)} className='p-2 font-medium text-xs border border-gray-600 focus:border-orange-500 w-fit rounded-sm'>
+                                        <select value={order.order_status?.trim()} onChange={(event) => updateOrderStatus( order._id,event)} className='p-2 font-medium text-xs border border-gray-600 focus:border-orange-500 w-fit rounded-sm'>
                                             <option value="PLACED" className='bg-[#1A1A1A]'>Order Placed</option>
                                             <option value="PACKING" className='bg-[#1A1A1A]'>Packing</option>
                                             <option value="SHIPPED" className='bg-[#1A1A1A]'>Shipped</option>

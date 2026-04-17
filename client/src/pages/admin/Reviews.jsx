@@ -57,6 +57,8 @@ const Reviews = () => {
         }
     }
 
+    console.log(allReviews)
+
     return (
         <div className='flex w-full justify-center px-4 py-8 md:px-8 lg:py-10 h-full min-h-[95vh]'>
             <div className='flex flex-col w-full'>
@@ -93,7 +95,7 @@ const Reviews = () => {
                                                 <h6 className='text-sm mt-0.5'>{review?.comment}</h6>
                                             </div>
                                             <div className='flex flex-col lg:flex-row lg:items-center sm:gap-2 gap-1.5'>
-                                                <img src={review?.images[0].url} className='sm:w-14 sm:h-14 w-20 h-20 max-sm:mx-auto object-cover' alt="" />
+                                                <img src={review?.images[0]} className='sm:w-14 sm:h-14 w-20 h-20 max-sm:mx-auto object-cover' alt="" />
                                                 <h5 className='font-medium leading-[1.2em] text-sm tracking-[-0.2px]'>{review.product_name}</h5>
                                             </div>
                                             <div className="mx-auto xl:block hidden">

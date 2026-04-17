@@ -52,8 +52,8 @@ const Service = () => {
                             className="relative group overflow-hidden transition-all duration-500"
                         >
                             {/* Image */}
-                            <figure className='w-full bg-[rgba(15,15,15,0.68)] bg-cover bg-center bg-no-repeat object-cover'>
-                                <img src={service.img} className='h-full transition duration-500 group-hover:scale-110' alt="" />
+                            <figure className='w-full bg-cover bg-center bg-no-repeat object-cover'>
+                                <img src={service.img} className='h-full w-full transition duration-500 group-hover:scale-110' alt="" />
                             </figure>
                             {/* <h3 className="text-xl font-semibold mb-3 uppercase absolute bottom-0 left-0 text-white">
                             {service.title}

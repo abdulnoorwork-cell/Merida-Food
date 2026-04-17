@@ -49,7 +49,7 @@ const Login = () => {
               <h6 className='text-orange-500 font-medium'>Admin Password: <span className='text-white font-normal'>toxd egor wsfl ovjv</span></h6>
             </div>
             <form onSubmit={handleSubmit} className='w-full mt-5 text-sm'>
-              <p className='text-red-500'>{error ? error : null}</p>
+              <p className='text-red-500 mb-1'>{error ? error : null}</p>
               <input type="email" value={email} onChange={(e) => setEmail(e.target.value)} placeholder='admin email id' className='w-full border border-gray-300 p-2.5 outline-none mb-6' required />
               <input type="password" value={password} onChange={(e) => setPassword(e.target.value)} placeholder='admin password' className='w-full border border-gray-300 p-2.5 outline-none mb-6' required />
               <button type="submit" className='w-full py-3 font-medium bg-[#FE6A13] text-white text-base rounded cursor-pointer hover:bg-orange-600 transition-all'>{loading ? 'loading...' : 'Login'}</button>

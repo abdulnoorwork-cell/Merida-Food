@@ -12,7 +12,7 @@ import { RiBox3Line } from 'react-icons/ri'
 
 const Dashboard = () => {
   const [orders, setOrders] = useState([]);
-  const { backendUrl, navigate, isAdmin, currency, products, fetchProducts, fetchLatestProducts, latestProducts, latestBlogs, blogs, fetchBlogs, fetchLatestBlogs, loading, blogLoading, orderLoading, setOrderLoading, fetchAdminOrders,allReviews } = useContext(AppContext);
+  const { backendUrl, navigate, isAdmin, currency, products, fetchProducts, fetchLatestProducts, latestProducts, latestBlogs, blogs, fetchBlogs, fetchUserOrders, fetchLatestBlogs, loading, blogLoading, orderLoading, setOrderLoading, fetchAdminOrders, allReviews } = useContext(AppContext);
 
   const deleteBlog = async (blogId) => {
     try {
@@ -82,7 +82,7 @@ const Dashboard = () => {
     }
   }
 
-  const updateOrderStatus = async (event, order_id) => {
+  const updateOrderStatus = async (order_id, event) => {
     try {
 
       let response = await axios.put(`${backendUrl}/api/order/update-order/${order_id}`, { order_status: event.target.value }, {
@@ -92,8 +92,10 @@ const Dashboard = () => {
         withCredentials: true
       });
       if (response.data.success) {
-        toast.success(response.data.messege);
         await fetchAdminOrders()
+        await fetchUserOrders()
+        await fetchLatestOrders()
+        toast.success(response.data.messege);
       } else {
         toast.error(response.data.messege)
       }
@@ -103,9 +105,7 @@ const Dashboard = () => {
   }
 
   useEffect(() => {
-    fetchBlogs();
     fetchLatestBlogs()
-    fetchProducts();
     fetchLatestProducts()
     fetchLatestOrders();
   }, [])
@@ -169,7 +169,7 @@ const Dashboard = () => {
                       </div>
                       <h6 className='category mx-auto text-center leading-[1.4em] max-sm:hidden'>{product?.category}</h6>
                       <h6 className='category_2 mx-auto text-center leading-[1.4em] text-blue-600 hidden'>{product?.category}</h6>
-                      <h6 className='category mx-auto text-center leading-[1.4em] font-medium text-sm'>{currency}.{product?.price}</h6>
+                      <h6 className='category mx-auto text-center leading-[1.4em] font-medium text-sm'>{currency}.{(product?.price).toLocaleString()}</h6>
                       <h6 className='mx-auto max-xl:hidden text-center leading-[1.4em] text-gray-400 text-[13px]'>{new Date(product?.created_at).toDateString()}</h6>
                       <div className='text-[23px] text-red-500 cursor-pointer mx-auto'>
                         <span onClick={() => deleteProduct(product._id)} className=''><MdDeleteOutline /></span>
@@ -200,7 +200,7 @@ const Dashboard = () => {
                   {latestBlogs?.slice(length - 3).reverse().map((blog, index) => (
                     <div key={index} className='blog_list sm:text-sm text-[13px] border-b border-gray-600 px-3 py-2.5 grid lg:grid-cols-[2fr_2fr_1fr_1fr] sm:grid-cols-[2fr_2fr_1fr] grid-cols-[4fr_1fr] gap-2 items-center'>
                       <div className='flex items-center sm:gap-4 gap-3'>
-                        <img className='main_image h-8 w-14' src={JSON.parse(blog.image).url} alt="" />
+                        <img className='main_image h-8 w-14' src={blog.image.url} alt="" />
                         <h6 className='font-medium'>{blog.title}</h6>
                       </div>
                       <div className='hidden sm:block'>
@@ -229,7 +229,7 @@ const Dashboard = () => {
         <h6 className='font-semibold'>Latest Orders</h6>
       </div>
       <div className='flex flex-col bg-black/30 backdrop-blur-xs'>
-        <div className='xl:grid hidden xl:grid-cols-[2fr_2fr_1fr_2fr_1fr] md:grid-cols-[2fr_2fr_1fr] sm:grid-cols-2 hidden gap-2 py-3 px-3 text-xs uppercase font-semibold bg-[#111]'>
+        <div className='xl:grid hidden xl:grid-cols-[2fr_2fr_1fr_2fr_1fr] md:grid-cols-[2fr_2fr_1fr] sm:grid-cols-2 gap-2 py-3 px-3 text-xs uppercase font-semibold bg-[#111]'>
           <label style={{ fontFamily: "Montserrat" }}>Order</label>
           <label className='max-sm:hidden' style={{ fontFamily: "Montserrat" }}>Delivery</label>
           <label className='' style={{ fontFamily: "Montserrat" }}>Amount</label>
@@ -270,7 +270,7 @@ const Dashboard = () => {
                       <h6>Date: {new Date(order.created_at).toDateString()}</h6>
                       <h6>Payment: {order.payment_status.charAt(0).toUpperCase() + order.payment_status.slice(1).toLowerCase()}</h6>
                     </div>
-                    <select value={order.order_status?.trim()} onChange={(event) => updateOrderStatus(event, order.order_id)} className='p-2 font-medium text-xs border border-gray-600 focus:border-orange-500 w-fit rounded-sm'>
+                    <select value={order.order_status?.trim()} onChange={(event) => updateOrderStatus( order._id,event)} className='p-2 font-medium text-xs border border-gray-600 focus:border-orange-500 w-fit rounded-sm'>
                       <option value="PLACED" className='bg-[#1A1A1A]'>Order Placed</option>
                       <option value="PACKING" className='bg-[#1A1A1A]'>Packing</option>
                       <option value="SHIPPED" className='bg-[#1A1A1A]'>Shipped</option>
