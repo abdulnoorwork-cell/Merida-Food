@@ -228,8 +228,7 @@ const SingleProduct = () => {
                                             />
                                         ))}
                                     </div>
-                                    {reviews.length > 0 ?
-                                        <span className="text-gray-600 text-sm sm:text-base">({getRating.average_rating ? getRating.average_rating.slice(0,3) : ""})</span> : null}
+                                    <span className="text-gray-600 text-sm sm:text-base">({getRating.average_rating ? getRating.average_rating.slice(0,3) : "0 Reviews"})</span>
                                 </div>
 
                                 {/* Price */}
