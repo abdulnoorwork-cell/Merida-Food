@@ -87,8 +87,11 @@ const Login = () => {
                 setError('')
                 setTimeout(() => {
                     window.location.href = '/'
-                    scrollTo(0, 0)
                 }, 1000)
+                setTimeout(() => {
+                    localStorage.removeItem('User');
+                    window.location.reload()
+                }, response.data.expiresIn * 1000)
             }
             setLoading(false)
         } catch (error) {
