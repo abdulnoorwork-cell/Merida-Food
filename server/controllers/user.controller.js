@@ -139,7 +139,8 @@ export const login = async (req, res) => {
             success: true,
             message: `Welcome back ${user.name}`,
             user,
-            token
+            token,
+            expiresIn: 86400
         });
 
     } catch (error) {
