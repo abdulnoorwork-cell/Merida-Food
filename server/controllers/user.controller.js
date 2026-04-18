@@ -15,7 +15,7 @@ export const signup = async (req, res) => {
         if (!name || !email || !password) {
             return res.status(400).json({
                 success: false,
-                message: "Name, email, and password are required"
+                message: "Please fill required fileds"
             });
         }
 

@@ -172,7 +172,7 @@ const Login = () => {
                         </div>
 
                         {/* Forgot Password */}
-                        <p onClick={()=>{navigate('/forgot-password');scrollTo(0,0)}} className="text-[15px] text-[#1A1A1A] hover:text-orange-500 cursor-pointer">
+                        <p onClick={() => { navigate('/forgot-password'); scrollTo(0, 0) }} className="text-[15px] text-[#1A1A1A] hover:text-orange-500 cursor-pointer">
                             Lost your password?
                         </p>
 
@@ -246,7 +246,7 @@ const Login = () => {
                                 value={name} onChange={(e) => setName(e.target.value)}
                                 className="w-full bg-white rounded text-[15px] px-3 py-2 border border-[#1A1A1A] focus:border-none focus:outline-none focus:ring-1 focus:ring-orange-500"
                             />
-                            <p className='text-red-600 mt-2 leading-none text-sm'>{error ? error : null}</p>
+                            <p className='text-red-600 mt-2 leading-none text-xs'>{error === 'Please fill required fileds' ? error : null}</p>
                         </div>
 
                         {/* Email */}
@@ -260,7 +260,7 @@ const Login = () => {
                                 value={email} onChange={(e) => setEmail(e.target.value)}
                                 className="w-full bg-white rounded text-[15px] px-3 py-2 border border-[#1A1A1A] focus:border-none focus:outline-none focus:ring-1 focus:ring-orange-500"
                             />
-                            <p className='text-red-600 mt-2 leading-none text-sm'>{error ? error : null}</p>
+                            <p className='text-red-600 mt-2 leading-none text-xs'>{error === 'Please fill required fileds' || error === 'Email already exists' ? error : null}</p>
                         </div>
 
                         {/* Password */}
@@ -284,7 +284,7 @@ const Login = () => {
                                     <span onClick={() => setShowPassword(false)} className={`cursor-pointer text-base text-gray-700 ${showPassword ? "block" : "hidden"}`}><RxEyeOpen /></span>
                                 </span>
                             </div>
-                            <p className='text-red-600 mt-2 leading-none text-sm'>{error ? error : null}</p>
+                            <p className='text-red-600 mt-2 leading-none text-xs'>{error === 'Please fill required fileds' || error === 'Password must be at least 8 characters' ? error : null}</p>
                         </div>
 
                         {/* Phone*/}
