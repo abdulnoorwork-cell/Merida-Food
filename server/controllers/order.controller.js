@@ -11,31 +11,40 @@ export const placeOrder = async (req, res) => {
         return res.status(400).json({ messege: "Invalid address" });
     }
 
-    // 🟢 COD (Keep your existing logic)
+    // ---------------- COD ----------------
     if (payment_method === "COD") {
-        db.query(
+
+        const [order] = await db.execute(
             `INSERT INTO orders (user_id, total_amount, payment_method, address, payment_status)
-             VALUES (?, ?, ?, ?, ?)`,
-            [user_id, total_amount, payment_method, JSON.stringify(address), "PENDING"],
-            (err, result) => {
-                if (err) return res.status(500).json({ success: false, messege: err });
-
-                const order_id = result.insertId;
-
-                items.forEach(item => {
-                    db.query(
-                        `INSERT INTO order_items (order_id, product_id, quantity, price)
-                         VALUES (?, ?, ?, ?)`,
-                        [order_id, item._id, item.quantity, item.price]
-                    );
-                });
-
-                // delete cart
-                db.query('DELETE FROM cart_items WHERE user_id = ?', [user_id]);
-
-                res.json({ success: true, messege: "Order placed (COD)" });
-            }
+                 VALUES (?, ?, ?, ?, ?)`,
+            [user_id, total_amount, "COD", JSON.stringify(address), "PENDING"]
         );
+
+        const order_id = order.insertId;
+
+        await Promise.all(items.map(item => {
+            const productId = item.id || item._id;
+
+            if (!productId) {
+                throw new Error("Invalid product id in order items");
+            }
+
+            return db.execute(
+                `INSERT INTO order_items 
+            (order_id, product_id, quantity, price)
+         VALUES (?, ?, ?, ?)`,
+                [
+                    order_id,
+                    productId,
+                    item.quantity ?? 1,
+                    item.price ?? 0
+                ]
+            );
+        }));
+
+        await db.execute("DELETE FROM cart_items WHERE user_id = ?", [user_id]);
+
+        return res.json({ success: true, message: "Order placed (COD)" });
     }
 
     // 🔵 ONLINE (Stripe)

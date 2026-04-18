@@ -290,6 +290,7 @@ const AppContextProvider = ({ children }) => {
     const fetchWishlist = async () => {
         try {
             const res = await axios.get(`${backendUrl}/api/wishlist/get-user-wishlist/${userId}`);
+            console.log(res.data)
             setWishlist(res.data);
         } catch (error) {
             console.log(error)

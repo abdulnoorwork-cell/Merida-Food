@@ -10,9 +10,8 @@ if (!global.dbPool) {
     password: process.env.DB_PASSWORD,
     database: process.env.DB_DATABASE,
     port: process.env.DB_PORT,
-
     waitForConnections: true,
-    connectionLimit: 10,   // keep small
+    connectionLimit: 2,   // keep small
     queueLimit: 0,
     enableKeepAlive: true,
     keepAliveInitialDelay: 0

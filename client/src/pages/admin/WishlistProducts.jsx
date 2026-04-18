@@ -56,6 +56,8 @@ const WishlistProducts = () => {
         fetchWishlistProducts()
     }, [])
 
+    console.log(wishlist)
+
     return (
         <div className='flex w-full justify-center px-4 py-8 md:px-8 lg:py-10 h-full min-h-[95vh]'>
             <div className='flex flex-col w-full'>
@@ -83,7 +85,7 @@ const WishlistProducts = () => {
                                             <h6 className='category mx-auto text-center leading-[1.4em] hidden sm:block'>{w?.category}</h6>
                                             <h6 className='category_2 mx-auto text-center leading-[1.4em] text-blue-600 hidden'>{w?.category}</h6>
                                             <h6 className='category mx-auto text-center font-medium leading-[1.4em] hidden lg:block'>{currency}.{w?.price}</h6>
-                                            <h6 className='mx-auto text-center leading-[1.4em] font-medium flex items-center gap-1'><span className='text-red-500 text-[15px]'><FaHeart /></span> {w?.total_wishes < 10 ? "0" + w.total_wishes : total_wishes}</h6>
+                                            <h6 className='mx-auto text-center leading-[1.4em] font-medium flex items-center gap-1'><span className='text-red-500 text-[15px]'><FaHeart /></span> {w?.total_wishes < 10 ? "0" + w?.total_wishes : 1}</h6>
                                             <div className='text-[23px] text-red-500 cursor-pointer mx-auto'>
                                                 <span onClick={() => deleteWishlistProduct(w._id)} className=''><MdDeleteOutline /></span>
                                             </div>

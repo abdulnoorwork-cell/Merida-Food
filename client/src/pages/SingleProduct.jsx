@@ -131,7 +131,7 @@ const SingleProduct = () => {
             })
             if (response.data.success) {
                 setLoading(false)
-                toast.success(response.data.messege)
+                toast.success(response.data.message)
                 setRating(0);
                 setComment("");
                 setImages([]);
@@ -143,7 +143,7 @@ const SingleProduct = () => {
         } catch (error) {
             setLoading(false)
             console.log(error)
-            toast.error(error.response.data.messege)
+            toast.error(error.response.data.message)
         }
     }
 
