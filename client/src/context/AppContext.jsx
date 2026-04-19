@@ -298,6 +298,9 @@ const AppContextProvider = ({ children }) => {
     };
 
     const toggleWishlist = async (productId) => {
+        if (!token) {
+            return toast.error('Please login first')
+        }
         if (isInWishlist(productId)) {
             try {
                 const response = await axios.delete(`${backendUrl}/api/wishlist/remove`, {
