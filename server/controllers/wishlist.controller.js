@@ -79,11 +79,11 @@ export const removeFromWishlist = async (req, res) => {
             [user_id, product_id]
         );
 
-        res.json({ success: true, message: "Removed from wishlist" });
+        res.json({ success: true, messege: "Removed from wishlist" });
 
     } catch (err) {
         console.error(err);
-        res.status(500).json({ message: "Server error" });
+        res.status(500).json({ messege: "Server error" });
     }
 };
 
