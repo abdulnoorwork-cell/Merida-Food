@@ -23,7 +23,7 @@ const BlogSection = () => {
 
         {/* Blog Cards */}
         {latestBlogLoading ? <img src={loading_animation} alt='loader' className='mx-auto' /> : <>
-          {latestBlogs.length > 0 ? <div className="blogs grid lg:grid-cols-4 md:grid-cols-3 grid-cols-2 gap-5">
+          {latestBlogs.length > 200 ? <div className="blogs grid lg:grid-cols-4 md:grid-cols-3 grid-cols-2 gap-5">
             {latestBlogs.map((blog, index) => (
               <BlogCard key={index} blog={blog} />
             ))}

@@ -9,7 +9,7 @@ import { TbLoader2 } from 'react-icons/tb';
 import { LuSearch } from 'react-icons/lu';
 
 const Blogs = () => {
-  const { blogs, blogLoading, latestBlogs, handleSearchBlogs, blogQuery, setBlogQuery, blogSuggestions, setBlogSuggestions, handleClearBlogSearch, blogSuggestionLoading,navigate } = useContext(AppContext);
+  const { blogs, blogLoading, latestBlogs, latestBlogLoading, handleSearchBlogs, blogQuery, setBlogQuery, blogSuggestions, setBlogSuggestions, handleClearBlogSearch, blogSuggestionLoading, navigate } = useContext(AppContext);
 
   return (
     <div className='bg-white'>
@@ -39,7 +39,7 @@ const Blogs = () => {
         <div className="grid grid-cols-1 lg:grid-cols-3 gap-10">
 
           {/* LEFT CONTENT */}
-          {blogLoading ? <img src={loading_animation} alt='loader' className='mx-auto' /> : <div className="lg:col-span-2">
+          {blogLoading ? <img src={loading_animation} alt='loader' className='mx-auto lg:col-span-2' /> : <div className="lg:col-span-2">
             {/* Blog Cards */}
             {blogs.length > 0 ? <div className="blogs grid grid-cols-2 gap-5">
               {blogs.map((blog, index) => (
@@ -101,25 +101,25 @@ const Blogs = () => {
             <div className="bg-[#F6F6F7] p-6 rounded">
               <p className="text-2xl font-semibold mb-5">Recent Posts</p>
 
-              <div className="space-y-4">
-                {latestBlogs.map((item, index) => (
-                  <div key={index} onClick={()=>{navigate(`/blogs/${item._id}`);scrollTo(0,0)}} className="flex gap-3">
-                    <img
-                      src={item?.image?.url}
-                      alt={item.title}
-                      className='w-20 h-14 object-cover leading-none cursor-pointer'
-                    />
-                    <div>
-                      <p className="text-sm font-medium leading-tight line-clamp-1">
-                        {item.title}
-                      </p>
-                      <span className="text-xs text-gray-500">
-                        {new Date(item.created_at).toDateString()}
-                      </span>
+              <div>
+                {latestBlogLoading ? <img src={loading_animation} className='mx-auto' alt="loader" /> :
+                  <div className='space-y-4'>{latestBlogs.map((item, index) => (
+                    <div key={index} onClick={() => { navigate(`/blogs/${item._id}`); scrollTo(0, 0) }} className="flex gap-3">
+                      <img
+                        src={item?.image?.url}
+                        alt={item.title}
+                        className='w-20 h-14 object-cover leading-none cursor-pointer'
+                      />
+                      <div>
+                        <p className="text-sm font-medium leading-tight line-clamp-1">
+                          {item.title}
+                        </p>
+                        <span className="text-xs text-gray-500">
+                          {new Date(item.created_at).toDateString()}
+                        </span>
+                      </div>
                     </div>
-                  </div>
-                ))}
-
+                  ))}</div>}
               </div>
             </div>
 

@@ -16,13 +16,17 @@ const SingleBlog = () => {
 
     const [blog, setBlog] = useState([]);
     const { blog_id } = useParams();
-    const { backendUrl, latestBlogs, handleSearchBlogs, blogQuery, setBlogQuery, blogSuggestions, setBlogSuggestions, handleClearBlogSearch, blogSuggestionLoading,navigate } = useContext(AppContext)
+    const [loading, setLoading] = useState(false)
+    const { backendUrl, latestBlogs, latestBlogLoading, handleSearchBlogs, blogQuery, setBlogQuery, blogSuggestions, setBlogSuggestions, handleClearBlogSearch, blogSuggestionLoading, navigate } = useContext(AppContext)
     const fetchBog = async () => {
         try {
+            setLoading(true)
             let response = await axios.get(`${backendUrl}/api/blog/blog-detail/${blog_id}`, { withCredentials: true });
             if (response.data) {
                 setBlog(response.data);
+                setLoading(false)
             }
+            setLoading(false)
         } catch (error) {
             console.log(error)
         }
@@ -59,9 +63,9 @@ const SingleBlog = () => {
                 </div>
             </div>
 
-            <div className="container mx-auto 2xl:py-24 py-20 px-4">
-                {blog ?
-                    <div className="grid grid-cols-1 lg:grid-cols-3 gap-10">
+            <div className="container mx-auto 2xl:py-24 py-20 px-4 min-h-[80vh]">
+                {loading ? <img src={loading_animation} className='mx-auto' alt="loader" />
+                     : <div className="grid grid-cols-1 lg:grid-cols-3 gap-10">
 
                         {/* LEFT CONTENT */}
                         <div className="lg:col-span-2">
@@ -76,7 +80,6 @@ const SingleBlog = () => {
                             {/* Meta */}
                             <div className="flex flex-wrap gap-2 sm:text-sm text-xs mt-7 font-medium text-gray-500">
                                 <span className='border-r border-gray-500 pr-2'>Created At</span>
-                                <span className='border-r border-gray-500 pr-2'>Admin</span>
                                 <span>{new Date(blog.created_at).toDateString()}</span>
                             </div>
 
@@ -140,12 +143,10 @@ const SingleBlog = () => {
                             </div>
 
                             {/* Recent Posts */}
-                            <div className="bg-[#F6F6F7] p-6 rounded">
-                                <p className="text-2xl font-semibold mb-5">Recent Posts</p>
-
-                                <div className="space-y-4">
-                                    {latestBlogs.map((item, index) => (
-                                        <div onClick={()=>{navigate(`/blogs/${item._id}`);scrollTo(0,0)}} key={index} className="flex gap-3">
+                            <div>
+                                {latestBlogLoading ? <img src={loading_animation} className='mx-auto' alt="loader" /> :
+                                    <div className='space-y-4'>{latestBlogs.map((item, index) => (
+                                        <div key={index} onClick={() => { navigate(`/blogs/${item._id}`); scrollTo(0, 0) }} className="flex gap-3">
                                             <img
                                                 src={item?.image?.url}
                                                 alt={item.title}
@@ -160,13 +161,11 @@ const SingleBlog = () => {
                                                 </span>
                                             </div>
                                         </div>
-                                    ))}
-
-                                </div>
+                                    ))}</div>}
                             </div>
                         </div>
 
-                    </div> : console.log(blog)}
+                    </div>}
             </div>
         </div>
     )

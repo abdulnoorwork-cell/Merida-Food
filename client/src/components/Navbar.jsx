@@ -46,7 +46,7 @@ const Navbar = () => {
             <div className={`navbar bg-white py-3 lg:py-0 sticky top-0 left-0 z-30 min-h-[70px] flex items-center border-b border-gray-200 ${sticky ? 'shadow-[0_10px_30px_rgba(0,0,0,0.1)]' : 'shadow-none'}`}>
                 <div className="container mx-auto px-4 flex items-center justify-between">
                     {/* Logo */}
-                    <div onClick={() => { navigate('/'); scrollTo(0, 0) }} className="logo 2xl:text-[42px] text-4xl font-bold uppercase text-[#1A1A1A] cursor-pointer text-[#FE6A13] sm:text-[#1A1A1A] hover:text-[#FE6A13] transition-all duration-200 tracking-tight">Merida</div>
+                    <div onClick={() => { navigate('/'); scrollTo(0, 0) }} className="logo 2xl:text-[42px] text-4xl font-bold uppercase cursor-pointer text-[#FE6A13] hover:text-[#FE6A13] transition-all duration-200 tracking-tight">Merida</div>
                     {/* Navbar */}
                     <ul className={`lg:font-semibold font-medium text-base uppercase flex flex-col lg:flex-row fixed lg:static max-lg:w-full max-lg:max-w-[310px] max-lg:h-screen bg-white justify-center items-center lg:gap-10 gap-0 text-[#1A1A1A] max-lg:border-r-3 border-[#FE6A13] max-lg:top-0 px-6 lg:px-0 z-40 transition-all duration-300 ${mobile ? 'max-lg:left-0' : 'max-lg:left-[-100%]'}`}>
                         <span onClick={() => setMobile(false)} className='close flex lg:hidden absolute top-[25px] right-[-16.5px] bg-[#1A1A1A] text-white w-[33px] h-[33px] rounded-full items-center justify-center cursor-pointer text-lg z-10'><MdClose /></span>
