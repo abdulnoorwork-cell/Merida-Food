@@ -32,7 +32,7 @@ const LatestItems = () => {
                             {latestProducts.map((item, index) => (
                                 <ProductCard key={index} product={item} />
                             ))}
-                        </div> : <div className='font-medium min-h-[60vh] text-base sm:text-lg flex items-center justify-center text-center bg-white rounded-md w-full'>You don,t have any items</div>}
+                        </div> : <div className='font-medium min-h-[60vh] text-base sm:text-lg flex items-center justify-center text-center rounded-md w-full'>You don,t have any items</div>}
                     </div>
                 }
             </div>

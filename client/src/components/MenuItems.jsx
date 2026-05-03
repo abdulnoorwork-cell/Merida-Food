@@ -93,7 +93,7 @@ const MenuItems = () => {
                                             {currency}.{item.price}
                                         </span>
                                     </div>
-                                )) : <div className='font-medium min-h-[60vh] text-base sm:text-lg flex items-center justify-center text-center bg-white rounded-md w-full'>You don,t have any items</div>}
+                                )) : <div className='font-medium min-h-[60vh] text-base sm:text-lg flex items-center justify-center text-center rounded-md w-full'>You don,t have any items</div>}
                             </div>}
                     </div>
 
@@ -128,7 +128,7 @@ const MenuItems = () => {
                                             {currency}.{item.price}
                                         </span>
                                     </div>
-                                )) : <div className='font-medium min-h-[60vh] text-base sm:text-lg flex items-center justify-center text-center bg-white rounded-md w-full'>You don,t have any items</div>}
+                                )) : <div className='font-medium min-h-[60vh] text-base sm:text-lg flex items-center justify-center text-center rounded-md w-full'>You don,t have any items</div>}
                             </div>}
                     </div>
 
