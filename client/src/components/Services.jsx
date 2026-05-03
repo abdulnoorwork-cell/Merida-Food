@@ -53,7 +53,7 @@ const Service = () => {
                         >
                             {/* Image */}
                             <figure className='w-full bg-cover bg-center bg-no-repeat object-cover'>
-                                <img src={service.img} className='h-full w-full transition duration-500 group-hover:scale-110' alt="" />
+                                <img src={service.img} className='max-h-[570px] w-full transition duration-500 group-hover:scale-110' alt="" />
                             </figure>
                             {/* <h3 className="text-xl font-semibold mb-3 uppercase absolute bottom-0 left-0 text-white">
                             {service.title}
