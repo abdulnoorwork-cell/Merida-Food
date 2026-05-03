@@ -10,6 +10,7 @@ export const AppContext = createContext();
 const AppContextProvider = ({ children }) => {
     const [loading, setLoading] = useState(false)
     const [blogLoading, setBlogLoading] = useState(false)
+    const [latestItemsLoading, setLatestItemsLoading] = useState(false)
     const [latestBlogLoading, setLatestBlogLoading] = useState(false)
     const [orderLoading, setOrderLoading] = useState(false)
     const [wishlistLoading, setWishlistLoading] = useState(false)
@@ -97,12 +98,16 @@ const AppContextProvider = ({ children }) => {
 
     const fetchLatestProducts = async (req, res) => {
         try {
+            setLatestItemsLoading(true)
             let response = await axios.get(`${backendUrl}/api/product/latest-products`, { withCredentials: true })
             if (response.data) {
                 setLatestProducts(response.data)
+                setLatestItemsLoading(false)
             }
+            setLatestItemsLoading(false)
         } catch (error) {
             console.log(error)
+            setLatestItemsLoading(false)
         }
     }
 
@@ -415,7 +420,7 @@ const AppContextProvider = ({ children }) => {
     }, [])
 
     return (
-        <AppContext.Provider value={{ navigate, userId, discount, backendUrl, token, logout, shippingFee, blogs, fetchBlogs, fetchLatestBlogs, latestBlogs,latestBlogLoading, addToCart, qty, setQty, isAdmin, products, setProducts, fetchProducts, fetchLatestProducts, latestProducts, currency, handleSearchProducts, handleSearchBlogs, query, blogQuery, setQuery, setBlogQuery, suggestions, setSuggestions, blogSuggestions, setBlogSuggestions, blogSuggestionLoading, setBlogSuggestionLoading, cartItems, getCartItems, totalCartItems, getTotalCartItems, handleClearSearch, handleClearBlogSearch, toggleWishlist, isInWishlist, fetchWishlist, wishlist, orders, fetchUserOrders, searchLoading, setSearchLoading, blogsSearchLoading, setBlogSearchLoading, suggestionLoading, setSuggestionLoading, loading, blogLoading, orderLoading, setOrderLoading, wishlistLoading, setWishlistLoading, fetchAllReviews, allReviews, fetchAdminOrders, adminOrders }}>{children}</AppContext.Provider>
+        <AppContext.Provider value={{ navigate, userId, discount, backendUrl, token, logout, shippingFee, blogs, fetchBlogs, fetchLatestBlogs, latestBlogs,latestBlogLoading, addToCart, qty, setQty, isAdmin, products, setProducts, fetchProducts, fetchLatestProducts, latestProducts, currency, handleSearchProducts, handleSearchBlogs, query, blogQuery, setQuery, setBlogQuery, suggestions, setSuggestions, blogSuggestions, setBlogSuggestions, blogSuggestionLoading, setBlogSuggestionLoading, cartItems, getCartItems, totalCartItems, getTotalCartItems, handleClearSearch, handleClearBlogSearch, toggleWishlist, isInWishlist, fetchWishlist, wishlist, orders, fetchUserOrders, searchLoading, setSearchLoading, blogsSearchLoading, setBlogSearchLoading, suggestionLoading, setSuggestionLoading, loading, blogLoading, orderLoading, setOrderLoading, wishlistLoading, setWishlistLoading, fetchAllReviews, allReviews, fetchAdminOrders, adminOrders,latestItemsLoading}}>{children}</AppContext.Provider>
     )
 }
 
