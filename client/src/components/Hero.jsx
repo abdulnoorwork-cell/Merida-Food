@@ -1,15 +1,20 @@
-import React,{useEffect} from 'react'
+import React, { useEffect } from 'react'
 import hero_image from '../assets/hero_image.webp'
+import hero_image_2 from '../assets/slider-image-2.webp'
 import hero_bg from '../assets/hero_bg.webp'
 import { useInView } from 'react-intersection-observer'
+import { Swiper, SwiperSlide } from "swiper/react";
+import { Autoplay, Pagination } from "swiper/modules";
+import "swiper/css";
+import "swiper/css/pagination";
 
 const Hero = () => {
-    const {ref,inView}=useInView({threshold:0.2,triggerOnce:false})
+    const { ref, inView } = useInView({ threshold: 0.2, triggerOnce: false })
     return (
-        <div className="flex flex-1 2xl:h-[90vh] h-screen relative" style={{ backgroundImage: `url(${hero_bg})` }}>
+        <div className="flex flex-1 h-screen relative" style={{ backgroundImage: `url(${hero_bg})` }}>
 
             {/* Content */}
-            <div ref={ref} className={`box_3 ${inView ? 'show' : ''} container px-4 text-white flex flex-col absolute left-[43%] top-1/2 -translate-x-[43%] -translate-y-1/2 sm:pl-16 py-10`}>
+            <div ref={ref} className={`box_3 ${inView ? 'show' : ''} z-10 container px-4 text-white flex flex-col absolute left-[43%] top-1/2 -translate-x-[43%] -translate-y-1/2 sm:pl-16 py-10`}>
 
                 <p className="uppercase mb-4 font-medium flex items-center gap-3 sm:text-base text-sm">
                     Welcome to Merida
@@ -34,11 +39,25 @@ const Hero = () => {
 
             {/* Right Image */}
             <div className="w-1/2">
-                <img
-                    src={hero_image}
-                    alt="burger"
-                    className="w-full h-full object-cover"
-                />
+                <Swiper
+                    modules={[Autoplay, Pagination]}
+                    autoplay={{ delay: 3000 }}
+                    loop={true}>
+                    <SwiperSlide>
+                        <img
+                            src={hero_image}
+                            alt="burger"
+                            className="w-full h-screen object-cover"
+                        />
+                    </SwiperSlide>
+                    <SwiperSlide>
+                        <img
+                            src={hero_image_2}
+                            alt="burger"
+                            className="w-full h-screen object-cover"
+                        />
+                    </SwiperSlide>
+                </Swiper>
             </div>
 
         </div>

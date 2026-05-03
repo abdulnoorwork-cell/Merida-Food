@@ -1,4 +1,6 @@
 import React, { useContext, useEffect } from 'react'
+import "slick-carousel/slick/slick.css";
+import "slick-carousel/slick/slick-theme.css";
 import MainLayout from './MainLayout'
 import { Routes, Route } from 'react-router-dom'
 import Home from './pages/Home'
