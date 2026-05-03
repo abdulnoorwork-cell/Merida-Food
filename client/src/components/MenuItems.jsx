@@ -1,13 +1,14 @@
 import React, { useContext, useEffect, useState } from 'react'
 import { AppContext } from '../context/AppContext';
 import axios from 'axios';
+import loading_animation from '../../public/loading_animation.svg'
 
 const MenuItems = () => {
 
     const [brreakfastProducts, setBreakfastProducts] = useState([])
     const [lunchProducts, setLunchProducts] = useState([])
     const [loading, setLoading] = useState(false)
-    const { backendUrl,currency } = useContext(AppContext);
+    const { backendUrl, currency } = useContext(AppContext);
 
     const fetchBreakfastProducts = async () => {
         try {
@@ -67,30 +68,33 @@ const MenuItems = () => {
                             BREAKFAST MENU
                         </p>
 
-                        {brreakfastProducts.map((item, index) => (
-                            <div
-                                key={index}
-                                className="flex items-center gap-4 py-4 border-b border-gray-700"
-                            >
-                                <img
-                                    src={item.images?.[0]?.url}
-                                    alt={item.name}
-                                    className="w-16 h-16 rounded-full object-cover"
-                                />
+                        {loading ? <img src={loading_animation} className='mx-auto' alt="loader" /> :
+                            <div>
+                                {brreakfastProducts.length > 0 ? brreakfastProducts.map((item, index) => (
+                                    <div
+                                        key={index}
+                                        className="flex items-center gap-4 py-4 border-b border-gray-700"
+                                    >
+                                        <img
+                                            src={item.images?.[0]?.url}
+                                            alt={item.name}
+                                            className="w-16 h-16 rounded-full object-cover"
+                                        />
 
-                                <div className="flex-1">
-                                    <p className="text-white font-semibold text-lg">
-                                        {item.name}
-                                    </p>
-                                    <p className="text-gray-400 sm:text-base text-sm line-clamp-1" dangerouslySetInnerHTML={{__html: item.description}}>
-                                    </p>
-                                </div>
+                                        <div className="flex-1">
+                                            <p className="text-white font-semibold text-lg">
+                                                {item.name}
+                                            </p>
+                                            <p className="text-gray-400 sm:text-base text-sm line-clamp-1" dangerouslySetInnerHTML={{ __html: item.description }}>
+                                            </p>
+                                        </div>
 
-                                <span className="text-orange-500 font-semibold">
-                                    {currency}.{item.price}
-                                </span>
-                            </div>
-                        ))}
+                                        <span className="text-orange-500 font-semibold">
+                                            {currency}.{item.price}
+                                        </span>
+                                    </div>
+                                )) : <div className='font-medium min-h-[60vh] text-base sm:text-lg flex items-center justify-center text-center bg-white rounded-md w-full'>You don,t have any items</div>}
+                            </div>}
                     </div>
 
                     {/* RIGHT COLUMN */}
@@ -99,30 +103,33 @@ const MenuItems = () => {
                             LUNCH MENU
                         </p>
 
-                        {lunchProducts.map((item, index) => (
-                            <div
-                                key={index}
-                                className="flex items-center gap-4 py-4 border-b border-gray-700"
-                            >
-                                <img
-                                    src={item.images?.[0]?.url}
-                                    alt={item.name}
-                                    className="w-16 h-16 rounded-full object-cover"
-                                />
+                        {loading ? <img src={loading_animation} className='mx-auto' alt="loader" /> :
+                            <div>
+                                {lunchProducts.length > 0 ? lunchProducts.map((item, index) => (
+                                    <div
+                                        key={index}
+                                        className="flex items-center gap-4 py-4 border-b border-gray-700"
+                                    >
+                                        <img
+                                            src={item.images?.[0]?.url}
+                                            alt={item.name}
+                                            className="w-16 h-16 rounded-full object-cover"
+                                        />
 
-                                <div className="flex-1">
-                                    <p className="text-white font-semibold text-lg">
-                                        {item.name}
-                                    </p>
-                                    <p className="text-gray-400 sm:text-base text-sm line-clamp-1" dangerouslySetInnerHTML={{__html:item.description}}>
-                                    </p>
-                                </div>
+                                        <div className="flex-1">
+                                            <p className="text-white font-semibold text-lg">
+                                                {item.name}
+                                            </p>
+                                            <p className="text-gray-400 sm:text-base text-sm line-clamp-1" dangerouslySetInnerHTML={{ __html: item.description }}>
+                                            </p>
+                                        </div>
 
-                                <span className="text-orange-500 font-semibold">
-                                    {currency}.{item.price}
-                                </span>
-                            </div>
-                        ))}
+                                        <span className="text-orange-500 font-semibold">
+                                            {currency}.{item.price}
+                                        </span>
+                                    </div>
+                                )) : <div className='font-medium min-h-[60vh] text-base sm:text-lg flex items-center justify-center text-center bg-white rounded-md w-full'>You don,t have any items</div>}
+                            </div>}
                     </div>
 
                 </div>
