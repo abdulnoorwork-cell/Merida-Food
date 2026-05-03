@@ -1,15 +1,18 @@
-import React, { useContext, useState } from 'react'
+import React, { useContext, useState,useEffect } from 'react'
 import { AppContext } from '../context/AppContext';
 import { PiHeartStraightBold } from "react-icons/pi";
 import { FiHeart } from 'react-icons/fi';
 import { Star } from "lucide-react";
 import { FaHeart } from "react-icons/fa";
+import { useInView } from 'react-intersection-observer';
 
 const ProductCard = ({ product }) => {
     const { currency, navigate,toggleWishlist,isInWishlist,addToCart,qty} = useContext(AppContext);
+    const {ref,inView}=useInView({threshold:0.2,triggerOnce:false})
     return (
         <div
-            className="group relative bg-white text-black overflow-hidden border border-gray-400"
+            ref={ref}
+            className={`box_3 ${inView ? 'show' : ''} group relative bg-white text-black overflow-hidden border border-gray-400`}
         >
             {/* Image */}
             <figure onClick={() => { navigate(`/shop/${product?._id}`); scrollTo(0, 0) }} className='overflow-hidden sm:h-[200px] h-[165px]'>

@@ -4,31 +4,37 @@ import service_image2 from '../assets/service_image2.webp'
 import service_image3 from '../assets/service_image3.webp'
 import about_image from '../assets/about.webp'
 import { AppContext } from '../context/AppContext'
+import { useInView } from "react-intersection-observer";
+import { useEffect } from "react";
 
 const services = [
-        {
-            _id: 1,
-            title: "Fine Dining",
-            img: service_image,
-            link: '/shop/category/lunch'
-        },
-        {
-            _id: 2,
-            title: "Bar Testing",
-            img: service_image2,
-            link: '/shop/category/light&digestive'
-        },
-        {
-            _id: 3,
-            title: "Fast Food",
-            img: service_image3,
-            link: '/shop/category/fastfood'
+    {
+        _id: 1,
+        title: "Fine Dining",
+        img: service_image,
+        link: '/shop/category/lunch'
+    },
+    {
+        _id: 2,
+        title: "Bar Testing",
+        img: service_image2,
+        link: '/shop/category/light&digestive'
+    },
+    {
+        _id: 3,
+        title: "Fast Food",
+        img: service_image3,
+        link: '/shop/category/fastfood'
 
-        }
-    ];
+    }
+];
 
 const Service = () => {
-    const {navigate}=useContext(AppContext);
+    const { navigate } = useContext(AppContext);
+    const { ref, inView } = useInView({
+        threshold: 0.2,
+        triggerOnce: false,
+    });
     return (
         <div className="container mx-auto px-4 2xl:py-20 py-16">
 
@@ -47,7 +53,7 @@ const Service = () => {
                 <div className="grid grid-cols-3 md:gap-5 sm:gap-4 gap-3">
                     {services.map((service, index) => (
                         <div
-                            onClick={()=>{navigate(`${service.link}`);scrollTo(0,0)}}
+                            onClick={() => { navigate(`${service.link}`); scrollTo(0, 0) }}
                             key={index}
                             className="relative group overflow-hidden transition-all duration-500"
                         >
@@ -93,27 +99,32 @@ const Service = () => {
 
                 {/* LEFT CONTENT */}
                 <div className="flex-1/2 mb-5 sm:mb-0">
-                    <p className="text-orange-500 uppercase tracking-widest mb-2 2xl:text-base text-sm font-semibold">
-                        About Company
-                    </p>
+                    <div
+                        ref={ref}
+                        className={`box ${inView ? "show" : ""}`}
+                    >
+                        <p className="text-orange-500 uppercase tracking-widest mb-2 2xl:text-base text-sm font-semibold">
+                            About Company
+                        </p>
 
-                    <h2 className="2xl:text-[45px] xl:text-[38px] lg:text-[36px] sm:text-[32px] text-[30px] font-bold tracking-tight text-[#1A1A1A] sm:mb-6 mb-5">
-                        We Serve Quality & Balanced Food
-                    </h2>
+                        <h2 className="2xl:text-[45px] xl:text-[38px] lg:text-[36px] sm:text-[32px] text-[30px] font-bold tracking-tight text-[#1A1A1A] sm:mb-6 mb-5">
+                            We Serve Quality & Balanced Food
+                        </h2>
 
-                    <p className="text-gray-500 mb-7 sm:leading-relaxed sm:text-base text-sm">
-                        Lorem ipsum dolor sit amet consectetur adipiscing elit, arcu nam
-                        feren ames aliquam gravida praesent susci nibh faucibus magnis
-                        condimentum nulla. Ante parturient iaculis orci curae sapien feugiat
-                        conubia litora vivamus sociis auctor vestibulum.
-                    </p>
+                        <p className="text-gray-500 mb-7 sm:leading-relaxed sm:text-base text-sm">
+                            Lorem ipsum dolor sit amet consectetur adipiscing elit, arcu nam
+                            feren ames aliquam gravida praesent susci nibh faucibus magnis
+                            condimentum nulla. Ante parturient iaculis orci curae sapien feugiat
+                            conubia litora vivamus sociis auctor vestibulum.
+                        </p>
 
-                    <button className="uppercase bg-[#FE6A13] text-white px-[30px] 2xl:py-3.5 py-3 2xl:text-base text-sm font-semibold cursor-pointer hover:bg-[#1A1A1A] transition-all duration-300">
-                        DISCOVER MENUS
-                    </button>
+                        <button className="uppercase bg-[#FE6A13] text-white px-[30px] 2xl:py-3.5 py-3 2xl:text-base text-sm font-semibold cursor-pointer hover:bg-[#1A1A1A] transition-all duration-300">
+                            DISCOVER MENUS
+                        </button>
+                    </div>
                 </div>
 
-                <div className='flex flex-1/2 justify-end lg:gap-5 gap-4'>
+                <div ref={ref} className={`box_2 flex flex-1/2 justify-end lg:gap-5 gap-4 ${inView ? 'show' : ''}`}>
                     {/* STATS BOXES */}
                     <div className="flex flex-col border border-gray-300 divide-y divide-gray-300">
 

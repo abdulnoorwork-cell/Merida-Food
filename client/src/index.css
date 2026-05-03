@@ -27,6 +27,39 @@ h5 {
     unicode-bidi: isolate;
 }
 
+.box {
+    opacity: 0;
+    transform: translateY(60px);
+    transition: all 0.8s ease;
+}
+
+.box.show {
+    opacity: 1;
+    transform: translateY(0);
+}
+
+.box_2 {
+    opacity: 0;
+    transform: translateX(60px);
+    transition: all 0.8s ease;
+}
+
+.box_2.show {
+    opacity: 1;
+    transform: translateX(0);
+}
+
+.box_3 {
+    opacity: 0;
+    transform: translateX(-60px);
+    transition: all 0.8s ease;
+}
+
+.box_3.show {
+    opacity: 1;
+    transform: translateX(0);
+}
+
 @media screen and (min-width: 1280px) {
     .container {
         max-width: 1180px;

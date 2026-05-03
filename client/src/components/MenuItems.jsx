@@ -2,6 +2,7 @@ import React, { useContext, useEffect, useState } from 'react'
 import { AppContext } from '../context/AppContext';
 import axios from 'axios';
 import loading_animation from '../../public/loading_animation.svg'
+import { useInView } from 'react-intersection-observer';
 
 const MenuItems = () => {
 
@@ -45,6 +46,8 @@ const MenuItems = () => {
         fetchLunchProducts()
     }, []);
 
+    const {ref,inView}=useInView({threshold:0.2,triggerOnce:false});
+
     return (
         <section className="bg-[#111] py-20">
             <div className='container mx-auto px-4'>
@@ -63,7 +66,7 @@ const MenuItems = () => {
                 <div className="grid md:grid-cols-2 gap-10">
 
                     {/* LEFT COLUMN */}
-                    <div>
+                    <div ref={ref} className={`box_3 ${inView ? 'show' : ''}`}>
                         <p className="text-white text-lg font-medium mb-6 tracking-wide border-b border-gray-700 pb-2">
                             BREAKFAST MENU
                         </p>
@@ -98,7 +101,7 @@ const MenuItems = () => {
                     </div>
 
                     {/* RIGHT COLUMN */}
-                    <div>
+                    <div ref={ref} className={`box_2 ${inView ? 'show' : ''}`}>
                         <p className="text-white text-lg font-medium mb-6 tracking-wide border-b border-gray-700 pb-2">
                             LUNCH MENU
                         </p>

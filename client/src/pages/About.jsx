@@ -6,26 +6,29 @@ import { IoRestaurantOutline } from "react-icons/io5";
 import { GrRestaurant } from "react-icons/gr";
 import { FaAward } from "react-icons/fa";
 import Team from '../components/Team'
+import { useInView } from 'react-intersection-observer';
+
+const data = [
+  {
+    title: "Fresh Authentic Flavors",
+    desc: "Vehicula placerat eleifend facilisi tortor, interdum feugiat arcu habitasse iaculis ultricies ornare ridiculus.",
+    icon: <FaAward />,
+  },
+  {
+    title: "Inviting Atmosphere",
+    desc: "Vehicula placerat eleifend facilisi tortor, interdum feugiat arcu habitasse iaculis ultricies ornare ridiculus.",
+    icon: <IoRestaurantOutline />,
+  },
+  {
+    title: "Experience Chefs",
+    desc: "Vehicula placerat eleifend facilisi tortor, interdum feugiat arcu habitasse iaculis ultricies ornare ridiculus.",
+    icon: <GrRestaurant />,
+  },
+];
 
 const About = () => {
   const [startVideo, setStartVideo] = useState(false)
-  const data = [
-    {
-      title: "Fresh Authentic Flavors",
-      desc: "Vehicula placerat eleifend facilisi tortor, interdum feugiat arcu habitasse iaculis ultricies ornare ridiculus.",
-      icon: <FaAward />,
-    },
-    {
-      title: "Inviting Atmosphere",
-      desc: "Vehicula placerat eleifend facilisi tortor, interdum feugiat arcu habitasse iaculis ultricies ornare ridiculus.",
-      icon: <IoRestaurantOutline />,
-    },
-    {
-      title: "Experience Chefs",
-      desc: "Vehicula placerat eleifend facilisi tortor, interdum feugiat arcu habitasse iaculis ultricies ornare ridiculus.",
-      icon: <GrRestaurant />,
-    },
-  ];
+  const { ref, inView } = useInView({ threshold: 0.2, triggerOnce: false })
   return (
     <div>
       {/* Hero Section */}
@@ -51,7 +54,7 @@ const About = () => {
       </div>
 
       <section className="py-20">
-        <div className="container mx-auto px-4 text-center">
+        <div className={`container mx-auto px-4 text-center`}>
 
           {/* SMALL TITLE */}
           <p className="text-orange-500 uppercase tracking-widest 2xl:text-base text-sm font-semibold mb-2">
@@ -110,8 +113,9 @@ const About = () => {
           <div className="grid lg:grid-cols-3 sm:grid-cols-2 gap-5">
             {data.map((item, i) => (
               <div
+                ref={ref}
                 key={i}
-                className={`pt-[60px] px-10 pb-[51px] shadow-[0px_4px_52px_0px_#00000012] transition bg-white`}
+                className={`box_3 ${inView ? 'show' : ''} pt-[60px] px-10 pb-[51px] shadow-[0px_4px_52px_0px_#00000012] transition bg-white`}
               >
                 {/* ICON */}
                 <div className="2xl:w-[120px] 2xl:h-[120px] sm:w-24 sm:h-24 w-20 h-20 rounded-full mx-auto sm:mb-6 mb-4 flex items-center justify-center bg-[#FE6A13] text-white 2xl:text-[55px] sm:text-5xl text-4xl">

@@ -1,27 +1,31 @@
-import React from "react";
+import React,{useEffect} from "react";
 import { FaFacebookF, FaTwitter, FaLinkedinIn, FaInstagram } from "react-icons/fa";
 import team_1 from '../assets/team-1.webp'
 import team_2 from '../assets/team-2.webp'
 import team_3 from '../assets/team-3.webp'
+import { useInView } from 'react-intersection-observer';
+
+const team = [
+  {
+    name: "Edward Robert",
+    role: "Senior Chef",
+    image: team_3,
+  },
+  {
+    name: "Markus Daniel",
+    role: "Senior Chef",
+    image: team_1,
+  },
+  {
+    name: "Thomas Samuel",
+    role: "Senior Chef",
+    image: team_2,
+  },
+];
 
 const Team = () => {
-  const team = [
-    {
-      name: "Edward Robert",
-      role: "Senior Chef",
-      image: team_3,
-    },
-    {
-      name: "Markus Daniel",
-      role: "Senior Chef",
-      image: team_1,
-    },
-    {
-      name: "Thomas Samuel",
-      role: "Senior Chef",
-      image: team_2,
-    },
-  ];
+
+  const { ref, inView } = useInView({ threshold: 0.2, triggerOnce: false })
 
   return (
     <section className="container mx-auto 2xl:pt-20 pt-16 pb-16 px-4">
@@ -41,8 +45,9 @@ const Team = () => {
         <div className="grid lg:grid-cols-3 sm:grid-cols-2 gap-5">
           {team.map((member, index) => (
             <div
+              ref={ref}
               key={index}
-              className="group relative overflow-hidden"
+              className={`box_3 ${inView ? 'show' : ''} group relative overflow-hidden`}
             >
               {/* Image */}
               <div className="relative">

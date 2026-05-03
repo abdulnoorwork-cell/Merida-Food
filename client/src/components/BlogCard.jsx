@@ -1,12 +1,15 @@
 import React from 'react'
-import { useContext } from 'react'
+import { useContext,useEffect } from 'react'
 import { AppContext } from '../context/AppContext'
+import { useInView } from "react-intersection-observer";
 
 const BlogCard = ({blog}) => {
     const {navigate}=useContext(AppContext)
+    const {ref,inView}=useInView({threshold:0.2,triggerOnce:false})
     return (
         <div
-            className="bg-[#F6F6F7] overflow-hidden group"
+            ref={ref}
+            className={`box_3 ${inView ? 'show' : ''} bg-[#F6F6F7] overflow-hidden group`}
         >
             {/* Image */}
             <div onClick={()=>{navigate(`/blogs/${blog._id}`);scrollTo(0,0)}} className="overflow-hidden">

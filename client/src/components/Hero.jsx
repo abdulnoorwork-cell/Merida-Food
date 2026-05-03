@@ -1,13 +1,15 @@
-import React from 'react'
+import React,{useEffect} from 'react'
 import hero_image from '../assets/hero_image.webp'
 import hero_bg from '../assets/hero_bg.webp'
+import { useInView } from 'react-intersection-observer'
 
 const Hero = () => {
+    const {ref,inView}=useInView({threshold:0.2,triggerOnce:false})
     return (
         <div className="flex flex-1 2xl:h-[90vh] h-screen relative" style={{ backgroundImage: `url(${hero_bg})` }}>
 
             {/* Content */}
-            <div className="container px-4 text-white flex flex-col absolute left-[43%] top-1/2 -translate-x-[43%] -translate-y-1/2 sm:pl-16 py-10" >
+            <div ref={ref} className={`box_3 ${inView ? 'show' : ''} container px-4 text-white flex flex-col absolute left-[43%] top-1/2 -translate-x-[43%] -translate-y-1/2 sm:pl-16 py-10`}>
 
                 <p className="uppercase mb-4 font-medium flex items-center gap-3 sm:text-base text-sm">
                     Welcome to Merida
