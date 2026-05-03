@@ -46,7 +46,7 @@ const MenuItems = () => {
     }, []);
 
     return (
-        <section className="bg-[#111] py-16">
+        <section className="bg-[#111] py-20">
             <div className='container mx-auto px-4'>
 
                 {/* Heading */}

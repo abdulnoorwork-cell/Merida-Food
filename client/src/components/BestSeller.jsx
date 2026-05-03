@@ -2,6 +2,7 @@ import React, { useContext, useEffect, useState } from 'react'
 import { AppContext } from '../context/AppContext'
 import axios from 'axios';
 const ProductCard = React.lazy(() => import('./ProductCard'))
+import loading_animation from '../../public/loading_animation.svg'
 
 const BestSeller = () => {
 
@@ -42,11 +43,15 @@ const BestSeller = () => {
                 </div>
 
                 {/* Cards */}
-                <div className="products grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 sm:gap-5 gap-4">
-                    {bestSellerProducts.map((item, index) => (
-                        <ProductCard key={index} product={item} />
-                    ))}
-                </div>
+                {loading ? <img src={loading_animation} className='mx-auto' alt="loader" /> :
+                    <div className='min-h-[50vh]'>{bestSellerProducts.length > 0 ?
+                        <div className="products grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 sm:gap-5 gap-4">
+                            {bestSellerProducts.map((item, index) => (
+                                <ProductCard key={index} product={item} />
+                            ))}
+                        </div> : <div className='font-medium min-h-[60vh] text-base sm:text-lg flex items-center justify-center text-center rounded-md w-full'>You don,t have any items</div>}
+                    </div>
+                }
             </div>
         </section>
     )
