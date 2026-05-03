@@ -6,20 +6,25 @@ const ProductCard = React.lazy(() => import('../components/ProductCard'))
 import { RiArrowRightLongLine } from "react-icons/ri";
 import { RiArrowLeftLongLine } from "react-icons/ri";
 import axios from 'axios'
+import loading_animation from '../../public/loading_animation.svg'
 
-const CategoryProducts = ({category}) => {
-    const [products,setProducts] = useState([])
+const CategoryProducts = ({ category }) => {
+    const [products, setProducts] = useState([])
+    const [loading, setLoading] = useState(false)
     const { backendUrl } = useContext(AppContext)
     const [sortType, setSortType] = useState('latest');
     const [itemsPerPage, setItemsPerPage] = useState(8)
     const [currentPage, setCurrentPage] = useState(1);
     const fetchCategoryProducts = async () => {
         try {
-            let response =await axios.get(`${backendUrl}/api/product/category/${category}`,{withCredentials:true});
-            if(response.data){
+            setLoading(true)
+            let response = await axios.get(`${backendUrl}/api/product/category/${category}`, { withCredentials: true });
+            if (response.data) {
                 setProducts(response.data)
+                setLoading(false)
             }
         } catch (error) {
+            setLoading(false)
             console.log(error)
         }
     }
@@ -59,9 +64,9 @@ const CategoryProducts = ({category}) => {
     const currentProducts = sortedProducts.slice(firstIndex, lastIndex);
     const totalPages = Math.ceil(products?.length / itemsPerPage);
 
-    useEffect(()=>{
+    useEffect(() => {
         fetchCategoryProducts();
-    },[])
+    }, [])
 
     return (
         <div className='pb-20 sm:pb-24'>
@@ -102,11 +107,14 @@ const CategoryProducts = ({category}) => {
                 </div>
             </div>
             {/* PRODUCTS */}
-            <div className="products container mx-auto px-4 grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 sm:gap-5 gap-4">
-                {currentProducts.map((item, index) => (
-                    <ProductCard key={index} product={item} />
-                ))}
-            </div>
+            {currentProducts.length > 0 ?
+                <div className='min-h-[60vh]'>{loading ? <img src={loading_animation} className='mx-auto' alt="loader" />
+                    : <div className="products container mx-auto px-4 grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 sm:gap-5 gap-4">
+                        {currentProducts.map((item, index) => (
+                            <ProductCard key={index} product={item} />
+                        ))}
+                    </div>}</div> :
+                <div className='font-medium min-h-[50vh] text-base sm:text-lg flex items-center justify-center text-center bg-white rounded-md w-full'>You don,t have any items</div>}
             {/* Pagination Buttons */}
             {totalPages > 1 ? (
                 <div className='flex items-center justify-center gap-2 mt-10 flex-wrap'>

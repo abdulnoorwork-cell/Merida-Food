@@ -2,17 +2,18 @@ import React, { useContext, useEffect, useState } from "react";
 import product_bg from '../assets/product_bg.webp'
 import { AppContext } from "../context/AppContext";
 import axios from "axios";
-const ProductCard = React.lazy(()=>import("./ProductCard"));
+const ProductCard = React.lazy(() => import("./ProductCard"));
+import loading_animation from '../../public/loading_animation.svg'
 
-const categories = ["All", "Breakfast", "Lunch", "Light & Digestive","Fast Food"];
+const categories = ["All", "Breakfast", "Lunch", "Light & Digestive", "Fast Food"];
 
 export default function FoodMenu() {
     const [active, setActive] = useState("All");
     const [categoryProducts, setCategoryProducts] = useState([])
     const [limitedProducts, setLimitedProducts] = useState([])
-    const [loading, setLoading]=useState(false)
+    const [loading, setLoading] = useState(false)
 
-    const {backendUrl} = useContext(AppContext)
+    const { backendUrl } = useContext(AppContext)
 
     const fetchCategoryProducts = async () => {
         try {
@@ -44,9 +45,9 @@ export default function FoodMenu() {
         }
     }
 
-    useEffect(()=>{
+    useEffect(() => {
         fetchLimitedProducts()
-    },[])
+    }, [])
 
     useEffect(() => {
         if (active) {
@@ -92,12 +93,15 @@ export default function FoodMenu() {
                 </div>
 
                 {/* Cards */}
-                <div className="products grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 sm:gap-5 gap-4">
-                    {filtered?.map((item, index) => (
-                        <ProductCard key={index} product={item} />
-                    ))}
-                </div>
-
+                {filtered.length > 0 ?
+                    <div>
+                        {loading ? <div className="min-h-[40vh] flex items-center justify-center"><img src={loading_animation} className="mx-auto" alt="loader" /></div> :
+                            <div className="products grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 sm:gap-5 gap-4">
+                                {filtered?.map((item, index) => (
+                                    <ProductCard key={index} product={item} />
+                                ))}
+                            </div>}
+                    </div> : <div className='font-medium min-h-[50vh] text-base sm:text-lg flex items-center justify-center text-center text-white rounded-md w-full'>You don,t have any items</div>}
             </div>
         </section>
     );
