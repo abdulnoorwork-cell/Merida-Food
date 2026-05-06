@@ -206,7 +206,7 @@ const Login = () => {
     ) :
         <div>
             {/* Hero Section */}
-            <div className="relative h-[400px] md:h-[450px] w-full">
+            <div className="relative bg-gray-100 2xl:h-[430px] xl:h-[380px] lg:h-[360px] md:h-[340px] sm:h-[320px] h-[300px] w-full">
                 {/* Background Image */}
                 <img
                     src={breadcrumb_bg}
