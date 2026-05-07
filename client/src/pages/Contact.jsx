@@ -18,6 +18,7 @@ const Contact = () => {
     e.preventDefault();
     console.log(form);
   };
+  
   return (
     <div>
       {/* Hero Section */}

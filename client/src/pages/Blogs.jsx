@@ -45,7 +45,7 @@ const Blogs = () => {
               {blogs.map((blog, index) => (
                 <BlogCard key={index} blog={blog} />
               ))}
-            </div> : <div className='font-medium min-h-[100px] text-lg flex items-center justify-center text-center bg-white rounded-md w-full'>You don,t have any related items</div>}
+            </div> : <div className='font-medium min-h-[100px] bg-gray-100 text-lg flex items-center justify-center text-center rounded-md w-full'>You don,t have any blogs</div>}
           </div>}
 
           {/* RIGHT SIDEBAR */}
