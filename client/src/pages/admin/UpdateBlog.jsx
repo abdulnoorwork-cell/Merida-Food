@@ -84,7 +84,7 @@ const UpdateBlog = () => {
 
   return (
     <form onSubmit={onSubmitHandler} className='flex w-full justify-center px-4 py-8 md:px-8 lg:py-10 h-full min-h-[85vh]'>
-      <div className='bg-black/30 backdrop-blur-xs flex flex-col w-full max-w-[700px] p-6 md:p-10 shadow rounded'>
+      <div className='bg-black/30 backdrop-blur-xs flex flex-col w-full h-fit max-w-[700px] p-6 md:p-10 shadow rounded'>
         <label htmlFor="image">
           <img src={!image ? blog.image && blog.image.url : URL.createObjectURL(image)} className='rounded cursor-pointer max-h-24 max-w-24' alt="" />
           <input type="file" onChange={(e) => setImage(e.target.files[0])} hidden id='image' />
