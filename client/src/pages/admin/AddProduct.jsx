@@ -109,7 +109,7 @@ const AddProduct = () => {
 
   return (
     <form onSubmit={onSubmitHandler} className='flex w-full justify-center px-4 py-8 md:px-8 lg:py-10 h-full min-h-[85vh]'>
-      <div className='w-full max-w-5xl bg-black/30 backdrop-blur-xs rounded-2xl shadow-lg sm:p-8 p-6'>
+      <div className='w-full h-fit max-w-5xl bg-black/30 backdrop-blur-xs rounded-2xl shadow-lg sm:p-8 p-6'>
         {/* Header */}
         <div className="mb-6 lg:block hidden">
           <div>
@@ -158,7 +158,7 @@ const AddProduct = () => {
                 <label className="block sm:text-sm text-xs font-medium mb-1">
                   Category
                 </label>
-                <select defaultValue={0} onChange={(e) => setCategory(e.target.value)} name="category" className="w-full border border-gray-300 rounded-lg px-3 py-2.5 focus:ring-2 focus:ring-[#FE6A13] outline-none sm:text-[13px] text-xs bg-[#160f0f]">
+                <select defaultValue={0} onChange={(e) => setCategory(e.target.value)} name="category" className="w-full border border-gray-300 rounded-lg px-3 py-2.5 focus:ring-2 focus:ring-[#FE6A13] outline-none sm:text-[13px] text-xs">
                   <option disabled value={0}>--Select Category--</option>
                   <option id='Breakfast' value="Breakfast">Breakfast</option>
                   <option id="Lunch" value="Lunch">Lunch</option>
@@ -216,7 +216,7 @@ const AddProduct = () => {
 
         </div>
         
-        <button style={{ fontFamily: 'Poppins' }} type='submit' className='mt-7 flex items-center gap-1 sm:text-sm text-xs px-8 w-fit py-[10px] bg-orange-600 text-white rounded cursor-pointer'><span className='text-white text-base'><LuPlus /></span>{loading ? 'Ading...' : 'Add Product'}</button>
+        <button style={{ fontFamily: 'Poppins' }} type='submit' className='mt-7 flex items-center gap-1 sm:text-sm text-xs px-6 w-fit py-[10px] bg-orange-600 text-white rounded cursor-pointer'><span className='text-white text-base'><LuPlus /></span>{loading ? 'Ading...' : 'Add Product'}</button>
       </div>
     </form>
   )
