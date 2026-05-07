@@ -66,7 +66,7 @@ const AddBlog = () => {
   }, [])
 
   return (
-    <form onSubmit={onSubmitHandler} className='flex w-full justify-center px-4 py-8 md:px-8 lg:py-10 h-full min-h-[85vh]'>
+    <form onSubmit={onSubmitHandler} className='flex items-center w-full justify-center px-4 py-8 md:px-8 lg:py-10 h-full min-h-[85vh]'>
       <div className='bg-black/30 backdrop-blur-xs flex flex-col w-full h-fit max-w-[700px] p-6 md:p-10 shadow rounded-xl'>
         <label htmlFor="image">
           {!image ? <span className='sm:text-2xl text-xl border border-gray-300 bg-black/10 sm:w-20 w-18 sm:h-17 h-15 flex items-center justify-center cursor-pointer rounded-md'><LuUpload /></span> : <img src={URL.createObjectURL(image)} className='rounded cursor-pointer max-h-24 max-w-24' alt="" />}
