@@ -25,7 +25,7 @@ const ProductCard = ({ product }) => {
                 {product?.images?.[1]?.url && <img
                     src={product?.images?.[1]?.url}
                     alt="hover"
-                    className="sm:block hidden cursor-pointer absolute top-0 left-0 h-51 w-full object-contain opacity-0 group-hover:opacity-100 transition duration-300"
+                    className="sm:block hidden cursor-pointer absolute top-0 left-0 h-full w-full object-contain opacity-0 group-hover:opacity-100 transition duration-300"
                 />}
             </figure>
 
