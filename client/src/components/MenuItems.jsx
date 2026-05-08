@@ -76,6 +76,7 @@ const MenuItems = () => {
                                 {brreakfastProducts.length > 0 ? brreakfastProducts.map((item, index) => (
                                     <div
                                         key={index}
+                                        onClick={()=>{navigate(`/shop/${item?._id}`);scrollTo(0,0)}}
                                         className="flex items-center gap-4 py-4 border-b border-gray-700"
                                     >
                                         <img
@@ -85,7 +86,7 @@ const MenuItems = () => {
                                         />
 
                                         <div className="flex-1">
-                                            <p onClick={()=>{navigate(`/shop/${item?._id}`);scrollTo(0,0)}} className="cursor-pointer text-white font-semibold text-lg">
+                                            <p onClick={()=>{navigate(`/shop/${item?._id}`);scrollTo(0,0)}} className="cursor-pointer text-white font-semibold text-lg hover:text-orange-500">
                                                 {item.name}
                                             </p>
                                             <p className="text-gray-400 sm:text-base text-sm line-clamp-1" dangerouslySetInnerHTML={{ __html: item.description }}>
@@ -111,6 +112,7 @@ const MenuItems = () => {
                                 {lunchProducts.length > 0 ? lunchProducts.map((item, index) => (
                                     <div
                                         key={index}
+                                        onClick={()=>{navigate(`/shop/${item?._id}`);scrollTo(0,0)}}
                                         className="flex items-center gap-4 py-4 border-b border-gray-700"
                                     >
                                         <img
@@ -120,7 +122,7 @@ const MenuItems = () => {
                                         />
 
                                         <div className="flex-1">
-                                            <p onClick={()=>{navigate(`/shop/${item?._id}`);scrollTo(0,0)}} className="cursor-pointer text-white font-semibold text-lg">
+                                            <p onClick={()=>{navigate(`/shop/${item?._id}`);scrollTo(0,0)}} className="cursor-pointer text-white font-semibold text-lg hover:text-orange-500">
                                                 {item.name}
                                             </p>
                                             <p className="text-gray-400 sm:text-base text-sm line-clamp-1" dangerouslySetInnerHTML={{ __html: item.description }}>
