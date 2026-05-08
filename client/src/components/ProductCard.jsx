@@ -18,7 +18,7 @@ const ProductCard = ({ product }) => {
             <figure onClick={() => { navigate(`/shop/${product?._id}`); scrollTo(0, 0) }} className='overflow-hidden sm:h-[200px] h-[165px]'>
                 <img
                     src={`${product?.images?.[0]?.url}?w=500`}
-                    alt={product.name}
+                    alt={product?.name}
                     className="w-full h-full object-cover transform group-hover:scale-115 transition duration-500"
                 />
                 {/* Hover Image */}
