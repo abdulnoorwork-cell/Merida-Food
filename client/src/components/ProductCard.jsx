@@ -1,4 +1,4 @@
-import React, { useContext, useState,useEffect } from 'react'
+import React, { useContext, useState, useEffect } from 'react'
 import { AppContext } from '../context/AppContext';
 import { PiHeartStraightBold } from "react-icons/pi";
 import { FiHeart } from 'react-icons/fi';
@@ -7,8 +7,8 @@ import { FaHeart } from "react-icons/fa";
 import { useInView } from 'react-intersection-observer';
 
 const ProductCard = ({ product }) => {
-    const { currency, navigate,toggleWishlist,isInWishlist,addToCart,qty} = useContext(AppContext);
-    const {ref,inView}=useInView({threshold:0.2,triggerOnce:false})
+    const { currency, navigate, toggleWishlist, isInWishlist, addToCart, qty } = useContext(AppContext);
+    const { ref, inView } = useInView({ threshold: 0.2, triggerOnce: false })
     return (
         <div
             ref={ref}
@@ -16,8 +16,9 @@ const ProductCard = ({ product }) => {
         >
             {/* Image */}
             <figure onClick={() => { navigate(`/shop/${product?._id}`); scrollTo(0, 0) }} className='relative overflow-hidden sm:h-[200px] h-[165px]'>
+
                 <img
-                    src={`${product?.images?.[0]?.url}?w=500`}
+                    src={`${product.images[0].url}`}
                     alt={product?.name}
                     className="w-full h-full object-cover transform group-hover:scale-115 transition duration-500"
                 />
