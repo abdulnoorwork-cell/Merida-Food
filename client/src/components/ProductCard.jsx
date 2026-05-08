@@ -15,18 +15,18 @@ const ProductCard = ({ product }) => {
             className={`box_3 ${inView ? 'show' : ''} group relative bg-white text-black overflow-hidden border border-gray-400`}
         >
             {/* Image */}
-            <figure onClick={() => { navigate(`/shop/${product?._id}`); scrollTo(0, 0) }} className='overflow-hidden sm:h-[200px] h-[165px]'>
+            <figure onClick={() => { navigate(`/shop/${product?._id}`); scrollTo(0, 0) }} className='relative overflow-hidden sm:h-[200px] h-[165px]'>
                 <img
                     src={`${product?.images?.[0]?.url}?w=500`}
                     alt={product?.name}
                     className="w-full h-full object-cover transform group-hover:scale-115 transition duration-500"
                 />
                 {/* Hover Image */}
-                {product?.images?.[1]?.url && <img
+                {/* {product?.images?.[1]?.url && <img
                     src={product?.images?.[1]?.url}
                     alt="hover"
-                    className="sm:block hidden cursor-pointer absolute top-0 left-0 h-full w-full object-contain opacity-0 group-hover:opacity-100 transition duration-300"
-                />}
+                    className="sm:block hidden bg-gray-100 cursor-pointer absolute top-0 left-0 h-full w-full object-contain opacity-0 group-hover:opacity-100 transition duration-300"
+                />} */}
             </figure>
 
             {/* Content */}
