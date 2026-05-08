@@ -178,7 +178,7 @@ const Dashboard = () => {
                   ))}
                 </div>
               </div>
-            </div> : <div className='font-medium min-h-[100px] text-sm flex items-center justify-center text-center rounded-md w-full'>You don,t have any products</div>}
+            </div> : <div className='font-medium min-h-[100px] text-sm flex items-center justify-center text-center rounded-md w-full bg-black/30 backdrop-blur-xs'>You don,t have any products</div>}
         </div>}
       </div>
       {/* blogs */}

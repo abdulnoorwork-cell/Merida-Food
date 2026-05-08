@@ -67,7 +67,7 @@ const ProductList = () => {
                     </div>
                   ))}
                 </div> :
-                <div className='font-medium min-h-[100px] text-sm flex items-center justify-center text-center bg-white rounded-md w-full'>You don,t have any products</div>
+                <div className='font-medium min-h-[100px] text-sm flex items-center justify-center text-center rounded-md w-full'>You don,t have any products</div>
               }
             </div>}
           </div>
