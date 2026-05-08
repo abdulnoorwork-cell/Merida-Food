@@ -158,7 +158,7 @@ const AddProduct = () => {
                 <label className="block sm:text-sm text-xs font-medium mb-1">
                   Category
                 </label>
-                <select defaultValue={0} onChange={(e) => setCategory(e.target.value)} name="category" className="w-full border border-gray-300 rounded-lg px-3 py-2.5 focus:ring-2 focus:ring-[#FE6A13] outline-none sm:text-[13px] text-xs">
+                <select defaultValue={0} onChange={(e) => setCategory(e.target.value)} name="category" className="w-full bg-[#111] border border-gray-300 rounded-lg px-3 py-2.5 focus:ring-2 focus:ring-[#FE6A13] outline-none sm:text-[13px] text-xs">
                   <option disabled value={0}>--Select Category--</option>
                   <option id='Breakfast' value="Breakfast">Breakfast</option>
                   <option id="Lunch" value="Lunch">Lunch</option>
