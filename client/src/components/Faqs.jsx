@@ -28,7 +28,7 @@ const Faqs = () => {
         setActiveIndex(activeIndex === index ? null : index);
     };
 
-    const {ref,inView}=useInView({threshold:0.2,triggerOnce:false});
+    const {ref,inView}=useInView({threshold:0.2,triggerOnce:true});
 
     return (
         <div style={{ backgroundImage: `url(${faqs_bg})` }} className="bg-no-repeat bg-center bg-cover 2xl:pt-[70px] pt-[50px] pb-24 px-4">

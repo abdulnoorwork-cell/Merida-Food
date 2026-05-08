@@ -28,7 +28,7 @@ const data = [
 
 const About = () => {
   const [startVideo, setStartVideo] = useState(false)
-  const { ref, inView } = useInView({ threshold: 0.2, triggerOnce: false })
+  const { ref, inView } = useInView({ threshold: 0.2, triggerOnce: true})
   return (
     <div>
       {/* Hero Section */}

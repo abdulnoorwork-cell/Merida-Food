@@ -46,7 +46,7 @@ const MenuItems = () => {
         fetchLunchProducts()
     }, []);
 
-    const {ref,inView}=useInView({threshold:0.2,triggerOnce:false});
+    const {ref,inView}=useInView({threshold:0.2,triggerOnce:true});
 
     return (
         <section className="bg-[#111] py-20">

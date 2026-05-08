@@ -8,7 +8,7 @@ import { useInView } from 'react-intersection-observer';
 
 const ProductCard = ({ product }) => {
     const { currency, navigate, toggleWishlist, isInWishlist, addToCart, qty } = useContext(AppContext);
-    const { ref, inView } = useInView({ threshold: 0.2, triggerOnce: false })
+    const { ref, inView } = useInView({ threshold: 0.2, triggerOnce: true })
     return (
         <div
             ref={ref}

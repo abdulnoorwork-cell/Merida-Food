@@ -5,7 +5,7 @@ import { useInView } from "react-intersection-observer";
 
 const BlogCard = ({blog}) => {
     const {navigate}=useContext(AppContext)
-    const {ref,inView}=useInView({threshold:0.2,triggerOnce:false})
+    const {ref,inView}=useInView({threshold:0.2,triggerOnce:true})
     return (
         <div
             ref={ref}

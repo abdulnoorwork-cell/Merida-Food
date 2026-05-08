@@ -33,7 +33,7 @@ const Service = () => {
     const { navigate } = useContext(AppContext);
     const { ref, inView } = useInView({
         threshold: 0.2,
-        triggerOnce: false,
+        triggerOnce: true,
     });
     return (
         <div className="container mx-auto px-4 2xl:py-20 py-16">
