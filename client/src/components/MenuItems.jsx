@@ -9,7 +9,7 @@ const MenuItems = () => {
     const [brreakfastProducts, setBreakfastProducts] = useState([])
     const [lunchProducts, setLunchProducts] = useState([])
     const [loading, setLoading] = useState(false)
-    const { backendUrl, currency } = useContext(AppContext);
+    const { backendUrl, currency,navigate } = useContext(AppContext);
 
     const fetchBreakfastProducts = async () => {
         try {
@@ -85,7 +85,7 @@ const MenuItems = () => {
                                         />
 
                                         <div className="flex-1">
-                                            <p className="text-white font-semibold text-lg">
+                                            <p onClick={()=>{navigate(`/shop/${item?._id}`);scrollTo(0,0)}} className="cursor-pointer text-white font-semibold text-lg">
                                                 {item.name}
                                             </p>
                                             <p className="text-gray-400 sm:text-base text-sm line-clamp-1" dangerouslySetInnerHTML={{ __html: item.description }}>
@@ -120,7 +120,7 @@ const MenuItems = () => {
                                         />
 
                                         <div className="flex-1">
-                                            <p className="text-white font-semibold text-lg">
+                                            <p onClick={()=>{navigate(`/shop/${item?._id}`);scrollTo(0,0)}} className="cursor-pointer text-white font-semibold text-lg">
                                                 {item.name}
                                             </p>
                                             <p className="text-gray-400 sm:text-base text-sm line-clamp-1" dangerouslySetInnerHTML={{ __html: item.description }}>
