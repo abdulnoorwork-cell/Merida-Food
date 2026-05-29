@@ -10,28 +10,8 @@ import toast from 'react-hot-toast';
 import { MdDeleteOutline } from 'react-icons/md';
 
 const WishlistProducts = () => {
-    const [wishlist, setWishlist] = useState([]);
     const [wishlistLoading,setWishlistLoading]=useState(false)
-    const { backendUrl, isAdmin, currency, fetchProducts } = useContext(AppContext);
-    const fetchWishlistProducts = async () => {
-        try {
-            setWishlistLoading(true)
-            let response = await axios.get(`${backendUrl}/api/wishlist/get-wishlist-products`, {
-                headers: {
-                    Authorization: `${isAdmin}`
-                },
-                withCredentials: true
-            })
-            if (response.data) {
-                setWishlist(response.data)
-                setWishlistLoading(false)
-            }
-            setWishlistLoading(false)
-        } catch (error) {
-            setWishlistLoading(false)
-            console.log(error)
-        }
-    }
+    const { backendUrl, isAdmin, currency, fetchProducts,wishlistProducts,fetchWishlistProducts } = useContext(AppContext);
 
     const deleteWishlistProduct = async (productId) => {
         try {
@@ -72,7 +52,7 @@ const WishlistProducts = () => {
                             <label className='mx-auto' style={{ fontFamily: "Montserrat" }}>Action</label>
                         </div>
                         {wishlistLoading ? <img src={loading_animation} alt="" className='mx-auto' /> : <div>
-                            {wishlist.length > 0 ?
+                            {wishlistProducts.length > 0 ?
                                 <div className='overflow-auto max-h-[75vh] scrollbar-hide relative sm:text-sm text-[13px]'>
                                     {wishlist?.reverse().map((w, i) => (
                                         <div key={i} className='product_list border-b border-gray-600 px-2 py-1.5 grid lg:grid-cols-[3fr_1fr_1fr_1fr_1fr] sm:grid-cols-[3fr_1fr_1fr_1fr] grid-cols-[3fr_1fr_1fr] sm:gap-2 gap-1.5 items-center'>
