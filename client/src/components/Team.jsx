@@ -42,7 +42,7 @@ const Team = () => {
         </div>
 
         {/* Cards */}
-        <div className="grid lg:grid-cols-3 sm:grid-cols-2 gap-5">
+        <div className="grid lg:grid-cols-3 grid-cols-2 gap-5">
           {team.map((member, index) => (
             <div
               key={index}
@@ -57,7 +57,7 @@ const Team = () => {
                 />
 
                 {/* Overlay */}
-                <div className="absolute inset-0 bg-black/60 opacity-0 group-hover:opacity-100 transition duration-300 flex flex-col justify-center items-start pl-6 space-y-3">
+                <div className="absolute inset-0 z-10 bg-black/60 opacity-0 group-hover:opacity-100 transition duration-300 flex flex-col justify-center items-start pl-6 space-y-3">
 
                   {/* Social Icons */}
                   <div className="flex flex-col sm:gap-3 gap-2.5">
@@ -79,7 +79,7 @@ const Team = () => {
 
               {/* Content */}
               <div className="sm:p-5 p-4 text-center bg-white absolute bottom-[5%] left-0 right-0 w-[90%] mx-auto">
-                <p className="sm:text-xl text-lg font-semibold">
+                <p className="sm:text-xl text-base font-semibold leading-tight">
                   {member.name}
                 </p>
                 <p className="text-orange-500 font-normal sm:text-base text-sm">
