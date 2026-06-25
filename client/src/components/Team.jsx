@@ -46,7 +46,7 @@ const Team = () => {
           {team.map((member, index) => (
             <div
               key={index}
-              className={`group relative overflow-hidden`}
+              className={`team group relative overflow-hidden`}
             >
               {/* Image */}
               <div className="relative">
