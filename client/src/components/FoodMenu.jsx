@@ -94,7 +94,7 @@ export default function FoodMenu() {
                 {/* Cards */}
                 {loading ? <img src={loading_animation} className='mx-auto' alt="loader" /> :
                     <div className='min-h-[50vh]'>{filtered.length > 0 ?
-                        <div className="products grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 sm:gap-5 gap-4">
+                        <div className="products grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-5">
                             {filtered.map((item, index) => (
                                 <ProductCard key={index} product={item} />
                             ))}

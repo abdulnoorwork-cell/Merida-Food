@@ -22,14 +22,14 @@ const BlogCard = ({blog}) => {
             {/* Content */}
             <div className="xl:p-6 sm:p-5 p-4 pb-5">
                 {/* Meta */}
-                <div className="flex items-center xl:text-sm text-xs text-gray-500 gap-2 mb-3">
+                <div className="created_at flex items-center xl:text-sm text-xs text-gray-500 gap-2 mb-3">
                     <span>{new Date(blog.created_at).toDateString()}</span>
                     <div className="bg-orange-500 w-1.5 h-1.5 rounded-full"></div>
                     <span>Admin</span>
                 </div>
 
                 {/* Title */}
-                <p className="xl:text-xl sm:text-lg text-base font-medium sm:mb-5 mb-4 leading-snug">
+                <p className="xl:text-xl sm:text-lg text-base font-medium sm:mb-5 mb-4 leading-snug line-clamp-3 sm:line-clamp-2">
                     {blog.title}
                 </p>
 

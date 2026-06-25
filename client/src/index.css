@@ -73,6 +73,20 @@ h5 {
     }
 }
 
+@media screen and (max-width:450px) {
+    .product_card .description {
+        display: none;
+    }
+
+    .product_card figure {
+        height: 140px;
+    }
+
+    .product_card button {
+        margin-top: 14px;
+    }
+}
+
 @media screen and (max-width: 400px) {
     .hamburger {
         width: 35px;
@@ -88,9 +102,13 @@ h5 {
         font-size: 18px;
     }
 
-    .blogs {
-        display: flex;
-        flex-direction: column;
+    .blogs .created_at {
+        font-size: 11px;
+        display: none;
+    }
+
+    .blogs button {
+        font-size: 10px;
     }
 
     .blogs img {
@@ -117,11 +135,6 @@ h5 {
 
     .navbar .icons {
         gap: 9px;
-    }
-
-    .products {
-        display: flex;
-        flex-direction: column;
     }
 }
 

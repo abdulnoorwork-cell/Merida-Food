@@ -28,7 +28,7 @@ const LatestItems = () => {
                 {/* Cards */}
                 {latestItemsLoading ? <img src={loading_animation} className='mx-auto' alt="loader" /> :
                     <div className='min-h-[50vh]'>{latestProducts.length > 0 ?
-                        <div className="products grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 sm:gap-5 gap-4">
+                        <div className="products grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-5">
                             {latestProducts.map((item, index) => (
                                 <ProductCard key={index} product={item} />
                             ))}

@@ -11,7 +11,7 @@ const ProductCard = ({ product }) => {
     // const { ref, inView } = useInView({ threshold: 0.2, triggerOnce: true })
     return (
         <div
-            className={`group relative bg-white text-black overflow-hidden border border-gray-400`}
+            className={`product_card group relative bg-white text-black overflow-hidden border border-gray-400`}
         >
             {/* Image */}
             <figure onClick={() => { navigate(`/shop/${product?._id}`); scrollTo(0, 0) }} className='relative overflow-hidden sm:h-[200px] h-[165px]'>
@@ -39,12 +39,12 @@ const ProductCard = ({ product }) => {
                         <Star key={i} size={15} fill="currentColor" strokeWidth={0} />
                     ))}
                 </div>
-                <p onClick={() => { navigate(`/shop/${product?._id}`); scrollTo(0, 0) }} className="xl:text-lg text-base font-semibold leading-[1.3em] mt-2 sm:line-clamp-2 line-clamp-3">{product.name}</p>
+                <p onClick={() => { navigate(`/shop/${product?._id}`); scrollTo(0, 0) }} className="xl:text-lg text-base font-semibold leading-[1.3em] mt-2 line-clamp-2">{product.name}</p>
                 <p className="text-orange-500 font-semibold mt-1">
                     {currency}.{(product.price).toLocaleString()}
                 </p>
 
-                <p className="text-gray-500 sm:text-sm text-xs mt-2 line-clamp-3" dangerouslySetInnerHTML={{ __html: product.description }}>
+                <p className="description text-gray-500 sm:text-sm text-xs mt-2 line-clamp-3" dangerouslySetInnerHTML={{ __html: product.description }}>
                 </p>
 
                 <button onClick={() => addToCart(product?._id, qty)} className="mt-4 cursor-pointer bg-[#FE6A13] text-white sm:px-6 px-5 py-2 sm:text-sm text-xs hover:bg-[#1A1A1A] transition duration-200 font-medium">
