@@ -34,7 +34,7 @@ const Faqs = () => {
         <div style={{ backgroundImage: `url(${faqs_bg})` }} className="bg-no-repeat bg-center bg-cover 2xl:pt-[70px] pt-[50px] pb-24 px-4">
             <div className="container mx-auto px-4 grid md:grid-cols-2 gap-10 items-center">
                 {/* Image */}
-                <div ref={ref} className={`box ${inView ? 'show' : ''}`}>
+                <div className={``}>
                     <img
                         src={chef_image}
                         alt="Chef Cooking"
@@ -43,7 +43,7 @@ const Faqs = () => {
                 </div>
 
                 {/* Content */}
-                <div ref={ref} className={`box_2 ${inView ? 'show' : ''} mt-5 md:mt-0`}>
+                <div className={` mt-5 md:mt-0`}>
                     <p className="text-orange-500 font-semibold uppercase 2xl:text-base text-sm mb-2">
                         Some Question Answer
                     </p>

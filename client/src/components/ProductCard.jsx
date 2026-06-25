@@ -8,11 +8,10 @@ import { useInView } from 'react-intersection-observer';
 
 const ProductCard = ({ product }) => {
     const { currency, navigate, toggleWishlist, isInWishlist, addToCart, qty } = useContext(AppContext);
-    const { ref, inView } = useInView({ threshold: 0.2, triggerOnce: true })
+    // const { ref, inView } = useInView({ threshold: 0.2, triggerOnce: true })
     return (
         <div
-            ref={ref}
-            className={`box_3 ${inView ? 'show' : ''} group relative bg-white text-black overflow-hidden border border-gray-400`}
+            className={`group relative bg-white text-black overflow-hidden border border-gray-400`}
         >
             {/* Image */}
             <figure onClick={() => { navigate(`/shop/${product?._id}`); scrollTo(0, 0) }} className='relative overflow-hidden sm:h-[200px] h-[165px]'>

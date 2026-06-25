@@ -66,7 +66,7 @@ const MenuItems = () => {
                 <div className="grid md:grid-cols-2 gap-10">
 
                     {/* LEFT COLUMN */}
-                    <div ref={ref} className={`box_3 ${inView ? 'show' : ''}`}>
+                    <div className={``}>
                         <p className="text-white text-lg font-medium mb-6 tracking-wide border-b border-gray-700 pb-2">
                             BREAKFAST MENU
                         </p>
@@ -102,7 +102,7 @@ const MenuItems = () => {
                     </div>
 
                     {/* RIGHT COLUMN */}
-                    <div ref={ref} className={`box_2 ${inView ? 'show' : ''}`}>
+                    <div className={``}>
                         <p className="text-white text-lg font-medium mb-6 tracking-wide border-b border-gray-700 pb-2">
                             LUNCH MENU
                         </p>

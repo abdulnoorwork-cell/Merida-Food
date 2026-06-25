@@ -45,9 +45,8 @@ const Team = () => {
         <div className="grid lg:grid-cols-3 sm:grid-cols-2 gap-5">
           {team.map((member, index) => (
             <div
-              ref={ref}
               key={index}
-              className={`box_3 ${inView ? 'show' : ''} group relative overflow-hidden`}
+              className={`group relative overflow-hidden`}
             >
               {/* Image */}
               <div className="relative">

@@ -8,8 +8,7 @@ const BlogCard = ({blog}) => {
     const {ref,inView}=useInView({threshold:0.2,triggerOnce:true})
     return (
         <div
-            ref={ref}
-            className={`box_3 ${inView ? 'show' : ''} bg-[#F6F6F7] overflow-hidden group`}
+            className={`bg-[#F6F6F7] overflow-hidden group`}
         >
             {/* Image */}
             <div onClick={()=>{navigate(`/blogs/${blog._id}`);scrollTo(0,0)}} className="overflow-hidden">
