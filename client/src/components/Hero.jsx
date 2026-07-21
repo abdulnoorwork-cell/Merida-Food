@@ -16,7 +16,7 @@ const Hero = () => {
             {/* Content */}
             <div ref={ref} className={`box_3 ${inView ? 'show' : ''} z-10 container px-4 text-white flex flex-col absolute left-[43%] top-1/2 -translate-x-[43%] -translate-y-1/2 sm:pl-16 py-10`}>
 
-                <p className="uppercase mb-4 font-medium flex items-center gap-3 sm:text-base text-sm">
+                <p className="uppercase mb-4 flex items-center gap-3 sm:text-base text-sm">
                     Welcome to Merida
                     <div className='bg-white h-[1px] sm:w-[140px] w-[100px]'></div>
                 </p>
