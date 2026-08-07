@@ -30,7 +30,7 @@ const About = () => {
   const [startVideo, setStartVideo] = useState(false)
   const { ref, inView } = useInView({ threshold: 0.2, triggerOnce: true})
   return (
-    <div>
+    <div className='2xl:mb-24 mb-20'>
       {/* Hero Section */}
       <div className="relative 2xl:h-[430px] xl:h-[380px] lg:h-[360px] md:h-[340px] sm:h-[320px] h-[300px] w-full">
         {/* Background Image */}
@@ -53,7 +53,7 @@ const About = () => {
         </div>
       </div>
 
-      <section className="py-20">
+      <section className="2xl:py-24 py-20">
         <div className={`container mx-auto px-4 text-center`}>
 
           {/* SMALL TITLE */}
@@ -110,7 +110,7 @@ const About = () => {
           </h2>
 
           {/* CARDS */}
-          <div className="grid lg:grid-cols-3 sm:grid-cols-2 gap-5">
+          <div className="grid lg:grid-cols-3 sm:grid-cols-2 gap-8">
             {data.map((item, i) => (
               <div
                 key={i}
