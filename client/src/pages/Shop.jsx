@@ -5,6 +5,10 @@ import { useContext } from 'react'
 const ProductCard = React.lazy(() => import('../components/ProductCard'))
 import { RiArrowRightLongLine } from "react-icons/ri";
 import { RiArrowLeftLongLine } from "react-icons/ri";
+import { PiHeartStraightBold } from "react-icons/pi";
+import { FiHeart } from 'react-icons/fi';
+import { Star } from "lucide-react";
+import { FaHeart } from "react-icons/fa";
 
 const Shop = () => {
     const { currency, navigate, toggleWishlist, isInWishlist, addToCart, qty,products } = useContext(AppContext);
