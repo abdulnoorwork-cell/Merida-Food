@@ -39,10 +39,10 @@ const ProductCard = ({ product }) => {
                         <Star key={i} size={16} fill="currentColor" strokeWidth={0} />
                     ))}
                 </div>
-                <p onClick={() => { navigate(`/shop/${product?._id}`); scrollTo(0, 0) }} className="xl:text-xl text-base sm:text-lg font-semibold leading-[1.3em] mt-2 line-clamp-2">{product.name}</p>
-                <p className="text-orange-500 font-semibold mt-1 xl:text-xl text-lg">
+                <p onClick={() => { navigate(`/shop/${product?._id}`); scrollTo(0, 0) }} className="xl:text-xl text-base sm:text-lg font-semibold leading-[1.3em] mt-2 line-clamp-1">{product.name}</p>
+                <h5 className="text-orange-500 font-semibold mt-1 xl:text-xl text-lg">
                     {currency}.{(product.price).toLocaleString()}
-                </p>
+                </h5>
 
                 <p className="description text-gray-500 sm:text-sm text-xs mt-2 line-clamp-2" dangerouslySetInnerHTML={{ __html: product.description }}>
                 </p>
