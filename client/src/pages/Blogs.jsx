@@ -35,7 +35,7 @@ const Blogs = () => {
         </div>
       </div>
 
-      <div className="container mx-auto sm:py-24 py-20 px-4">
+      <div className="container mx-auto py-20 px-4">
         <div className="grid grid-cols-1 lg:grid-cols-3 gap-10">
 
           {/* LEFT CONTENT */}
