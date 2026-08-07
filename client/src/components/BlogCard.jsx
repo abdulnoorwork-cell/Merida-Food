@@ -29,11 +29,11 @@ const BlogCard = ({ blog }) => {
                 </div>
 
                 {/* Title */}
-                <p className="xl:text-xl text-lg font-medium sm:mb-5 mb-4 leading-snug line-clamp-3 sm:line-clamp-2">
+                <p className="xl:text-xl text-lg font-medium mb-3 leading-snug line-clamp-3 sm:line-clamp-2">
                     {blog.title}
                 </p>
 
-                <p className="description text-gray-500 sm:text-sm text-xs mb-2 line-clamp-3" dangerouslySetInnerHTML={{ __html: blog.description }}>
+                <p className="description text-gray-500 sm:text-sm text-xs mb-4 line-clamp-3" dangerouslySetInnerHTML={{ __html: blog.description }}>
                 </p>
 
                 {/* Button */}
