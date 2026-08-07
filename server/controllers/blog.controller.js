@@ -252,7 +252,7 @@ export const updateBlog = async (req, res) => {
 
 export const getLatestBlogs = async (req, res) => {
     try {
-        const limit = parseInt(req.query.limit) || 4;
+        const limit = parseInt(req.query.limit) || 3;
 
         const [blogs] = await db.query(
             "SELECT _id, title, description, image, created_at FROM blogs ORDER BY created_at DESC LIMIT ?",
