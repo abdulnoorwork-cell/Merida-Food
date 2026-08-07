@@ -18,7 +18,7 @@ const Contact = () => {
     e.preventDefault();
     console.log(form);
   };
-  
+
   return (
     <div>
       {/* Hero Section */}
@@ -43,98 +43,100 @@ const Contact = () => {
         </div>
       </div>
 
-      <div className="container mx-auto px-4 2xl:py-26 sm:py-24 py-20 flex flex-col gap-16">
+      <div className="container mx-auto px-4 py-16">
 
-        {/* Map Section */}
-        <div className="overflow-hidden">
+        <div className='max-w-7xl mx-auto flex flex-col gap-14'>
+          {/* Map Section */}
+          <div className="overflow-hidden">
 
-          <iframe
-            title="map"
-            width="100%"
-            height="560"
-            loading="lazy"
-            src="https://maps.google.com/maps?q=karachi&t=&z=13&ie=UTF8&iwloc=&output=embed"
-          ></iframe>
+            <iframe
+              title="map"
+              width="100%"
+              height="560"
+              loading="lazy"
+              src="https://maps.google.com/maps?q=karachi&t=&z=13&ie=UTF8&iwloc=&output=embed"
+            ></iframe>
 
-        </div>
-
-        {/* Contact Form */}
-        <div className="w-full bg-[#F6F6F6] sm:p-20 p-8">
-          <div className="text-center mb-10">
-            <p className="sm:text-4xl text-3xl font-semibold mb-2 tracking-tight leading-none">Leave A Message</p>
-            <p className="text-gray-500 max-w-2xl mx-auto text-sm sm:text-base">
-              Lorem ipsum dolor sit amet consectetur adipiscing, elit curae quis libero erat, justo in habitasse aliquet mi. Condimentum inceptos euismod eu nunc ad nisl fermentum erat gravida
-            </p>
           </div>
 
-          <form onSubmit={handleSubmit} action="https://api.web3forms.com/submit" method="POST" className="space-y-5 text-sm">
-            <input type="hidden" name="access_key" value="44a0df73-c478-46b6-af8f-27518e08c08e" />
-            <div className="grid md:grid-cols-2 gap-5">
-              <div className="relative">
-                <input
-                  type="text"
-                  name="name"
-                  placeholder="Your Full Name"
-                  value={form.name}
-                  onChange={handleChange}
-                  className="w-full bg-white border border-gray-300 px-4 py-3 pr-10 focus:outline-none focus:ring-1 focus:ring-orange-500"
-                />
-                <User className="absolute right-3 top-3.5 text-gray-400" size={18} />
-              </div>
-
-              <div className="relative">
-                <input
-                  type="email"
-                  name="email"
-                  placeholder="Email Address"
-                  value={form.email}
-                  onChange={handleChange}
-                  className="w-full bg-white border border-gray-300 px-4 py-3 pr-10 focus:outline-none focus:ring-1 focus:ring-orange-500"
-                />
-                <Mail className="absolute right-3 top-3.5 text-gray-400" size={18} />
-              </div>
+          {/* Contact Form */}
+          <div className="w-full bg-[#F6F6F6] sm:p-20 p-8">
+            <div className="text-center mb-10">
+              <p className="sm:text-4xl text-3xl font-semibold mb-2 tracking-tight leading-none">Leave A Message</p>
+              <p className="text-gray-500 max-w-2xl mx-auto text-sm sm:text-base">
+                Lorem ipsum dolor sit amet consectetur adipiscing, elit curae quis libero erat, justo in habitasse aliquet mi. Condimentum inceptos euismod eu nunc ad nisl fermentum erat gravida
+              </p>
             </div>
 
-            <div className="grid md:grid-cols-2 gap-5">
-              <div className="relative">
-                <input
-                  type="number"
-                  name="phone"
-                  placeholder="Phone"
-                  value={form.name}
-                  onChange={handleChange}
-                  className="w-full bg-white border border-gray-300 px-4 py-3 pr-10 focus:outline-none focus:ring-1 focus:ring-orange-500"
-                />
+            <form onSubmit={handleSubmit} action="https://api.web3forms.com/submit" method="POST" className="space-y-5 text-sm">
+              <input type="hidden" name="access_key" value="44a0df73-c478-46b6-af8f-27518e08c08e" />
+              <div className="grid md:grid-cols-2 gap-5">
+                <div className="relative">
+                  <input
+                    type="text"
+                    name="name"
+                    placeholder="Your Full Name"
+                    value={form.name}
+                    onChange={handleChange}
+                    className="w-full bg-white border border-gray-300 px-4 py-3 pr-10 focus:outline-none focus:ring-1 focus:ring-orange-500"
+                  />
+                  <User className="absolute right-3 top-3.5 text-gray-400" size={18} />
+                </div>
+
+                <div className="relative">
+                  <input
+                    type="email"
+                    name="email"
+                    placeholder="Email Address"
+                    value={form.email}
+                    onChange={handleChange}
+                    className="w-full bg-white border border-gray-300 px-4 py-3 pr-10 focus:outline-none focus:ring-1 focus:ring-orange-500"
+                  />
+                  <Mail className="absolute right-3 top-3.5 text-gray-400" size={18} />
+                </div>
               </div>
 
-              <div className="relative">
-                <input
-                  type="number"
-                  name="age"
-                  placeholder="Age"
-                  value={form.email}
-                  onChange={handleChange}
-                  className="w-full bg-white border border-gray-300 px-4 py-3 pr-10 focus:outline-none focus:ring-1 focus:ring-orange-500"
-                />
+              <div className="grid md:grid-cols-2 gap-5">
+                <div className="relative">
+                  <input
+                    type="number"
+                    name="phone"
+                    placeholder="Phone"
+                    value={form.name}
+                    onChange={handleChange}
+                    className="w-full bg-white border border-gray-300 px-4 py-3 pr-10 focus:outline-none focus:ring-1 focus:ring-orange-500"
+                  />
+                </div>
+
+                <div className="relative">
+                  <input
+                    type="number"
+                    name="age"
+                    placeholder="Age"
+                    value={form.email}
+                    onChange={handleChange}
+                    className="w-full bg-white border border-gray-300 px-4 py-3 pr-10 focus:outline-none focus:ring-1 focus:ring-orange-500"
+                  />
+                </div>
               </div>
-            </div>
 
-            <textarea
-              name="message"
-              placeholder="Type Your Message"
-              value={form.message}
-              onChange={handleChange}
-              rows={5}
-              className="w-full bg-white border border-gray-300 px-4 py-3 focus:outline-none focus:ring-1 focus:ring-orange-500"
-            />
+              <textarea
+                name="message"
+                placeholder="Type Your Message"
+                value={form.message}
+                onChange={handleChange}
+                rows={5}
+                className="w-full bg-white border border-gray-300 px-4 py-3 focus:outline-none focus:ring-1 focus:ring-orange-500"
+              />
 
-            <button
-              type="submit"
-              className="w-full bg-orange-500 text-white font-semibold py-3 cursor-pointer hover:bg-[#1A1A1A] transition-all duration-300 text-sm sm:text-base"
-            >
-              SUBMIT MESSAGE
-            </button>
-          </form>
+              <button
+                type="submit"
+                className="w-full bg-orange-500 text-white font-semibold py-3 cursor-pointer hover:bg-[#1A1A1A] transition-all duration-300 text-sm sm:text-base"
+              >
+                SUBMIT MESSAGE
+              </button>
+            </form>
+          </div>
         </div>
 
       </div>
