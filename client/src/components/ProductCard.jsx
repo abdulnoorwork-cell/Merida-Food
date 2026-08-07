@@ -19,13 +19,13 @@ const ProductCard = ({ product }) => {
                 <img
                     src={`${product.images[0].url}`}
                     alt={product?.name}
-                    className="w-full h-full object-cover transform group-hover:scale-115 transition duration-500"
+                    className="w-full object-cover transform group-hover:scale-115 transition duration-500"
                 />
                 {/* Hover Image */}
                 {product?.images?.[1]?.url && <img
                     src={product?.images?.[1]?.url}
                     alt="hover"
-                    className="sm:block hidden bg-gray-100 cursor-pointer absolute top-0 left-0 h-full w-full object-contain opacity-0 group-hover:opacity-100 transition duration-300"
+                    className="sm:block hidden bg-gray-100 cursor-pointer absolute top-0 left-0 w-full object-contain opacity-0 group-hover:opacity-100 transition duration-300"
                 />}
             </figure>
 
