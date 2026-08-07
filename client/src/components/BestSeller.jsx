@@ -47,7 +47,7 @@ const BestSeller = () => {
                 {/* Cards */}
                 {loading ? <img src={loading_animation} className='mx-auto' alt="loader" /> :
                     <div className='min-h-[50vh]'>{bestSellerProducts.length > 0 ?
-                        <div className="products grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-5">
+                        <div className="products grid grid-cols-2 md:grid-cols-3 gap-6">
                             {bestSellerProducts.map((item, index) => (
                                 <div key={index} style={{transitionDelay:`${index * 120}ms`}} ref={ref} className={`box ${inView ? "show" : ""}`}>
                                     <ProductCard key={index} product={item} />
