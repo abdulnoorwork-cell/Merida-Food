@@ -41,7 +41,7 @@ const Blogs = () => {
           {/* LEFT CONTENT */}
           {blogLoading ? <img src={loading_animation} alt='loader' className='mx-auto lg:col-span-2' /> : <div className="lg:col-span-2">
             {/* Blog Cards */}
-            {blogs.length > 0 ? <div className="blogs grid grid-cols-2 gap-5">
+            {blogs.length > 0 ? <div className="blogs grid grid-cols-2 gap-8">
               {blogs.map((blog, index) => (
                 <BlogCard key={index} blog={blog} />
               ))}
