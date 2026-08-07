@@ -11,7 +11,7 @@ const ProductCard = ({ product }) => {
     // const { ref, inView } = useInView({ threshold: 0.2, triggerOnce: true })
     return (
         <div
-            className={`product_card group relative bg-white text-black overflow-hidden border border-gray-400`}
+            className={`product_card group relative bg-[#F6F6F7] text-black overflow-hidden`}
         >
             {/* Image */}
             <figure onClick={() => { navigate(`/shop/${product?._id}`); scrollTo(0, 0) }} className='relative overflow-hidden sm:h-[200px] h-[165px]'>
