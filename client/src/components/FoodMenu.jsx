@@ -4,10 +4,12 @@ import { AppContext } from "../context/AppContext";
 import axios from "axios";
 const ProductCard = React.lazy(() => import("./ProductCard"));
 import loading_animation from '../../public/loading_animation.svg'
+import { useInView } from "react-intersection-observer";
 
 const categories = ["All", "Breakfast", "Lunch", "Light & Digestive", "Fast Food"];
 
 export default function FoodMenu() {
+    const {ref,inView} = useInView({threshold:0.2,triggerOnce:false})
     const [active, setActive] = useState("All");
     const [categoryProducts, setCategoryProducts] = useState([])
     const [limitedProducts, setLimitedProducts] = useState([])
@@ -96,7 +98,9 @@ export default function FoodMenu() {
                     <div className='min-h-[50vh]'>{filtered.length > 0 ?
                         <div className="products grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-5">
                             {filtered.map((item, index) => (
-                                <ProductCard key={index} product={item} />
+                                <div key={index} ref={ref} style={{transitionDelay:`${index * 120}ms`}} className={`box ${inView ? "show" : ""}`}>
+                                    <ProductCard key={index} product={item} />
+                                </div>
                             ))}
                         </div> : <div className='font-medium min-h-[60vh] text-base sm:text-lg flex items-center justify-center text-center rounded-md w-full'>You don,t have any items</div>}
                     </div>

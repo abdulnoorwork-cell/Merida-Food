@@ -22,7 +22,7 @@ const Layout = () => {
         </div>
         <button style={{fontFamily:'Poppins'}} onClick={logout} type='submit' className='sm:text-sm text-xs px-7 w-fit py-[10px] bg-orange-600 hover:bg-orange-600 text-white rounded-md cursor-pointer font-medium flex items-center gap-1'><span className='text-lg'><BiLogOut /></span>Logout</button>
       </div>
-      <div className='flex min-h-[95vh]'>
+      <div className='flex min-h-screen'>
         <Sidebar />
         <Outlet />
       </div>

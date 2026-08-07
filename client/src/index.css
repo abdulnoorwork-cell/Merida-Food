@@ -30,8 +30,8 @@ h5 {
 
 .box {
     opacity: 0;
-    transform: translateY(60px);
-    transition: all 0.8s ease;
+    transform: translateY(50px);
+    transition: all 0.6s ease;
 }
 
 .box.show {
@@ -41,8 +41,8 @@ h5 {
 
 .box_2 {
     opacity: 0;
-    transform: translateX(60px);
-    transition: all 0.8s ease;
+    transform: translateX(50px);
+    transition: all 0.6s ease;
 }
 
 .box_2.show {
@@ -52,8 +52,8 @@ h5 {
 
 .box_3 {
     opacity: 0;
-    transform: translateX(-60px);
-    transition: all 0.8s ease;
+    transform: translateX(-50px);
+    transition: all 0.6s ease;
 }
 
 .box_3.show {

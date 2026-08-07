@@ -31,10 +31,10 @@ const services = [
 
 const Service = () => {
     const { navigate } = useContext(AppContext);
-    // const { ref, inView } = useInView({
-    //     threshold: 0.2,
-    //     triggerOnce: true,
-    // });
+    const { ref, inView } = useInView({
+        threshold: 0.2,
+        triggerOnce: false,
+    });
     return (
         <div className="container mx-auto px-4 2xl:py-20 py-16">
 
@@ -98,7 +98,7 @@ const Service = () => {
             <div className="flex flex-col sm:flex-row items-center 2xl:gap-10 lg:gap-8 gap-6 items-center 2xl:mt-24 sm:mt-[75px] mt-[59px]">
 
                 {/* LEFT CONTENT */}
-                <div className="flex-1/2 mb-5 sm:mb-0">
+                <div ref={ref} className={`box flex-1/2 mb-5 sm:mb-0 ${inView ? "show" : ""}`}>
                     <div
                         className={``}
                     >
@@ -123,7 +123,7 @@ const Service = () => {
                     </div>
                 </div>
 
-                <div className={`flex flex-1/2 justify-end lg:gap-5 gap-4`}>
+                <div ref={ref} style={{transitionDelay:'120ms'}} className={`box flex flex-1/2 justify-end lg:gap-5 gap-4 ${inView ? "show" : ""}`}>
                     {/* STATS BOXES */}
                     <div className="flex flex-col border border-gray-300 divide-y divide-gray-300">
 
