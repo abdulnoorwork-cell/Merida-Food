@@ -44,7 +44,7 @@ const ProductCard = ({ product }) => {
                     {currency}.{(product.price).toLocaleString()}
                 </p>
 
-                <p className="description text-gray-500 sm:text-sm text-xs mt-2 line-clamp-3" dangerouslySetInnerHTML={{ __html: product.description }}>
+                <p className="description text-gray-500 sm:text-sm text-xs mt-2 line-clamp-2" dangerouslySetInnerHTML={{ __html: product.description }}>
                 </p>
 
                 <button onClick={() => addToCart(product?._id, qty)} className="mt-4 cursor-pointer bg-[#FE6A13] text-white sm:px-6 px-5 py-2 sm:text-sm text-xs hover:bg-[#1A1A1A] transition duration-200 font-medium">
