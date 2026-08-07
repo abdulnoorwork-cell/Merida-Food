@@ -47,14 +47,14 @@ const Hero = () => {
                         <img
                             src={hero_image}
                             alt="burger"
-                            className="w-full h-screen object-cover"
+                            className="w-full h-[90vh] object-cover"
                         />
                     </SwiperSlide>
                     <SwiperSlide>
                         <img
                             src={hero_image_2}
                             alt="burger"
-                            className="w-full h-screen object-cover"
+                            className="w-full h-[90vh] object-cover"
                         />
                     </SwiperSlide>
                 </Swiper>
