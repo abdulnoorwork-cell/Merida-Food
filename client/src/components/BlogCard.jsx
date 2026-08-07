@@ -29,7 +29,7 @@ const BlogCard = ({blog}) => {
                 </div>
 
                 {/* Title */}
-                <p className="xl:text-xl sm:text-lg text-base font-medium sm:mb-5 mb-4 leading-snug line-clamp-3 sm:line-clamp-2">
+                <p className="xl:text-xl text-lg font-medium sm:mb-5 mb-4 leading-snug line-clamp-3 sm:line-clamp-2">
                     {blog.title}
                 </p>
 
