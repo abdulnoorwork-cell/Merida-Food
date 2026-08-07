@@ -33,7 +33,7 @@ const BestSeller = () => {
 
     return (
         <section>
-            <div className='container mx-auto px-4 pt-20 2xl:pt-24 pb-6'>
+            <div className='container mx-auto px-4 pt-20 2xl:pt-24'>
                 {/* Heading */}
                 <div className="text-center 2xl:mb-10 sm:mb-9 mb-6.5">
                     <p className="text-orange-500 uppercase tracking-widest mb-2 2xl:text-base text-sm font-semibold">
