@@ -14,7 +14,7 @@ const ProductCard = ({ product }) => {
             className={`product_card group relative bg-[#F6F6F7] text-black overflow-hidden`}
         >
             {/* Image */}
-            <figure onClick={() => { navigate(`/shop/${product?._id}`); scrollTo(0, 0) }} className='relative overflow-hidden sm:h-[200px] h-[165px]'>
+            <figure onClick={() => { navigate(`/shop/${product?._id}`); scrollTo(0, 0) }} className='relative overflow-hidden w-full h-full'>
 
                 <img
                     src={`${product.images[0].url}`}
