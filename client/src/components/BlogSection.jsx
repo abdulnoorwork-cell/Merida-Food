@@ -7,7 +7,7 @@ import { useInView } from "react-intersection-observer";
 
 const BlogSection = () => {
   const { latestBlogs, latestBlogLoading } = useContext(AppContext);
-  const { ref, inView } = useInView({ threshold: 0.2, triggerOnce: false })
+  const { ref, inView } = useInView({ threshold: 0.2, triggerOnce: true })
 
   return (
     <section className="2xl:py-24 py-20">

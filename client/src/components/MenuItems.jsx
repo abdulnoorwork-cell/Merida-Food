@@ -5,7 +5,7 @@ import loading_animation from '../../public/loading_animation.svg'
 import { useInView } from 'react-intersection-observer';
 
 const MenuItems = () => {
-
+    const {ref,inView}=useInView({threshold:0.2,triggerOnce:true});
     const [brreakfastProducts, setBreakfastProducts] = useState([])
     const [lunchProducts, setLunchProducts] = useState([])
     const [loading, setLoading] = useState(false)
@@ -45,8 +45,6 @@ const MenuItems = () => {
         fetchBreakfastProducts();
         fetchLunchProducts()
     }, []);
-
-    const {ref,inView}=useInView({threshold:0.2,triggerOnce:true});
 
     return (
         <section className="bg-[#111] py-20">

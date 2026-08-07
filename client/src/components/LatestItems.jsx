@@ -6,7 +6,7 @@ import loading_animation from '../../public/loading_animation.svg'
 import { useInView } from 'react-intersection-observer';
 
 const LatestItems = () => {
-    const { ref, inView } = useInView({ threshold: 0.2, triggerOnce: false })
+    const { ref, inView } = useInView({ threshold: 0.2, triggerOnce: true })
     const { latestProducts, fetchLatestProducts, latestItemsLoading } = useContext(AppContext);
 
     useEffect(() => {

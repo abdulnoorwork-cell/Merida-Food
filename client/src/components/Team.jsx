@@ -25,8 +25,6 @@ const team = [
 
 const Team = () => {
 
-  const { ref, inView } = useInView({ threshold: 0.2, triggerOnce: true })
-
   return (
     <section className="container mx-auto 2xl:pt-24 pt-20 px-4">
       <div>

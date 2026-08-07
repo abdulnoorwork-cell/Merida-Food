@@ -22,13 +22,12 @@ const faqs = [
 ];
 
 const Faqs = () => {
+    const { ref, inView } = useInView({ threshold: 0.2, triggerOnce: true });
     const [activeIndex, setActiveIndex] = useState(0);
 
     const toggleFAQ = (index) => {
         setActiveIndex(activeIndex === index ? null : index);
     };
-
-    const { ref, inView } = useInView({ threshold: 0.2, triggerOnce: false });
 
     return (
         <div style={{ backgroundImage: `url(${faqs_bg})` }} className="bg-no-repeat bg-center bg-cover 2xl:pt-[70px] pt-[50px] pb-20 px-4">

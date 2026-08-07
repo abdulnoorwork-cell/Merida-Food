@@ -9,7 +9,7 @@ import { useInView } from "react-intersection-observer";
 const categories = ["All", "Breakfast", "Lunch", "Light & Digestive", "Fast Food"];
 
 export default function FoodMenu() {
-    const {ref,inView} = useInView({threshold:0.2,triggerOnce:false})
+    const {ref,inView} = useInView({threshold:0.2,triggerOnce:true})
     const [active, setActive] = useState("All");
     const [categoryProducts, setCategoryProducts] = useState([])
     const [limitedProducts, setLimitedProducts] = useState([])
