@@ -25,7 +25,7 @@ const BlogSection = () => {
 
         {/* Blog Cards */}
         {latestBlogLoading ? <img src={loading_animation} alt='loader' className='mx-auto' /> : <>
-          {latestBlogs.length > 0 ? <div className="blogs max-w-7xl mx-auto grid md:grid-cols-3 grid-cols-2 gap-6 sm:gap-8">
+          {latestBlogs.length > 0 ? <div className="blogs max-w-7xl mx-auto grid md:grid-cols-3 xl:grid-cols-4 grid-cols-2 gap-6 sm:gap-8">
             {latestBlogs.map((blog, index) => (
               <div key={index} style={{transitionDelay:`${index * 120}ms`}} ref={ref} className={`box ${inView ? "show" : ""}`}>
                 <BlogCard key={index} blog={blog} />
