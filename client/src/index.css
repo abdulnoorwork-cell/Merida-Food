@@ -80,6 +80,13 @@ h5 {
     }
 } */
 
+@media screen and (max-width:490px) {
+    .products {
+        display: flex;
+        flex-direction: column;
+    }
+}
+
 @media screen and (max-width: 400px) {
     .hamburger {
         width: 35px;
