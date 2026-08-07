@@ -96,7 +96,7 @@ export default function FoodMenu() {
                 {/* Cards */}
                 {loading ? <img src={loading_animation} className='mx-auto' alt="loader" /> :
                     <div className='min-h-[50vh]'>{filtered.length > 0 ?
-                        <div className="products grid sm:grid-cols-2 md:grid-cols-3 gap-6 sm:gap-8">
+                        <div className="products grid sm:grid-cols-2 lg:grid-cols-3 gap-6 sm:gap-8">
                             {filtered.map((item, index) => (
                                 <div key={index} ref={ref} style={{transitionDelay:`${index * 120}ms`}} className={`box ${inView ? "show" : ""}`}>
                                     <ProductCard key={index} product={item} />
