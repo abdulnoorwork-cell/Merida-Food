@@ -31,7 +31,7 @@ const LatestItems = () => {
                     <div className='min-h-[50vh]'>{latestProducts.length > 0 ?
                         <div className="products grid grid-cols-2 lg:grid-cols-3 gap-8">
                             {latestProducts.map((item, index) => (
-                                <div key={index} style={{transitionDelay:`${index * 120}ms`}} ref={ref} className={`box ${inView ? "show" : ""}`}>
+                                <div key={index} style={{transitionDelay:`${index * 120}ms`}} ref={ref} className={`box ${inView ? "sm:show" : ""}`}>
                                     <ProductCard key={index} product={item} />
                                 </div>
                             ))}
