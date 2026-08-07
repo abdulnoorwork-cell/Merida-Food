@@ -11,7 +11,7 @@ import "swiper/css/pagination";
 const Hero = () => {
     const { ref, inView } = useInView({ threshold: 0.2, triggerOnce: false })
     return (
-        <div className="flex flex-1 h-screen relative" style={{ backgroundImage: `url(${hero_bg})` }}>
+        <div className="flex flex-1 min-h-[90vh] relative" style={{ backgroundImage: `url(${hero_bg})` }}>
 
             {/* Content */}
             <div ref={ref} className={`box_3 ${inView ? 'show' : ''} z-10 container px-4 text-white flex flex-col absolute left-[43%] top-1/2 -translate-x-[43%] -translate-y-1/2 sm:pl-16 py-10`}>
