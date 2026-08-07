@@ -15,11 +15,11 @@ const Home = () => {
       <Hero />
       <Service />
       <FoodMenu />
-      <LatestItems />
+      <Team />
       <Faqs />
       <MenuItems />
       <BestSeller />
-      <Team />
+      <LatestItems />
       <BlogSection />
     </div>
   )
