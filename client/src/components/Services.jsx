@@ -36,7 +36,7 @@ const Service = () => {
         triggerOnce: false,
     });
     return (
-        <div className="container mx-auto px-4 2xl:py-20 py-16">
+        <div className="container mx-auto px-4 2xl:py-24 py-20">
 
             <div className=''>
                 {/* Heading */}

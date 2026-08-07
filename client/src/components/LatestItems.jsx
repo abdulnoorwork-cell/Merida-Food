@@ -15,7 +15,7 @@ const LatestItems = () => {
 
     return (
         <section>
-            <div className='container mx-auto px-4 2xl:pt-20 pt-16'>
+            <div className='container mx-auto px-4 2xl:pt-24 pt-20'>
                 {/* Heading */}
                 <div className="text-center 2xl:mb-10 sm:mb-9 mb-6.5">
                     <p className="text-orange-500 uppercase tracking-widest mb-2 2xl:text-base text-sm font-semibold">

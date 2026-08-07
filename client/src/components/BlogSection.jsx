@@ -10,7 +10,7 @@ const BlogSection = () => {
   const { ref, inView } = useInView({ threshold: 0.2, triggerOnce: false })
 
   return (
-    <section className="pt-10 2xl:pb-24 pb-20">
+    <section className="2xl:py-24 py-20">
       <div className="container mx-auto px-4">
 
         {/* Heading */}

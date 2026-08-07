@@ -64,7 +64,7 @@ export default function FoodMenu() {
 
     return (
         <section style={{ backgroundImage: `url(${product_bg})` }} className="bg-center bg-no-repeat bg-cover text-white">
-            <div className="container mx-auto px-4 2xl:py-24 sm:py-20 py-16">
+            <div className="container mx-auto px-4 2xl:py-24 py-20">
 
                 {/* Heading */}
                 <div className="max-w-7xl mx-auto flex flex-col lg:flex-row lg:items-center lg:justify-between 2xl:mb-10 sm:mb-9 mb-6.5">
