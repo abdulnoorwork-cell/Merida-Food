@@ -33,11 +33,11 @@ const BlogCard = ({ blog }) => {
                     {blog.title}
                 </p>
 
-                <p className="description text-gray-500 sm:text-sm text-xs mt-2 line-clamp-3" dangerouslySetInnerHTML={{ __html: blog.description }}>
+                <p className="description text-gray-500 sm:text-sm text-xs mb-2 line-clamp-3" dangerouslySetInnerHTML={{ __html: blog.description }}>
                 </p>
 
                 {/* Button */}
-                <button onClick={() => { navigate(`/blogs/${blog._id}`); scrollTo(0, 0) }} className="cursor-pointer bg-orange-500 text-white text-xs 2xl:text-sm font-medium uppercase sm:px-5 px-4 sm:py-2.5 py-2 flex items-center gap-2 hover:bg-[#1A1A1A] transition-all duration-300">
+                <button onClick={() => { navigate(`/blogs/${blog._id}`); scrollTo(0, 0) }} className="cursor-pointer bg-orange-500 text-white text-xs 2xl:text-sm font-medium sm:px-5 px-4 sm:py-2.5 py-2 flex items-center gap-2 hover:bg-[#1A1A1A] transition-all duration-300">
                     Read Details
                     <span className="sm:block hidden">→</span>
                 </button>
