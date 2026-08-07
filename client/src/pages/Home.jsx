@@ -15,10 +15,10 @@ const Home = () => {
       <Hero />
       <Service />
       <FoodMenu />
+      <BestSeller />
       <Team />
       <Faqs />
       <MenuItems />
-      <BestSeller />
       <LatestItems />
       <BlogSection />
     </div>
