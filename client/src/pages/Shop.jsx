@@ -103,7 +103,7 @@ const Shop = () => {
             </div>
             {/* PRODUCTS */}
             <div className="products container mx-auto px-4 grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6">
-                {currentProducts.map((item, index) => (
+                {currentProducts.map((product, index) => (
                     <div
                         key={index}
                         className={`product_card group relative bg-[#F6F6F7] text-black overflow-hidden`}
