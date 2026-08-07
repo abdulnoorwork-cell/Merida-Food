@@ -32,7 +32,7 @@ const Faqs = () => {
 
     return (
         <div style={{ backgroundImage: `url(${faqs_bg})` }} className="bg-no-repeat bg-center bg-cover 2xl:pt-[70px] pt-[50px] pb-24 px-4">
-            <div className="container mx-auto px-4 grid md:grid-cols-2 gap-10 items-center">
+            <div className="container mx-auto px-4 grid md:grid-cols-2 md:gap-10 gap-8 items-center">
                 {/* Image */}
                 <div ref={ref} className={`box ${inView ? "show" : ""}`}>
                     <img
