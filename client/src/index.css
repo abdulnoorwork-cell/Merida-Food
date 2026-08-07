@@ -84,7 +84,8 @@ h5 {
 
 @media screen and (max-width:490px) {
     .products,
-    .blogs {
+    .blogs,
+    .team {
         display: flex;
         flex-direction: column;
     }
