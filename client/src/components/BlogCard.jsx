@@ -37,7 +37,7 @@ const BlogCard = ({ blog }) => {
                 </p>
 
                 {/* Button */}
-                <button onClick={() => { navigate(`/blogs/${blog._id}`); scrollTo(0, 0) }} className="cursor-pointer bg-orange-500 text-white text-xs 2xl:text-sm font-medium sm:px-5 px-4 sm:py-2.5 py-2 flex items-center gap-2 hover:bg-[#1A1A1A] transition-all duration-300">
+                <button onClick={() => { navigate(`/blogs/${blog._id}`); scrollTo(0, 0) }} className="cursor-pointer bg-orange-500 text-white sm:text-sm text-xs font-medium sm:px-5 px-4 sm:py-2.5 py-2 flex items-center gap-2 hover:bg-[#1A1A1A] transition-all duration-300">
                     Read Details
                     <span className="sm:block hidden">→</span>
                 </button>
