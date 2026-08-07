@@ -7,7 +7,7 @@ import { RiArrowRightLongLine } from "react-icons/ri";
 import { RiArrowLeftLongLine } from "react-icons/ri";
 
 const Shop = () => {
-    const { products } = useContext(AppContext)
+    const { currency, navigate, toggleWishlist, isInWishlist, addToCart, qty,products } = useContext(AppContext);
     const [sortType, setSortType] = useState('latest');
     const [category, setCategory] = useState('All');
     const [itemsPerPage, setItemsPerPage] = useState(8)
