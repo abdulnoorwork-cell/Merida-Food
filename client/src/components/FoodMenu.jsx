@@ -67,7 +67,7 @@ export default function FoodMenu() {
             <div className="container mx-auto px-4 2xl:py-24 sm:py-20 py-16">
 
                 {/* Heading */}
-                <div className="flex flex-col lg:flex-row lg:items-center lg:justify-between 2xl:mb-10 sm:mb-9 mb-6.5">
+                <div className="max-w-7xl mx-auto flex flex-col lg:flex-row lg:items-center lg:justify-between 2xl:mb-10 sm:mb-9 mb-6.5">
                     <div>
                         <p className="text-orange-500 uppercase tracking-widest mb-2 2xl:text-base text-sm font-semibold">
                             Food Menus
@@ -95,7 +95,7 @@ export default function FoodMenu() {
                 </div>
                 {/* Cards */}
                 {loading ? <img src={loading_animation} className='mx-auto' alt="loader" /> :
-                    <div className='min-h-[50vh]'>{filtered.length > 0 ?
+                    <div className='max-w-7xl mx-auto min-h-[50vh]'>{filtered.length > 0 ?
                         <div className="products grid grid-cols-2 lg:grid-cols-3 gap-8">
                             {filtered.map((item, index) => (
                                 <div key={index} ref={ref} style={{transitionDelay:`${index * 120}ms`}} className={`box ${inView ? "show" : ""}`}>
