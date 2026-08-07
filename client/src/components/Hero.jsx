@@ -9,7 +9,7 @@ import "swiper/css";
 import "swiper/css/pagination";
 
 const Hero = () => {
-    const { ref, inView } = useInView({ threshold: 0.2, triggerOnce: false })
+    const { ref, inView } = useInView({ threshold: 0.2, triggerOnce: true})
     return (
         <div className="flex flex-1 min-h-[90vh] relative" style={{ backgroundImage: `url(${hero_bg})` }}>
 
