@@ -50,7 +50,7 @@ const Service = () => {
                 </div>
 
                 {/* Cards */}
-                <div className="grid grid-cols-3 md:gap-5 sm:gap-4 gap-3">
+                <div className="grid grid-cols-3 sm:gap-6 gap-5">
                     {services.map((service, index) => (
                         <div
                             onClick={() => { navigate(`${service.link}`); scrollTo(0, 0) }}
