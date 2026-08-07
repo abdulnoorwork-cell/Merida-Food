@@ -74,19 +74,11 @@ h5 {
     }
 }
 
-@media screen and (max-width:450px) {
+/* @media screen and (max-width:450px) {
     .product_card .description {
         display: none;
     }
-
-    .product_card figure {
-        height: 140px;
-    }
-
-    .product_card button {
-        margin-top: 14px;
-    }
-}
+} */
 
 @media screen and (max-width: 400px) {
     .hamburger {
