@@ -40,7 +40,7 @@ const Team = () => {
         </div>
 
         {/* Cards */}
-        <div className="team grid lg:grid-cols-3 grid-cols-2 gap-8">
+        <div className="team max-w-7xl mx-auto grid lg:grid-cols-3 grid-cols-2 gap-8">
           {team.map((member, index) => (
             <div
               key={index}
