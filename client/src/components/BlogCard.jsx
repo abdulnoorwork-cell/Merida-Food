@@ -1,17 +1,17 @@
 import React from 'react'
-import { useContext,useEffect } from 'react'
+import { useContext, useEffect } from 'react'
 import { AppContext } from '../context/AppContext'
 import { useInView } from "react-intersection-observer";
 
-const BlogCard = ({blog}) => {
-    const {navigate}=useContext(AppContext)
-    const {ref,inView}=useInView({threshold:0.2,triggerOnce:true})
+const BlogCard = ({ blog }) => {
+    const { navigate } = useContext(AppContext)
+    const { ref, inView } = useInView({ threshold: 0.2, triggerOnce: true })
     return (
         <div
             className={`bg-[#F6F6F7] overflow-hidden group`}
         >
             {/* Image */}
-            <div onClick={()=>{navigate(`/blogs/${blog._id}`);scrollTo(0,0)}} className="overflow-hidden">
+            <div onClick={() => { navigate(`/blogs/${blog._id}`); scrollTo(0, 0) }} className="overflow-hidden">
                 <img
                     src={blog.image?.url}
                     alt={blog.title}
@@ -33,8 +33,11 @@ const BlogCard = ({blog}) => {
                     {blog.title}
                 </p>
 
+                <p className="description text-gray-500 sm:text-sm text-xs mt-2 line-clamp-3" dangerouslySetInnerHTML={{ __html: blog.description }}>
+                </p>
+
                 {/* Button */}
-                <button onClick={()=>{navigate(`/blogs/${blog._id}`);scrollTo(0,0)}} className="cursor-pointer bg-orange-500 text-white text-xs 2xl:text-sm font-medium uppercase sm:px-5 px-4 sm:py-2.5 py-2 flex items-center gap-2 hover:bg-[#1A1A1A] transition-all duration-300">
+                <button onClick={() => { navigate(`/blogs/${blog._id}`); scrollTo(0, 0) }} className="cursor-pointer bg-orange-500 text-white text-xs 2xl:text-sm font-medium uppercase sm:px-5 px-4 sm:py-2.5 py-2 flex items-center gap-2 hover:bg-[#1A1A1A] transition-all duration-300">
                     Read Details
                     <span className="sm:block hidden">→</span>
                 </button>
