@@ -30,16 +30,16 @@ const ProductCard = ({ product }) => {
             </figure>
 
             {/* Content */}
-            <div className="sm:p-5 p-4">
+            <div className="sm:p-8 p-5">
                 <p className='bg-[#FE6A13] text-white w-fit sm:px-4 px-3 py-1.5 rounded-tr-full rounded-br-full sm:text-sm text-xs absolute top-2 left-0'>{product.category}</p>
                 <p onClick={() => toggleWishlist(product._id)} className='bg-[#FE6A13] text-white sm:w-9 sm:h-9 w-8 h-8 cursor-pointer rounded-full mb-1 font-medium absolute top-2 right-2 flex items-center justify-center sm:text-lg text-base'>{isInWishlist(product._id) ? <FaHeart /> : <FiHeart />}</p>
                 {/* Rating */}
                 <div className="rating flex items-center text-yellow-500">
                     {[...Array(5)].map((_, i) => (
-                        <Star key={i} size={15} fill="currentColor" strokeWidth={0} />
+                        <Star key={i} size={16} fill="currentColor" strokeWidth={0} />
                     ))}
                 </div>
-                <p onClick={() => { navigate(`/shop/${product?._id}`); scrollTo(0, 0) }} className="xl:text-lg text-base font-semibold leading-[1.3em] mt-2 line-clamp-2">{product.name}</p>
+                <p onClick={() => { navigate(`/shop/${product?._id}`); scrollTo(0, 0) }} className="xl:text-xl text-base sm:text-lg font-semibold leading-[1.3em] mt-2 line-clamp-2">{product.name}</p>
                 <p className="text-orange-500 font-semibold mt-1">
                     {currency}.{(product.price).toLocaleString()}
                 </p>
