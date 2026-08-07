@@ -83,7 +83,7 @@ h5 {
 } */
 
 @media screen and (max-width:490px) {
-    .products {
+    .products, .blogs {
         display: flex;
         flex-direction: column;
     }
@@ -103,20 +103,6 @@ h5 {
     .navbar .icons span {
         font-size: 18px;
     }
-
-    .blogs .created_at {
-        font-size: 11px;
-        display: none;
-    }
-
-    .blogs button {
-        font-size: 10px;
-    }
-
-    /* .blogs img {
-        height: 100%;
-        max-height: 180px;
-    } */
 
     .filterbar {
         display: flex;
