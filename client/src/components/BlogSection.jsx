@@ -3,9 +3,11 @@ import { useContext } from "react";
 import { AppContext } from "../context/AppContext";
 const BlogCard = React.lazy(() => import('./BlogCard'))
 import loading_animation from '../../public/loading_animation.svg'
+import { useInView } from "react-intersection-observer";
 
 const BlogSection = () => {
   const { latestBlogs, latestBlogLoading } = useContext(AppContext);
+  const { ref, inView } = useInView({ threshold: 0.2, triggerOnce: false })
 
   return (
     <section className="pt-10 2xl:pb-24 pb-20">
@@ -25,7 +27,9 @@ const BlogSection = () => {
         {latestBlogLoading ? <img src={loading_animation} alt='loader' className='mx-auto' /> : <>
           {latestBlogs.length > 0 ? <div className="blogs grid lg:grid-cols-4 md:grid-cols-3 grid-cols-2 gap-5">
             {latestBlogs.map((blog, index) => (
-              <BlogCard key={index} blog={blog} />
+              <div key={index} style={{transitionDelay:`${index * 120}ms`}} ref={ref} className={`box ${inView ? "show" : ""}`}>
+                <BlogCard key={index} blog={blog} />
+              </div>
             ))}
           </div> : <div className='font-medium min-h-[100px] text-lg flex items-center justify-center text-center bg-white rounded-md w-full'>You don,t have any latest items</div>}
         </>}

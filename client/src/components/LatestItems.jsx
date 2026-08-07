@@ -3,9 +3,10 @@ import { AppContext } from '../context/AppContext'
 import axios from 'axios';
 const ProductCard = React.lazy(() => import('./ProductCard'))
 import loading_animation from '../../public/loading_animation.svg'
+import { useInView } from 'react-intersection-observer';
 
 const LatestItems = () => {
-
+    const { ref, inView } = useInView({ threshold: 0.2, triggerOnce: false })
     const { latestProducts, fetchLatestProducts, latestItemsLoading } = useContext(AppContext);
 
     useEffect(() => {
@@ -30,7 +31,9 @@ const LatestItems = () => {
                     <div className='min-h-[50vh]'>{latestProducts.length > 0 ?
                         <div className="products grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-5">
                             {latestProducts.map((item, index) => (
-                                <ProductCard key={index} product={item} />
+                                <div key={index} style={{transitionDelay:`${index * 120}ms`}} ref={ref} className={`box ${inView ? "show" : ""}`}>
+                                    <ProductCard key={index} product={item} />
+                                </div>
                             ))}
                         </div> : <div className='font-medium min-h-[60vh] text-base sm:text-lg flex items-center justify-center text-center rounded-md w-full'>You don,t have any items</div>}
                     </div>
