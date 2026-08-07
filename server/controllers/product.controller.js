@@ -314,7 +314,7 @@ export const getSuggestions = async (req, res) => {
 
 export const getLatestProducts = async (req, res) => {
     try {
-        const limit = parseInt(req.query.limit) || 4;
+        const limit = parseInt(req.query.limit) || 3;
 
         // 1. Get latest products
         const [products] = await db.query(
@@ -365,7 +365,7 @@ export const getLatestProducts = async (req, res) => {
 
 export const getCategoryProducts = async (req, res) => {
     try {
-        const limit = parseInt(req.query.limit) || 4;
+        const limit = parseInt(req.query.limit) || 3;
         const { category } = req.params;
 
         // 1. Get products by category
@@ -420,7 +420,7 @@ export const getCategoryProducts = async (req, res) => {
 
 export const getLatestCategoryProducts = async (req, res) => {
     try {
-        const limit = parseInt(req.query.limit) || 4;
+        const limit = parseInt(req.query.limit) || 3;
         const { category } = req.params;
 
         // 1. Get latest category products
@@ -475,7 +475,7 @@ export const getLatestCategoryProducts = async (req, res) => {
 
 export const getLimitProducts = async (req, res) => {
     try {
-        const limit = parseInt(req.query.limit) || 4;
+        const limit = parseInt(req.query.limit) || 3;
 
         // 1. Get products
         const [products] = await db.query(
