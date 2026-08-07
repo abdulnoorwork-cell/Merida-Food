@@ -30,7 +30,7 @@ const Faqs = () => {
     };
 
     return (
-        <div style={{ backgroundImage: `url(${faqs_bg})` }} className="bg-no-repeat bg-center bg-cover 2xl:pt-[70px] pt-[50px] pb-20 px-4">
+        <div style={{ backgroundImage: `url(${faqs_bg})` }} className="bg-no-repeat bg-center bg-cover 2xl:py-24 py-20 px-4">
             <div className="container mx-auto px-4">
                 <div className='max-w-7xl mx-auto grid md:grid-cols-2 md:gap-10 gap-8 items-center'>
                     {/* Image */}
