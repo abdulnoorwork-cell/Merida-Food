@@ -7,7 +7,6 @@ import { FaHeart } from "react-icons/fa";
 import { useInView } from 'react-intersection-observer';
 
 const ProductCard = ({ product }) => {
-    console.log(product)
     const { currency, navigate, toggleWishlist, isInWishlist, addToCart, qty } = useContext(AppContext);
     // const { ref, inView } = useInView({ threshold: 0.2, triggerOnce: true })
     return (
