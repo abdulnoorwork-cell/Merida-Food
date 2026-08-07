@@ -176,7 +176,7 @@ const SingleProduct = () => {
                 </div>
             </div>
 
-            <div className="container mx-auto sm:py-24 py-20 px-4">
+            <div className="container mx-auto py-16 px-4">
                 {product ?
                     <>
                         <div className="grid lg:grid-cols-2 md:gap-12 sm:gap-12 gap-10 items-start">
@@ -489,7 +489,7 @@ const SingleProduct = () => {
                         </div>
                     </> : <img src={loading_animation} alt='loader' className='mx-auto' />}
                 {/* Related Products */}
-                <div className="mb-10 mt-16">
+                <div className="mb-10 mt-16 border-t border-gray-300">
                     <h3 className="text-[32px] font-bold mt-2 tracking-tight">
                         Related Products
                     </h3>
