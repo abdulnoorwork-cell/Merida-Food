@@ -43,7 +43,7 @@ const Navbar = () => {
                 </div>
             </div>
             {/* Navbar */}
-            <div className={`navbar bg-white py-3 lg:py-0 sticky top-0 left-0 z-30 min-h-[70px] flex items-center border-b border-gray-200 ${sticky ? 'shadow-[0_10px_30px_rgba(0,0,0,0.1)]' : 'shadow-none'}`}>
+            <div className={`navbar bg-white py-3 lg:py-0 sticky top-0 left-0 z-30 min-h-[80px] flex items-center border-b border-gray-200 ${sticky ? 'shadow-[0_10px_30px_rgba(0,0,0,0.1)]' : 'shadow-none'}`}>
                 <div className="container mx-auto px-4 flex items-center justify-between">
                     {/* Logo */}
                     <div onClick={() => { navigate('/'); scrollTo(0, 0) }} className="logo 2xl:text-[42px] text-4xl font-bold uppercase cursor-pointer text-[#FE6A13] hover:text-[#FE6A13] transition-all duration-200 tracking-tight">Merida</div>

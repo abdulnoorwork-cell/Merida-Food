@@ -176,7 +176,7 @@ const SingleProduct = () => {
                 </div>
             </div>
 
-            <div className="container mx-auto py-16 px-4">
+            <div className="container mx-auto pt-12 pb-16 px-4">
                 {product ?
                     <>
                         <div className="grid lg:grid-cols-2 md:gap-12 sm:gap-12 gap-10 items-start">

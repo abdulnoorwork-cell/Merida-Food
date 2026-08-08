@@ -16,14 +16,14 @@ const Hero = () => {
             {/* Content */}
             <div ref={ref} className={`box_3 ${inView ? 'show' : ''} z-10 container px-4 text-white flex flex-col absolute left-[43%] top-1/2 -translate-x-[43%] -translate-y-1/2 sm:pl-16 py-10`}>
 
-                <p className="uppercase mb-4 flex items-center gap-3 sm:text-base text-sm">
+                <p className="uppercase mb-4 flex items-center gap-3 sm:text-base text-sm shadow-lg">
                     Welcome to Merida
                     <div className='bg-white h-[1px] sm:w-[140px] w-[100px]'></div>
                 </p>
 
-                <h1 className="2xl:text-[68px] xl:text-[55px] sm:text-[53px] text-[43.8px] font-bold tracking-tight mb-9 shadow">
+                <h1 className="2xl:text-[68px] xl:text-[55px] sm:text-[53px] text-[43.8px] max-w-xl shadow-lg font-bold tracking-tight mb-9">
                     Amazing Tasty <br />
-                    Food Cooked By <br />
+                    Food Cooked By
                     Popular Chef
                 </h1>
 

@@ -79,8 +79,8 @@ const Shop = () => {
                 </div>
             </div>
             {/* FILTER BAR */}
-            <div className='container mx-auto px-4 mt-14'>
-                <div className="bg-[#F6F6F7] p-4 flex justify-between items-center mt-6 mb-10 rounded-[5px]">
+            <div className='container mx-auto px-4 mt-12'>
+                <div className="filterbar_parent bg-[#F6F6F7] p-4 flex justify-between items-center mt-6 mb-10 rounded-[5px]">
                     <span className="text-gray-600 text-sm sm:block hidden">
                         Showing {currentPage}–{totalPages} of {products.length} results
                     </span>

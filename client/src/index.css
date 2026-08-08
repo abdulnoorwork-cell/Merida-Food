@@ -107,14 +107,17 @@ h5 {
     }
 
     .filterbar {
-        display: flex;
-        flex-direction: column;
-        align-items: start;
-        padding: 28px;
+        padding: 0px;
+    }
+
+    .filterbar_parent {
+        background: none;
+        padding: 0;
     }
 
     .filterbar select {
         width: 100%;
+        background: #F6F6F7;
     }
 }
 
@@ -131,6 +134,12 @@ h5 {
 @media screen and (max-width: 350px) {
     .navbar .close {
         right: 10px;
+    }
+    .filterbar select {
+        font-size: 13px
+    }
+    .filterbar {
+        gap: 13px
     }
 }
 

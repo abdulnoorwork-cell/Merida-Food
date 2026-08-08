@@ -126,7 +126,7 @@ const Login = () => {
             </div>
 
             <div className="max-w-6xl mx-auto flex items-center justify-center px-4 2xl:py-32 xl:py-28 py-24">
-                <div className="w-full bg-white border border-gray-400 p-8">
+                <div className="w-full bg-[#F6F6F7] p-8">
 
                     {/* Title */}
                     <p className="sm:text-3xl text-2xl uppercase font-semibold text-gray-800 mb-6">
@@ -145,7 +145,7 @@ const Login = () => {
                                 type="text"
                                 placeholder='Enter your email'
                                 value={email} onChange={(e) => setEmail(e.target.value)}
-                                className="w-full bg-white rounded text-[15px] px-3 py-2 border border-[#1A1A1A] focus:border-none focus:outline-none focus:ring-1 focus:ring-orange-500"
+                                className="w-full bg-white rounded text-[15px] px-3 py-2.5 border border-gray-200 focus:border-none focus:outline-none focus:ring-1 focus:ring-orange-500"
                             />
                             <p className='text-red-600 mt-2 leading-none text-sm'>{error ? error : null}</p>
                         </div>
@@ -161,7 +161,7 @@ const Login = () => {
                                     type={showPassword ? "text" : "password"}
                                     value={password} onChange={(e) => setPassword(e.target.value)}
                                     placeholder='Enter your password'
-                                    className="w-full bg-white rounded text-[15px] px-3 py-2 border border-[#1A1A1A] focus:border-none pr-10 focus:outline-none focus:ring-1 focus:ring-orange-500"
+                                    className="w-full bg-white rounded text-[15px] px-3 py-2.5 border border-gray-200 focus:border-none pr-10 focus:outline-none focus:ring-1 focus:ring-orange-500"
                                 />
                                 <span
                                     onClick={() => setShowPassword(!showPassword)}
@@ -206,7 +206,7 @@ const Login = () => {
     ) :
         <div>
             {/* Hero Section */}
-            <div className="relative bg-gray-100 2xl:h-[430px] xl:h-[380px] lg:h-[360px] md:h-[340px] sm:h-[320px] h-[300px] w-full">
+            <div className="relative 2xl:h-[430px] xl:h-[380px] lg:h-[360px] md:h-[340px] sm:h-[320px] h-[300px] w-full">
                 {/* Background Image */}
                 <img
                     src={breadcrumb_bg}
@@ -215,20 +215,20 @@ const Login = () => {
                 />
 
                 {/* Overlay */}
-                <div className="absolute inset-0 bg-black/50"></div>
+                <div className="absolute inset-0 bg-black/20"></div>
 
                 {/* Content */}
-                <div className="container mx-auto absolute inset-0 flex items-center justify-between px-4 text-white">
-                    <p className="flex-1 text-5xl md:text-6xl font-medium mb-4">My Account</p>
+                <div className="container mx-auto absolute inset-0 flex flex-col md:flex-row md:items-center md:justify-between justify-center px-4 text-white">
+                    <p className="md:flex-1 xl:text-6xl lg:text-5xl md:text-[44px] text-[40px] font-semibold md:mb-4 mb-2.5 leading-tight">My Account</p>
 
-                    <p className="flex-1 flex justify-end text-sm md:text-base text-white font-semibold">
-                        HOME &gt; MY ACCOUNT
+                    <p className="md:flex-1 flex md:justify-end text-sm md:text-base text-white font-semibold">
+                        HOME &gt; My Account
                     </p>
                 </div>
             </div>
 
             <div className="max-w-6xl mx-auto flex items-center justify-center px-4 2xl:py-32 xl:py-28 py-24">
-                <div className="w-full bg-white border border-gray-400 p-8">
+                <div className="w-full bg-[#F6F6F7] p-8">
 
                     {/* Title */}
                     <p className="sm:text-3xl text-2xl uppercase font-semibold text-gray-800 mb-6">
@@ -247,7 +247,7 @@ const Login = () => {
                                 type="text"
                                 placeholder='Enter Your Name'
                                 value={name} onChange={(e) => setName(e.target.value)}
-                                className="w-full bg-white rounded text-[15px] px-3 py-2 border border-[#1A1A1A] focus:border-none focus:outline-none focus:ring-1 focus:ring-orange-500"
+                                className="w-full bg-white rounded text-[15px] px-3 py-2.5 border border-gray-200 focus:border-none focus:outline-none focus:ring-1 focus:ring-orange-500"
                             />
                             <p className='text-red-600 mt-2 leading-none text-xs'>{error === 'Please fill required fileds' ? error : null}</p>
                         </div>
@@ -261,7 +261,7 @@ const Login = () => {
                                 type="text"
                                 placeholder='Enter email'
                                 value={email} onChange={(e) => setEmail(e.target.value)}
-                                className="w-full bg-white rounded text-[15px] px-3 py-2 border border-[#1A1A1A] focus:border-none focus:outline-none focus:ring-1 focus:ring-orange-500"
+                                className="w-full bg-white rounded text-[15px] px-3 py-2.5 border border-gray-200 focus:border-none focus:outline-none focus:ring-1 focus:ring-orange-500"
                             />
                             <p className='text-red-600 mt-2 leading-none text-xs'>{error === 'Please fill required fileds' || error === 'Email already exists' ? error : null}</p>
                         </div>
@@ -277,7 +277,7 @@ const Login = () => {
                                     type={showPassword ? "text" : "password"}
                                     value={password} onChange={(e) => setPassword(e.target.value)}
                                     placeholder='Enter password'
-                                    className="w-full bg-white rounded text-[15px] px-3 py-2 border border-[#1A1A1A] focus:border-none pr-10 focus:outline-none focus:ring-1 focus:ring-orange-500"
+                                    className="w-full bg-white rounded text-[15px] px-3 py-2.5 border border-gray-200 focus:border-none pr-10 focus:outline-none focus:ring-1 focus:ring-orange-500"
                                 />
                                 <span
                                     onClick={() => setShowPassword(!showPassword)}
@@ -301,7 +301,7 @@ const Login = () => {
                                     type='number'
                                     value={phone} onChange={(e) => setPhone(e.target.value)}
                                     placeholder='Enter phone'
-                                    className="w-full bg-white rounded text-[15px] px-3 py-2 border border-[#1A1A1A] focus:border-none pr-10 focus:outline-none focus:ring-1 focus:ring-orange-500"
+                                    className="w-full bg-white rounded text-[15px] px-3 py-2.5 border border-gray-200 focus:border-none pr-10 focus:outline-none focus:ring-1 focus:ring-orange-500"
                                 />
                             </div>
                         </div>
