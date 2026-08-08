@@ -187,7 +187,7 @@ const SingleProduct = () => {
                                 <img
                                     src={selected}
                                     alt="product"
-                                    className="w-full h-[500px] object-cover rounded"
+                                    className="w-full h-full object-cover rounded"
                                 />
 
                                 {/* Thumbnails */}
@@ -489,7 +489,7 @@ const SingleProduct = () => {
                         </div>
                     </> : <img src={loading_animation} alt='loader' className='mx-auto' />}
                 {/* Related Products */}
-                <div className="mb-10 mt-16 border-t border-gray-300">
+                <div className="mb-10 pt-16 border-t border-gray-300">
                     <h3 className="text-[32px] font-bold mt-2 tracking-tight">
                         Related Products
                     </h3>

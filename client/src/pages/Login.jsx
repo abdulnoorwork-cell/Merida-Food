@@ -125,7 +125,7 @@ const Login = () => {
                 </div>
             </div>
 
-            <div className="max-w-6xl mx-auto flex items-center justify-center px-4 2xl:py-32 xl:py-28 py-24">
+            <div className="max-w-6xl mx-auto flex items-center justify-center px-4 sm:py-20 py-16">
                 <div className="w-full bg-[#F6F6F7] p-8">
 
                     {/* Title */}
@@ -227,7 +227,7 @@ const Login = () => {
                 </div>
             </div>
 
-            <div className="max-w-6xl mx-auto flex items-center justify-center px-4 2xl:py-32 xl:py-28 py-24">
+            <div className="max-w-6xl mx-auto flex items-center justify-center px-4 sm:py-20 py-16">
                 <div className="w-full bg-[#F6F6F7] p-8">
 
                     {/* Title */}
