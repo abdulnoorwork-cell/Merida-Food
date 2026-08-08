@@ -38,7 +38,7 @@ const Service = () => {
     return (
         <div className="container mx-auto px-4 2xl:py-24 py-20">
 
-            <div className=''>
+            <div className='max-w-7xl mx-auto'>
                 {/* Heading */}
                 <div className="text-center 2xl:mb-10 sm:mb-9 mb-6.5">
                     <p className="text-orange-500 uppercase tracking-widest 2xl:text-base text-sm font-semibold mb-2">
@@ -95,7 +95,7 @@ const Service = () => {
 
             {/* Bottom */}
 
-            <div className="flex flex-col sm:flex-row items-center 2xl:gap-10 lg:gap-8 gap-6 items-center 2xl:mt-24 sm:mt-[75px] mt-[59px]">
+            <div className="max-w-7xl mx-auto flex flex-col sm:flex-row items-center 2xl:gap-10 lg:gap-8 gap-6 2xl:mt-24 sm:mt-[75px] mt-[59px]">
 
                 {/* LEFT CONTENT */}
                 <div ref={ref} className={`box flex-1/2 mb-5 sm:mb-0 ${inView ? "show" : ""}`}>

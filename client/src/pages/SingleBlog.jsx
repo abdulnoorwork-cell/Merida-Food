@@ -63,7 +63,7 @@ const SingleBlog = () => {
                 </div>
             </div>
 
-            <div className="container mx-auto pt-12 pb-16 px-4 min-h-[80vh]">
+            <div className="container mx-auto py-16 px-4 min-h-[80vh]">
                 {loading ? <img src={loading_animation} className='mx-auto' alt="loader" />
                      : <div className="grid grid-cols-1 lg:grid-cols-3 gap-10">
 
