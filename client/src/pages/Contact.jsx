@@ -3,21 +3,6 @@ import { User, Mail } from "lucide-react";
 import breadcrumb_bg from '../assets/breadcrumb_bg.webp'
 
 const Contact = () => {
-  const [form, setForm] = useState({
-    name: "",
-    email: "",
-    option: "",
-    message: "",
-  });
-
-  const handleChange = (e) => {
-    setForm({ ...form, [e.target.name]: e.target.value });
-  };
-
-  const handleSubmit = (e) => {
-    e.preventDefault();
-    console.log(form);
-  };
 
   return (
     <div>
@@ -68,7 +53,7 @@ const Contact = () => {
               </p>
             </div>
 
-            <form onSubmit={handleSubmit} action="https://api.web3forms.com/submit" method="POST" className="space-y-5 text-sm">
+            <form action="https://api.web3forms.com/submit" method="POST" className="space-y-5 text-sm">
               <input type="hidden" name="access_key" value="44a0df73-c478-46b6-af8f-27518e08c08e" />
               <div className="grid md:grid-cols-2 gap-5">
                 <div className="relative">
@@ -76,8 +61,6 @@ const Contact = () => {
                     type="text"
                     name="name"
                     placeholder="Your Full Name"
-                    value={form.name}
-                    onChange={handleChange}
                     className="w-full bg-white border border-gray-300 px-4 py-3 pr-10 focus:outline-none focus:ring-1 focus:ring-orange-500"
                   />
                   <User className="absolute right-3 top-3.5 text-gray-400" size={18} />
@@ -88,8 +71,6 @@ const Contact = () => {
                     type="email"
                     name="email"
                     placeholder="Email Address"
-                    value={form.email}
-                    onChange={handleChange}
                     className="w-full bg-white border border-gray-300 px-4 py-3 pr-10 focus:outline-none focus:ring-1 focus:ring-orange-500"
                   />
                   <Mail className="absolute right-3 top-3.5 text-gray-400" size={18} />
@@ -102,8 +83,6 @@ const Contact = () => {
                     type="number"
                     name="phone"
                     placeholder="Phone"
-                    value={form.name}
-                    onChange={handleChange}
                     className="w-full bg-white border border-gray-300 px-4 py-3 pr-10 focus:outline-none focus:ring-1 focus:ring-orange-500"
                   />
                 </div>
@@ -113,8 +92,6 @@ const Contact = () => {
                     type="number"
                     name="age"
                     placeholder="Age"
-                    value={form.email}
-                    onChange={handleChange}
                     className="w-full bg-white border border-gray-300 px-4 py-3 pr-10 focus:outline-none focus:ring-1 focus:ring-orange-500"
                   />
                 </div>
@@ -123,8 +100,6 @@ const Contact = () => {
               <textarea
                 name="message"
                 placeholder="Type Your Message"
-                value={form.message}
-                onChange={handleChange}
                 rows={5}
                 className="w-full bg-white border border-gray-300 px-4 py-3 focus:outline-none focus:ring-1 focus:ring-orange-500"
               />
