@@ -339,10 +339,23 @@ export const resetPassword = async (req, res) => {
             });
         }
 
+        console.log(decoded)
+
         const hashPassword = await bcrypt.hash(password, 10);
 
-        const sql = 'UPDATE users SET password = ? WHERE _id = ?';
-        await db.query(sql, [hashPassword, decoded.id]);
+        const [result] = await db.query(
+            "UPDATE users SET password = ? WHERE email = ?",
+            [hashPassword, decoded.email]
+        );
+
+        console.log("UPDATE RESULT:", result);
+
+        if (result.affectedRows === 0) {
+            return res.status(404).json({
+                success: false,
+                messege: "User not found"
+            });
+        }
 
         return res.status(200).json({
             success: true,
