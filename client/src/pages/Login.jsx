@@ -75,22 +75,26 @@ const Login = () => {
                 headers: { "Content-Type": "application/json" },
                 withCredentials: true
             })
+            
             if (response.data.success) {
                 setLoading(false)
+                setError('')
                 // ⏰ assume token expires in 1 hour (same as backend)
                 const expiryTime = Date.now() + 60 * 60 * 1000;
-                localStorage.setItem("expiryTime", expiryTime);
+                localStorage.setItem('expiryTime', expiryTime);
                 localStorage.setItem('User', JSON.stringify(response.data))
                 toast.success(response.data.message)
                 setEmail('');
                 setPassword('');
-                setError('')
+                navigate('/')
+                scrollTo(0, 0)
                 setTimeout(() => {
-                    window.location.href = '/'
+                    window.location.reload()
+                    navigate('/')
                 }, 1000)
                 setTimeout(() => {
-                    localStorage.removeItem('User');
-                    window.location.reload()
+                    localStorage.removeItem('User')
+                    localStorage.removeItem('expiryTime')
                 }, response.data.expiresIn * 1000)
             }
             setLoading(false)

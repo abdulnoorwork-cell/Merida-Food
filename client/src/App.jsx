@@ -47,10 +47,12 @@ const App = () => {
 
       if (!expiryTime) return;
 
-      if (Date.now() > expiryTime) {
+      if (expiryTime &&
+        Date.now() > Number(expiryTime)) {
         // ✅ AUTO LOGOUT
         localStorage.removeItem("User");
         localStorage.removeItem("expiryTime");
+        localStorage.removeItem('token')
 
         window.location.href = "/login";
         window.location.reload();
